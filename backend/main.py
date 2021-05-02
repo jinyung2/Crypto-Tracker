@@ -2,49 +2,112 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
+from flask_bcrypt import Bcrypt
 
 import pymongo
 
 from model import User
 
 import string
-import random
 
-app = Flask(__name__)
-CORS(app)
-
-users = {
-    'users_list' :
-    []
-}
-
+app = Flask(__name__)                                           #Initializing flask app
+bcrypt = Bcrypt(app)                                            #Initializing encryption utility
+CORS(app)                                                       #Can't remember why anymore, but we need it
 
 @app.route('/signup', methods=['POST'])
-def sign_up():
+def signup():
 
     userToAdd = request.get_json()
 
-    existing = User().find_by_usernamename(userToAdd['username'])
-    if existing:
-        resp = jsonify(success=False)
-        return resp, 400
+    #Check if the given user is valid
+    if not validSignUp(userToAdd):
+        return jsonify(success=False, reason="Invalid Fields"), 400
 
+    if existingEmail(userToAdd):
+        return jsonify(succress=False, reason="Email Already Exists"), 400
+
+    #Password encrytion
+    crypt = bcrypt.generate_password_hash(userToAdd['password']).decode('utf-8')
+    userToAdd['password'] = crypt
+
+    #Save user to database
     new_user = User(userToAdd)
     new_user.save()
-    resp = jsonify(success=True)
+
+    #Return token and success code
+    resp = jsonify(token=crypt)                                 #Token might have to be the user's '_id'. Discuss with frontend team
     return resp, 201
 
+def validSignUp(user: dict) -> bool:
+    """
+    Input:  A dictionary representing the fields passed in for the user (email, password and re-entered password)
+    Output: Returns False if any of the fields are empty, or if the passwords don't match. Returns True otherwise
+    """
 
-@app.route('/user', methods=['GET', 'POST', 'DELETE'])
+    #Check if any of the fields are empty
+    if not user.get('email') or not user.get('password') or not user.get('reEnterPass'):
+        return False
+
+    #Check if passwords match
+    if user['password'] != user['reEnterPass']:
+        return False
+
+    return True
+
+def existingEmail(user: dict) -> bool:
+    """
+    Input:  A dictionary representing the fields passed in for the user (email, password and re-entered password)
+    Output: Returns True if the given email already exists in the database. Returns False otherwise
+    """
+
+    if User().find_by_email(user['email'].lower()):
+        return True
+
+    return False
+
+
+@app.route('/signin', methods=['POST'])
+def signin():
+
+    user = request.get_json()
+
+    #Check if any of the fienlds is empty
+    if not validSignIn(user):
+        return jsonify(success=False, reason="Invalid Fields"), 400
+
+    #Search for the email in database
+    found = User().find_by_email(user['email'])
+    if not found:
+        return jsonify(success=False, reason="Email Not Found"), 400
+
+    #Compare given password to database
+    if not bcrypt.check_password_hash(found[0]['password'], user['password']):
+        return jsonify(success=False, reason="Password Does Not Match"), 400
+
+    return jsonify(token=found[0]['password']), 200             #Token might have to be the user's '_id'. Discuss with frontend team
+
+def validSignIn(user: dict) -> bool:
+    """
+    Input:  A dictionary represengint the fields passed in for the user (email and password)
+    Output: Returns False if either of the fields is empty. Returns True otherwise
+    """
+
+    if not user.get('email') or not user.get('password'):
+        return False
+    
+    return True
+
+
+#WILL BE LEAVING THIS FOR NOW FOR DEBUGGING PURPOSES
+@app.route('/users', methods=['GET', 'POST', 'DELETE'])
 def get_users():
     if request.method == 'GET':
-        search_username = request.args.get('name')
-        search_job = request.args.get('job')
+        search_email = request.args.get('email')
             
-        if search_username:               #Updated to work with DB
-            users = User().find_by_name(search_username)
+        if search_email:
+            users = User().find_by_email(search_email)
 
-        else:                               #Updated to work with DB
+        else:
             users = User().find_all()
             
         return { "users_list" : users }

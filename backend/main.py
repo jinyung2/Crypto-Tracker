@@ -30,6 +30,9 @@ def signup():
     crypt = bcrypt.generate_password_hash(userToAdd['password']).decode('utf-8')
     userToAdd['password'] = crypt
 
+    #Remove re-entered password from the dict
+    del userToAdd['reEnterPass']
+
     #Save user to database
     new_user = User(userToAdd)
     new_user.save()

@@ -37,8 +37,6 @@ class Model(dict):
 class User(Model):
 
     db_client = pymongo.MongoClient(dotenv.URI, tls=True, tlsAllowInvalidCertificates=True)
-    #db = client.test
-    #collection = db_client["cryptotracker"]["Users"]  #db name is 'cryptotracker' and collection name is 'Users'
     db = db_client.get_database('cryptotracker')
     collection = db.Users
 
@@ -48,8 +46,13 @@ class User(Model):
             user["_id"] = str(user["_id"])
         return users
 
-    def find_by_usernamename(self, name):
-        users = list(self.collection.find({"name": name}))
+    def find_by_email(self, email: str) -> list:
+        """
+        Input:  An email
+        Output: A list containing the entry that matches the given email, if found
+                Returns an empty list otherwise
+        """
+        users = list(self.collection.find({"email": email}))
         for user in users:
             user["_id"] = str(user["_id"])
         return users

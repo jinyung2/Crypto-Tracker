@@ -2,7 +2,7 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt                                 #Encryption module
 
 import pymongo
 
@@ -24,7 +24,7 @@ def signup():
         return jsonify(success=False, reason="Invalid Fields"), 400
 
     if existingEmail(userToAdd):
-        return jsonify(succress=False, reason="Email Already Exists"), 400
+        return jsonify(success=False, reason="Email Already Exists"), 400
 
     #Password encrytion
     crypt = bcrypt.generate_password_hash(userToAdd['password']).decode('utf-8')
@@ -38,7 +38,7 @@ def signup():
     new_user.save()
 
     #Return token and success code
-    resp = jsonify(token=crypt)                                 #Token might have to be the user's '_id'. Discuss with frontend team
+    resp = jsonify(token=new_user.get("_id"))
     return resp, 201
 
 def validSignUp(user: dict) -> bool:
@@ -72,22 +72,22 @@ def existingEmail(user: dict) -> bool:
 @app.route('/signin', methods=['POST'])
 def signin():
 
-    user = request.get_json()
+    given_user = request.get_json()
 
     #Check if any of the fienlds is empty
-    if not validSignIn(user):
+    if not validSignIn(given_user):
         return jsonify(success=False, reason="Invalid Fields"), 400
 
     #Search for the email in database
-    found = User().find_by_email(user['email'])
+    found = User().find_by_email(given_user['email'])
     if not found:
         return jsonify(success=False, reason="Email Not Found"), 400
 
     #Compare given password to database
-    if not bcrypt.check_password_hash(found[0]['password'], user['password']):
+    if not bcrypt.check_password_hash(found['password'], given_user['password']):
         return jsonify(success=False, reason="Password Does Not Match"), 400
 
-    return jsonify(token=found[0]['password']), 200             #Token might have to be the user's '_id'. Discuss with frontend team
+    return jsonify(token=found['_id']), 200
 
 def validSignIn(user: dict) -> bool:
     """

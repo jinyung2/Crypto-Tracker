@@ -3,6 +3,9 @@ from bson import ObjectId
 import dns
 import dotenv
 
+from dotenv import dotenv_values
+config = dotenv_values(".env")
+
 class Model(dict):
     """
     A simple model that wraps mongodb document
@@ -36,7 +39,7 @@ class Model(dict):
 
 class User(Model):
 
-    db_client = pymongo.MongoClient(dotenv.URI, tls=True, tlsAllowInvalidCertificates=True)
+    db_client = pymongo.MongoClient(config["URI"], tls=True, tlsAllowInvalidCertificates=True)
     db = db_client.get_database('cryptotracker')
     collection = db.Users
 
@@ -52,7 +55,16 @@ class User(Model):
         Output: A list containing the entry that matches the given email, if found
                 Returns an empty list otherwise
         """
-        users = list(self.collection.find({"email": email}))
-        for user in users:
+        user = self.collection.find_one({"email": email})
+        if user:
             user["_id"] = str(user["_id"])
-        return users
+        return user
+
+    def find_by_id(self, id: str):
+        
+        user = self.collection.find_one( {"_id": id} )
+
+        if user:
+            user["_id"] = str(user["_id"])
+
+        return user

@@ -2,7 +2,8 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
-from flask_bcrypt import Bcrypt                                 #Encryption module
+from flask_bcrypt import Bcrypt  
+import requests as r
 
 import pymongo
 
@@ -101,6 +102,31 @@ def validSignIn(user: dict) -> bool:
     return True
 
 
+@app.route('/search/<id>', methods=['GET'])
+def get_coin(id):
+    url="http://api.coincap.io/v2/assets"
+
+    payload={}
+    headers = {}
+    info_coin = {}
+    response = r.request("GET", url, headers=headers, data=payload)
+    data = response.json()
+    for info in data['data']:
+        if id == info['id'] or str.upper(id)==info['symbol']:
+            info_coin={
+                "name":info['name'],
+                'id':info['id'],
+                'symbol': info['symbol'],
+                'priceUsd':info['priceUsd']
+                
+            }
+            return info_coin
+    return jsonify({ "error": "Coin not found" }), 404
+
+
+
+
+
 #WILL BE LEAVING THIS FOR NOW FOR DEBUGGING PURPOSES
 @app.route('/users', methods=['GET', 'POST', 'DELETE'])
 def get_users():
@@ -127,21 +153,21 @@ def get_users():
         return resp, 201
 
 
-@app.route('/users/<id>', methods=['GET', 'DELETE'])
-def get_user(id):
+# @app.route('/users/<id>', methods=['GET', 'DELETE'])
+# def get_user(id):
 
-    if request.method == 'GET':
+#     if request.method == 'GET':
         
-        user = User( {"_id": id} )
-        if user.reload():
-            return user
-        return jsonify({ "error": "user not found" }), 404
+#         user = User( {"_id": id} )
+#         if user.reload():
+#             return user
+#         return jsonify({ "error": "user not found" }), 404
 
-    elif request.method == 'DELETE':
+#     elif request.method == 'DELETE':
 
-        user = User( {"_id": id} )
-        if user.reload():
-            user.remove()
-            return jsonify({}), 204
+#         user = User( {"_id": id} )
+#         if user.reload():
+#             user.remove()
+#             return jsonify({}), 204
 
-        return jsonify({"error": "user not found"}), 404
+#         return jsonify({"error": "user not found"}), 404

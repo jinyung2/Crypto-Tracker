@@ -54,3 +54,63 @@
     border-right: 1px solid #8D8D8D;
     height: 100%;
 }
+
+@media only screen and (max-width: 1024px) {
+    #logo {
+        max-height: 300px;
+    }
+
+    .lsButton {
+        width: 40%;
+    }
+    #signUpForm {
+        width: 80%;
+        margin-left: 10%;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    #logo {
+        max-height: 200px;
+    }
+
+    .lsButton {
+        width: 50%;
+        margin-top: 5%;
+    }
+
+    #signUpForm {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #vr {
+        border-right: none;
+    }
+}
+
+@media only screen and (width: 414px) {
+    #logo {
+        max-height: 250px;
+    }
+}
+
+@media only screen and (width: 540px) {
+    #signUpLogin {
+        padding: 15% 15%;
+    }
+
+    .lsButton {
+        width: 50%;
+        margin-top: 8%;
+    }
+
+    #signUpForm {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #vr {
+        border-right: none;
+    }
+}

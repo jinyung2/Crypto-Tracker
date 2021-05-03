@@ -6,8 +6,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/signup">
-          <SignUpPage />
+        <Route path="/signup" component={SignUpPage}>
         </Route>
       </Switch>
     </BrowserRouter>

@@ -6,7 +6,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/signUp">
+        <Route path="/signup">
           <SignUpPage />
         </Route>
       </Switch>

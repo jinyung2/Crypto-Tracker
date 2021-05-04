@@ -8,10 +8,10 @@ import LogIn from './LogIn';
 
 function LoginSignUp() {
     const [up, setUP] = useState({
-            email: "",
-            password: "",
-            reEnterPass: ""
-        })
+        email: "",
+        password: "",
+        reEnterPass: ""
+    })
     const [loginCred, setLoginCred] = useState({
         email: "",
         password: ""
@@ -39,11 +39,10 @@ function LoginSignUp() {
         }
     }
 
-    
     //check if inputs are valid
     function submitSignUpForm() {
         //if not all criteria is filled out, then alert
-        if ( !validateEmail(up.email) || up.password === "" || up.reEnterPass === "") {
+        if (!validateEmail(up.email) || up.password === "" || up.reEnterPass === "") {
             setError("Sign Up Credentials are invalid. Please try again.")
         }
         //else if passwords don't match, then alert 
@@ -54,10 +53,10 @@ function LoginSignUp() {
         }
         //else then no errors and add to database and redirect user to dashbaord
     }
-    
+
     function handleLogInChange(event) {
-        const {name, value} = event.target;
-        if (name === "email"){
+        const { name, value } = event.target;
+        if (name === "email") {
             setLoginCred({
                 email: value,
                 password: loginCred.password
@@ -73,7 +72,7 @@ function LoginSignUp() {
     function handleLogInForm() {
         console.log(loginCred.password.length);
         // Set password validation to be >= 6 characters
-        if (!validateEmail(loginCred.email) || loginCred.password.length < 6){
+        if (!validateEmail(loginCred.email) || loginCred.password.length < 6) {
             setError("Log In Credentials are invalid. Please try again.");
         } else {
             clearError();
@@ -85,9 +84,7 @@ function LoginSignUp() {
         return re.test(String(email).toLowerCase());
     }
 
-    function clearError() {
-        setError("");
-    }
+    function clearError() { setError(""); }
 
     return (
         <div id="signUpLogin">
@@ -107,7 +104,7 @@ function LoginSignUp() {
                         <Route path="/login">
                             <LogIn handleChange={handleLogInChange} submitForm={handleLogInForm}></LogIn>
                         </Route>
-                        {error ? <Alert style={{ margin: "5px 20%"}}variant="danger">{error}</Alert> : null}
+                        {error ? <Alert style={{ margin: "5px 20%" }} variant="danger">{error}</Alert> : null}
                     </Col>
                 </Row>
             </Container>

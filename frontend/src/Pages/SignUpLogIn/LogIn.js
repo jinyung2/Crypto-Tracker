@@ -2,7 +2,6 @@ import React from 'react';
 import "./SignUpLogIn.css";
 
 function LogIn(props) {
-
     return (
         <form id="signUpForm">
             <input className="form-control form-control-lg signUpInput" type="text" name="email" placeholder="Email" onChange={props.handleChange} /><br />

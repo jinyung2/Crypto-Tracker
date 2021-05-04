@@ -1,18 +1,20 @@
-import "./SignUpPage.css";
+import "./SignUpLogIn.css";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { useState } from "react";
 import logo from '../../assets/square.jpg';
+import Signup from './SignUp';
 
 function LoginSignUp() {
-    const [up, setUP] = useState(
-
-        {
+    const [up, setUP] = useState({
             email: "",
             password: "",
             reEnterPass: ""
-        }
-    )
+        })
+    const [loginCred, setLoginCred] = useState({
+        email: "",
+        password: ""
+    })
 
     //assigns username and password values to "up" variable
     function handleChange(event) {
@@ -45,10 +47,9 @@ function LoginSignUp() {
         else if (up.password !== up.reEnterPass) {
             alert("Passwords do not match. Please re-enter passwords.");
         }
+        console.log(up);
         //else then no errors and add to database and redirect user to dashbaord
     }
-
-    console.log(up);
 
     return (
         <body id="signUpLogin">
@@ -60,14 +61,12 @@ function LoginSignUp() {
                     <Col>
                         <div className="nav-buttons">
                             <Link id="loginLink" to="/login"><button className="lsButton">Login</button></Link>
-                            <button id="signUpBtn" className="lsButton active">Sign Up</button>
+                            <Link id="signUpBtn" to="/signup"><button className="lsButton">Sign Up</button></Link>
                         </div>
-                        <form id="signUpForm">
-                            <input className="form-control form-control-lg signUpInput" type="text" name="email" placeholder="Email" onChange={handleChange} /><br />
-                            <input className="form-control form-control-lg signUpInput" type="password" name="password" onChange={handleChange} placeholder="Password" /><br />
-                            <input className="form-control form-control-lg signUpInput" type="password" name="repassword" onChange={handleChange} placeholder="Re-enter Password" /><br />
-                            <input className="btn signUpSubmit" type="button" value="Sign Up" onClick={submitForm} />
-                        </form>
+                        <Route path="/signup">
+                            <Signup handleChange={handleChange} submitForm={submitForm}></Signup>
+                        </Route>
+                        <Route path="/login">TEST2</Route>
                     </Col>
                 </Row>
             </Container>

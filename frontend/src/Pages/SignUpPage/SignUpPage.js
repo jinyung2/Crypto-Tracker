@@ -1,11 +1,10 @@
 import "./SignUpPage.css";
 import { Container, Row, Col } from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
+import logo from '../../assets/square.jpg';
 
 function LoginSignUp() {
-    const logo = "https://www.kidsmathgamesonline.com/images/pictures/shapes/square.jpg";
-
     const [up, setUP] = useState(
 
         {
@@ -18,19 +17,19 @@ function LoginSignUp() {
     //assigns username and password values to "up" variable
     function handleChange(event) {
         const { name, value } = event.target;
-        if(name === "password") {
+        if (name === "password") {
             setUP(
-                { email: up["email"], password: value, reEnterPass: up["reEnterPass"]}
+                { email: up["email"], password: value, reEnterPass: up["reEnterPass"] }
             )
-        } 
-        else if(name === "repassword") {
+        }
+        else if (name === "repassword") {
             setUP(
-                { email: up["email"], password: up["password"], reEnterPass: value}
+                { email: up["email"], password: up["password"], reEnterPass: value }
             )
         }
         else {
-            setUP (
-                { email: value, password: up["password"], reEnterPass: up["reEnterPass"]}
+            setUP(
+                { email: value, password: up["password"], reEnterPass: up["reEnterPass"] }
             )
         }
 
@@ -39,11 +38,11 @@ function LoginSignUp() {
     //check if inputs are valid
     function submitForm() {
         //if not all criteria is filled out, then alert
-        if(up.email === "" || up.password === "" || up.reEnterPass === "") {
+        if (up.email === "" || up.password === "" || up.reEnterPass === "") {
             alert("Please enter all information.")
         }
         //else if passwords don't match, then alert 
-        else if(up.password !== up.reEnterPass) {
+        else if (up.password !== up.reEnterPass) {
             alert("Passwords do not match. Please re-enter passwords.");
         }
         //else then no errors and add to database and redirect user to dashbaord
@@ -54,23 +53,21 @@ function LoginSignUp() {
     return (
         <body id="signUpLogin">
             <Container fluid>
-                <Row style={{textAlign: "center"}} className="align-items-center">
+                <Row style={{ textAlign: "center" }} className="align-items-center">
                     <Col id="vr">
                         <img id="logo" src={logo} alt="logo" />
                     </Col>
                     <Col>
-                        <div>
-                            <div className="nav-buttons">
-                                <Link id="loginLink" to="/login"><button className="lsButton">Login</button></Link>
-                                <button id="signUpBtn" className="lsButton active">Sign Up</button>
-                            </div>
-                            <form id="signUpForm">
-                                <input className="signUpInput" type="text" name="email" placeholder="Email" onChange={handleChange} /><br /> 
-                                <input className="signUpInput" type="password" name="password" onChange={handleChange} placeholder="Password" /><br />
-                                <input className="signUpInput" type="password" name="repassword" onChange={handleChange} placeholder="Re-enter Password" /><br />
-                                <input className="signUpSubmit" type="button" value="Sign Up" onClick={submitForm} />
-                            </form> 
+                        <div className="nav-buttons">
+                            <Link id="loginLink" to="/login"><button className="lsButton">Login</button></Link>
+                            <button id="signUpBtn" className="lsButton active">Sign Up</button>
                         </div>
+                        <form id="signUpForm">
+                            <input className="form-control form-control-lg signUpInput" type="text" name="email" placeholder="Email" onChange={handleChange} /><br />
+                            <input className="form-control form-control-lg signUpInput" type="password" name="password" onChange={handleChange} placeholder="Password" /><br />
+                            <input className="form-control form-control-lg signUpInput" type="password" name="repassword" onChange={handleChange} placeholder="Re-enter Password" /><br />
+                            <input className="btn signUpSubmit" type="button" value="Sign Up" onClick={submitForm} />
+                        </form>
                     </Col>
                 </Row>
             </Container>

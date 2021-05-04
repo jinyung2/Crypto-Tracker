@@ -1,7 +1,12 @@
-html, body {
-  background-color: #2C2C2C;
+html {
+  --color-background: #2c2c2c;
+  --color-sub: #979797;
+  --color-sub-2: #E5E5E5;
+  --color-button: #E9E9E9;
 }
 
 body {
+  background-color: var(--color-background);
+
   margin: 0;
 }

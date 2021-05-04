@@ -13,7 +13,7 @@
 .lsButton {
     display: inline;
     margin: 0;
-    background-color: #E5E5E5;
+    background-color: var(--color-sub-2);
     outline: none;
     border: none;
     width: 30%;
@@ -22,11 +22,11 @@
 }
 
 .active {
-    background-color: #979797;
+    background-color: var(--color-sub);
 }
 
 #signUpForm {
-    background-color: #979797;
+    background-color: var(--color-sub);
     width: 60%;
     padding: 8% 5%;
     margin-left: 20%;
@@ -44,7 +44,7 @@
 .signUpSubmit {
     padding: 3%;
     border-radius: 100px;
-    background: #E9E9E9;
+    background: var(--color-button);
     border: none;
     margin-top: 5%;
     font-size: 120%;

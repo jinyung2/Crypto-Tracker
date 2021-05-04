@@ -37,7 +37,6 @@ function LoginSignUp() {
                 { email: value, password: up["password"], reEnterPass: up["reEnterPass"] }
             )
         }
-        console.log(up);
     }
 
     

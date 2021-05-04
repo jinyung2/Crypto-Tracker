@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import "./SignUpLogIn.css";
 
 function Signup(props) {
 

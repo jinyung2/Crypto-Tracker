@@ -4,6 +4,7 @@ import { Link, Route } from "react-router-dom";
 import { useState } from "react";
 import logo from '../../assets/square.jpg';
 import Signup from './SignUp';
+import LogIn from './LogIn';
 
 function LoginSignUp() {
     const [up, setUP] = useState({
@@ -17,7 +18,7 @@ function LoginSignUp() {
     })
 
     //assigns username and password values to "up" variable
-    function handleChange(event) {
+    function handleSignUpChange(event) {
         const { name, value } = event.target;
         if (name === "password") {
             setUP(
@@ -34,11 +35,12 @@ function LoginSignUp() {
                 { email: value, password: up["password"], reEnterPass: up["reEnterPass"] }
             )
         }
-
+        console.log(up);
     }
 
+    
     //check if inputs are valid
-    function submitForm() {
+    function submitSignUpForm(event) {
         //if not all criteria is filled out, then alert
         if (up.email === "" || up.password === "" || up.reEnterPass === "") {
             alert("Please enter all information.")
@@ -47,8 +49,15 @@ function LoginSignUp() {
         else if (up.password !== up.reEnterPass) {
             alert("Passwords do not match. Please re-enter passwords.");
         }
-        console.log(up);
         //else then no errors and add to database and redirect user to dashbaord
+    }
+    
+    function handleLogInChange(event) {
+        const {name, value} = event.target.addEventListener;
+    }
+
+    function handleLogInForm() {
+
     }
 
     return (
@@ -64,9 +73,11 @@ function LoginSignUp() {
                             <Link id="signUpBtn" to="/signup"><button className="lsButton">Sign Up</button></Link>
                         </div>
                         <Route path="/signup">
-                            <Signup handleChange={handleChange} submitForm={submitForm}></Signup>
+                            <Signup handleChange={handleSignUpChange} submitForm={submitSignUpForm}></Signup>
                         </Route>
-                        <Route path="/login">TEST2</Route>
+                        <Route path="/login">
+                            <LogIn handleChange={handleLogInChange} submitForm={handleLogInForm}></LogIn>
+                        </Route>
                     </Col>
                 </Row>
             </Container>

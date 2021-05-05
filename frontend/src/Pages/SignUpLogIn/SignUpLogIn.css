@@ -48,18 +48,19 @@
 }
 
 #vr {
-    border-right: 1px solid #8D8D8D;
+    border-left: 1px solid #8D8D8D;
     height: 100%;
 }
 
 @media only screen and (max-width: 1024px) {
     #logo {
-        max-height: 300px;
+        max-height: 100px;
     }
 
     .lsButton {
         width: 40%;
     }
+
     #signUpForm {
         width: 80%;
         margin-left: 10%;
@@ -68,12 +69,12 @@
 
 @media only screen and (max-width: 425px) {
     #logo {
-        max-height: 200px;
+        max-height: 90px;
     }
 
     .lsButton {
         width: 50%;
-        margin-top: 5%;
+        margin-top: 10%;
     }
 
     #signUpForm {
@@ -82,13 +83,14 @@
     }
 
     #vr {
-        border-right: none;
+        border-left: none;
     }
 }
 
 @media only screen and (width: 414px) {
     #logo {
-        max-height: 250px;
+        width: 100%;
+        height: auto;
     }
 }
 
@@ -108,6 +110,6 @@
     }
 
     #vr {
-        border-right: none;
+        border-left: none;
     }
 }

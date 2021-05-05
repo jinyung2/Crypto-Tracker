@@ -2,7 +2,7 @@ import "./SignUpLogIn.css";
 import { Container, Row, Col, Alert } from "react-bootstrap";
 import { Route } from "react-router-dom";
 import { useState } from "react";
-import logo from '../../assets/square.jpg';
+import logo from '../../assets/crypto-logo-white.png';
 import Signup from '../../Components/SignUpForm/SignUp';
 import LogIn from '../../Components/LoginForm/LogInForm';
 
@@ -90,10 +90,10 @@ function LoginSignUp() {
         <div id="signUpLogin">
             <Container fluid>
                 <Row style={{ textAlign: "center" }} className="align-items-center justify-content-center">
-                    <Col id="vr">
+                    <Col>
                         <img id="logo" src={logo} alt="logo" />
                     </Col>
-                    <Col className="justify-content-center">
+                    <Col id="vr" className="justify-content-center">
                         <Route path="/signup">
                             <Signup handleChange={handleSignUpChange} submitForm={submitSignUpForm} clearError={clearError}></Signup>
                         </Route>

@@ -1,13 +1,13 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import SignUpPage from "./Pages/SignUpPage/SignUpPage";
+import SignUpLogIn from "./Pages/SignUpLogIn/SignUpLogIn";
 import './App.css';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/signup">
-          <SignUpPage />
+        <Route path="">
+          <SignUpLogIn />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -1,10 +1,10 @@
 import "./SignUpLogIn.css";
 import { Container, Row, Col, Alert } from "react-bootstrap";
-import { Link, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { useState } from "react";
 import logo from '../../assets/square.jpg';
-import Signup from './SignUp';
-import LogIn from './LogIn';
+import Signup from '../../Components/SignUpForm/SignUp';
+import LogIn from '../../Components/LoginForm/LogInForm';
 
 function LoginSignUp() {
     const [up, setUP] = useState({
@@ -43,7 +43,7 @@ function LoginSignUp() {
     function submitSignUpForm() {
         //if not all criteria is filled out, then alert
         if (!validateEmail(up.email) || up.password === "" || up.reEnterPass === "") {
-            setError("Sign Up Credentials are invalid. Please try again.")
+            setError("Sign up credentials are invalid. Please try again.")
         }
         //else if passwords don't match, then alert 
         else if (up.password !== up.reEnterPass) {
@@ -94,15 +94,11 @@ function LoginSignUp() {
                         <img id="logo" src={logo} alt="logo" />
                     </Col>
                     <Col className="justify-content-center">
-                        <div className="nav-buttons">
-                            <Link id="loginLink" to="/login"><button className="lsButton" onClick={clearError}>Login</button></Link>
-                            <Link id="signUpBtn" to="/signup"><button className="lsButton" onClick={clearError}>Sign Up</button></Link>
-                        </div>
                         <Route path="/signup">
-                            <Signup handleChange={handleSignUpChange} submitForm={submitSignUpForm}></Signup>
+                            <Signup handleChange={handleSignUpChange} submitForm={submitSignUpForm} clearError={clearError}></Signup>
                         </Route>
                         <Route path="/login">
-                            <LogIn handleChange={handleLogInChange} submitForm={handleLogInForm}></LogIn>
+                            <LogIn handleChange={handleLogInChange} submitForm={handleLogInForm} clearError={clearError}></LogIn>
                         </Route>
                         {error ? <Alert style={{ margin: "5px 20%" }} variant="danger">{error}</Alert> : null}
                     </Col>

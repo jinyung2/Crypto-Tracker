@@ -21,10 +21,6 @@
     padding: 1%;
 }
 
-.active {
-    background-color: var(--color-sub);
-}
-
 #signUpForm {
     /* height: 100%; */
     background-color: var(--color-sub);

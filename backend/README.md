@@ -11,7 +11,9 @@ For more information about setting up virtual environments, go to https://packag
 
 ### Dependencies
 To make sure that you have all the necessary dependencies run 
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 This will install all the required libraries that are used in the project.
 
 ### URIs and Secret Keys
@@ -40,21 +42,20 @@ Info about the PEP8 Style Guide can be found at https://www.python.org/dev/peps/
 
 ### pycodestyle and autopep8
 `pycodestyle` is a tool that checks the formatting of a specific file and reports any lines of code that do not follow typical styling conventions. To use it, run
-```pycodestyle <filename>```
+```
+pycodestyle <filename>
+```
 on your terminal.
 
 If your file follows PEP8 styling, nothing should be printed to the terminal. 
 
 Any reported issues should be addressed before pushing.
 
-To check that you are following the PEP8 style formatting guide, run
-`pycodestyle <filename>`. To solve minor styling issues, you can also run
-`autopep8 --in-place -a -a <file>`. Note that this does NOT remove all styling errors. 
-You will have to re-run the stylechecker afterwards to make sure that all issues were addressed.
-
 ### autopep8
 `autopep8` automatically addresses minor formatting issues. To use it, run
-```autopep --in-place -a -a <filename>```
+```
+autopep --in-place -a -a <filename>
+```
 on your terminal.
 
 Please note taht this does NOT remove all styling errors. You should re-run `pycodestyle` afterwards to make sure that all issues were addressed.

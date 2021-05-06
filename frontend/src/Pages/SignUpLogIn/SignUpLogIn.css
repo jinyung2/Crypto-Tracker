@@ -1,113 +1,113 @@
 #signUpLogin {
-    padding: 10% 10%;
+  padding: 10% 10%;
 }
 
 #logo {
-    display: inline-block;
-    border: none;
-    background: none;
-    max-height: 500px;
-    width: auto;
+  display: inline-block;
+  border: none;
+  background: none;
+  max-height: 500px;
+  width: auto;
 }
 
 .lsButton {
-    display: inline;
-    margin: 0;
-    background-color: var(--color-sub-2);
-    outline: none;
-    border: none;
-    width: 30%;
-    font-size: 160%;
-    padding: 1%;
+  display: inline;
+  margin: 0;
+  background-color: var(--color-sub-2);
+  outline: none;
+  border: none;
+  width: 30%;
+  font-size: 160%;
+  padding: 1%;
 }
 
 #signUpForm {
-    /* height: 100%; */
-    background-color: var(--color-sub);
-    width: 60%;
-    padding: 8% 5%;
-    margin-left: 20%;
+  /* height: 100%; */
+  background-color: var(--color-sub);
+  width: 60%;
+  padding: 8% 5%;
+  margin-left: 20%;
 }
 
 .signUpInput {
-    margin: 2% 2% 2% 0;
-    border-radius: 100px;
-    border: 1px solid #000000;
-    width: 100%;
-    padding: 3% 7%;
-    font-size: 120%;
+  margin: 2% 2% 2% 0;
+  border-radius: 100px;
+  border: 1px solid #000000;
+  width: 100%;
+  padding: 3% 7%;
+  font-size: 120%;
 }
 
 .signUpSubmit {
-    padding: 3%;
-    border-radius: 100px;
-    background: var(--color-button);
-    border: none;
-    margin-top: 5%;
-    font-size: 120%;
+  padding: 3%;
+  border-radius: 100px;
+  background: var(--color-button);
+  border: none;
+  margin-top: 5%;
+  font-size: 120%;
 }
 
 #vr {
-    border-right: 1px solid #8D8D8D;
-    height: 100%;
+  border-right: 1px solid #8d8d8d;
+  height: 100%;
 }
 
 @media only screen and (max-width: 1024px) {
-    #logo {
-        max-height: 300px;
-    }
+  #logo {
+    max-height: 300px;
+  }
 
-    .lsButton {
-        width: 40%;
-    }
-    #signUpForm {
-        width: 80%;
-        margin-left: 10%;
-    }
+  .lsButton {
+    width: 40%;
+  }
+  #signUpForm {
+    width: 80%;
+    margin-left: 10%;
+  }
 }
 
 @media only screen and (max-width: 425px) {
-    #logo {
-        max-height: 200px;
-    }
+  #logo {
+    max-height: 200px;
+  }
 
-    .lsButton {
-        width: 50%;
-        margin-top: 5%;
-    }
+  .lsButton {
+    width: 50%;
+    margin-top: 5%;
+  }
 
-    #signUpForm {
-        width: 100%;
-        margin-left: 0;
-    }
+  #signUpForm {
+    width: 100%;
+    margin-left: 0;
+  }
 
-    #vr {
-        border-right: none;
-    }
+  #vr {
+    border-right: none;
+  }
 }
 
 @media only screen and (width: 414px) {
-    #logo {
-        max-height: 250px;
-    }
+  #logo {
+    max-height: 250px;
+  }
 }
 
 @media only screen and (width: 540px) {
-    #signUpLogin {
-        padding: 15% 15%;
-    }
+  #signUpLogin {
+    padding: 15% 15%;
+  }
 
-    .lsButton {
-        width: 50%;
-        margin-top: 8%;
-    }
+  .lsButton {
+    width: 50%;
+    margin-top: 8%;
+  }
 
-    #signUpForm {
-        width: 100%;
-        margin-left: 0;
-    }
+  #signUpForm {
+    width: 100%;
+    margin-left: 0;
+  }
 
-    #vr {
-        border-right: none;
-    }
+  #vr {
+    border-right: none;
+  }
 }

@@ -1,15 +1,17 @@
+import string
+from model import User
+import pymongo
 from flask import Flask
 from flask import request
 from flask import jsonify
+from flask import g as context
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 import requests as r
 
-import pymongo
+from flask_httpauth import HTTPBasicAuth
+auth = HTTPBasicAuth()
 
-from model import User
-
-import string
 
 app = Flask(__name__)  # Initializing flask app
 bcrypt = Bcrypt(app)  # Initializing encryption utility
@@ -41,8 +43,8 @@ def signup():
     new_user.save()
 
     # Return token and success code
-    resp = jsonify(token=new_user.get("_id"))
-    return resp, 201
+    token = User().generate_auth_token(new_user)
+    return jsonify(token=token.decode('utf-8')), 201
 
 
 def validSignUp(user: dict) -> bool:
@@ -99,7 +101,8 @@ def signin():
             given_user['password']):
         return jsonify(success=False, reason="Password Does Not Match"), 400
 
-    return jsonify(token=found['_id']), 200
+    token = User().generate_auth_token(given_user)
+    return jsonify(token=token.decode('utf-8')), 200
 
 
 def validSignIn(user: dict) -> bool:
@@ -113,6 +116,28 @@ def validSignIn(user: dict) -> bool:
     if not user.get('email') or not user.get('password'):
         return False
 
+    return True
+
+
+@app.route('/token', methods=['GET'])
+@auth.login_required
+def get_auth_token():
+    token = User().generate_auth_token(context.user)
+    return jsonify({'token': token.decode('ascii')})
+
+
+@auth.verify_password
+def verify_password(email_or_token, password):
+
+    user = User().verify_auth_token(email_or_token)
+    if not user:
+        user = User().find_by_email(email_or_token)
+        if not user or not bcrypt.check_password_hash(
+                user['password'],
+                password):
+            return False
+
+    context.user = user
     return True
 
 

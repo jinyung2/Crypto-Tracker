@@ -1,6 +1,8 @@
 import pymongo
 from bson import ObjectId
 import dns
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, 
+                          BadSignature, SignatureExpired)
 
 
 from dotenv import dotenv_values
@@ -72,4 +74,19 @@ class User(Model):
         if user:
             user["_id"] = str(user["_id"])
 
+        return user
+
+    def generate_auth_token(self, user, expiration=600):
+        s = Serializer(config['SECRET_KEY'], expiration)
+        return s.dumps({'email': user['email']})
+
+    def verify_auth_token(self, token):
+        s = Serializer(config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None
+        except BadSignature:
+            return None
+        user = User().find_by_email(data['email'])
         return user

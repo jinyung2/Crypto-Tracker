@@ -101,8 +101,9 @@ def signin():
             given_user['password']):
         return jsonify(success=False, reason="Password Does Not Match"), 400
 
+    # Generate token for the user
     token = User().generate_auth_token(given_user)
-    return jsonify(token=token.decode('utf-8')), 200
+    return jsonify(token=token.decode('utf-8')), 201
 
 
 def validSignIn(user: dict) -> bool:
@@ -119,6 +120,7 @@ def validSignIn(user: dict) -> bool:
     return True
 
 
+# Gets the token for the user passed through the HTTP header
 @app.route('/token', methods=['GET'])
 @auth.login_required
 def get_auth_token():
@@ -126,17 +128,25 @@ def get_auth_token():
     return jsonify({'token': token.decode('ascii')})
 
 
+# If given an email, verifies that the password matches the one in the database
+# If given a token, verifies that the token is valid
 @auth.verify_password
 def verify_password(email_or_token, password):
 
+    # First checks if a token was passed in
     user = User().verify_auth_token(email_or_token)
-    if not user:
+
+    if not user:  # If no user was linked to a token or an email was passed in
+
+        # Search email in database and then compare passwords
         user = User().find_by_email(email_or_token)
         if not user or not bcrypt.check_password_hash(
                 user['password'],
                 password):
             return False
 
+    # context remains constant through a request. Used to securely hold info
+    # through different calls
     context.user = user
     return True
 

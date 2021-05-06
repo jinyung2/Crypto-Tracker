@@ -6,6 +6,7 @@ import dns
 from dotenv import dotenv_values
 config = dotenv_values(".env")
 
+
 class Model(dict):
     """
     A simple model that wraps mongodb document
@@ -19,13 +20,13 @@ class Model(dict):
             self.collection.insert(self)
         else:
             self.collection.update(
-                { "_id": ObjectId(self._id) }, self)
+                {"_id": ObjectId(self._id)}, self)
         self._id = str(self._id)
 
     def reload(self):
         if self._id:
             result = self.collection.find_one({"_id": ObjectId(self._id)})
-            if result :
+            if result:
                 self.update(result)
                 self._id = str(self._id)
                 return True
@@ -37,9 +38,13 @@ class Model(dict):
             self.clear()
             return resp
 
+
 class User(Model):
 
-    db_client = pymongo.MongoClient(config["URI"], tls=True, tlsAllowInvalidCertificates=True)
+    db_client = pymongo.MongoClient(
+        config["URI"],
+        tls=True,
+        tlsAllowInvalidCertificates=True)
     db = db_client.get_database('cryptotracker')
     collection = db.Users
 
@@ -61,8 +66,8 @@ class User(Model):
         return user
 
     def find_by_id(self, id: str):
-        
-        user = self.collection.find_one( {"_id": id} )
+
+        user = self.collection.find_one({"_id": id})
 
         if user:
             user["_id"] = str(user["_id"])

@@ -1,7 +1,7 @@
 import pymongo
 from bson import ObjectId
 import dns
-from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, 
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer,
                           BadSignature, SignatureExpired)
 
 
@@ -59,8 +59,8 @@ class User(Model):
     def find_by_email(self, email: str) -> list:
         """
         Input:  An email
-        Output: A list containing the entry that matches the given email, if found
-                Returns an empty list otherwise
+        Output: The entry that matches the given email, if found
+                Returns None otherwise
         """
         user = self.collection.find_one({"email": email})
         if user:
@@ -76,17 +76,37 @@ class User(Model):
 
         return user
 
-    def generate_auth_token(self, user, expiration=600):
+    # Auth-Token Generation
+    def generate_auth_token(self, user: dict, expiration=600):
+        """
+        Input:  A dictionary representing a user and an expiration timer,
+                600 seconds (10 minutes) by default
+        Output: A token linked to the user's email
+        """
+        # Set up serializer
         s = Serializer(config['SECRET_KEY'], expiration)
+
+        # Return encrypted dictionary containing the user's email
         return s.dumps({'email': user['email']})
 
+    # Token verification
     def verify_auth_token(self, token):
+        """
+        Input:  A token
+        Output: Returns the user linked to that token if the token is valid
+                Returns None otherwise
+        """
+        # Set up serializer
         s = Serializer(config['SECRET_KEY'])
+
+        # Try loading token
         try:
             data = s.loads(token)
         except SignatureExpired:
-            return None
+            return None  # Returns none if the token expired
         except BadSignature:
-            return None
+            return None  # Returns None if the token is invalid
+
+        # Find and return user linked to that token
         user = User().find_by_email(data['email'])
         return user

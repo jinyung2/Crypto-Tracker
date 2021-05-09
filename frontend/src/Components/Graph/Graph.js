@@ -14,14 +14,14 @@ const data = {
       backgroundColor: 'black',
       borderWidth: 2,
       fill: false,
-      data: [rand(), rand(), rand(), rand(), rand(), rand()],
+      data: [rand(), rand(), rand(), rand(), rand(), rand(), rand()],
     },
     {
       type: 'bar',
       label: 'Dataset 2',
       backgroundColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
       data: [rand(), rand(), rand(), rand(), rand(), rand(), rand()],
-      borderColor: 'white',
+    //   borderColor: 'white',
       borderWidth: 2,
     },
     {
@@ -106,8 +106,8 @@ function Graph() {
   return (
     <div class="root">
       <h1 className="title">MultiType Chart</h1>
+      {type === 'doughnut' ? <div style={{display: 'flex', justifyContent: 'center'}}><Doughnut data={data2} height={500} options={{maintainAspectRatio: false}} /></div> : null}
       {type === 'bar' ? <Bar data={data} height={2} width={4} options={options} /> : null}
-      {type === 'doughnut' ? <Doughnut data={data2} /> : null}
       <div onClick={toggleType}><h1 style={{border: '1px solid white'}}>Click here to Toggle Chart</h1></div>
     </div>
   );

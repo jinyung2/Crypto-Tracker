@@ -5,7 +5,7 @@ import './Dashboard.css';
 
 function Dashboard() {
   return (
-    <Container fluid style={{margin: '1em'}}>
+    <Container fluid>
       <Row>NavBar goes here</Row>
       <Row>
         <Col lg={8}>

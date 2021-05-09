@@ -5,16 +5,16 @@ import './Dashboard.css';
 
 function Dashboard() {
   return (
-    <Container fluid>
+    <Container fluid style={{margin: '1em'}}>
       <Row>NavBar goes here</Row>
       <Row>
-        <Col>
+        <Col lg={8}>
           <Row>
             <Graph />
           </Row>
-          <Row>Info here</Row>
+          <Row><h1>Info here</h1></Row>
         </Col>
-        <Col>WatchList over here</Col>
+        <Col lg><h1>WatchList over here</h1></Col>
       </Row>
     </Container>
   );

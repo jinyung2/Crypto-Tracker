@@ -11,6 +11,7 @@ const data = {
       type: 'line',
       label: 'Dataset 1',
       borderColor: 'rgb(54, 162, 235)',
+      backgroundColor: 'black',
       borderWidth: 2,
       fill: false,
       data: [rand(), rand(), rand(), rand(), rand(), rand()],
@@ -32,13 +33,42 @@ const data = {
   ],
 };
 
+const options = {
+    plugins: {
+        legend: {
+            display: false
+        },
+    },
+    scales: {
+        yAxes: {
+            ticks: {
+                font: {
+                    size: 30,
+                    weight: 'bold'
+                },
+            },
+            display: true
+        },
+        xAxes: {
+            ticks: {
+                color: 'pink',
+                font: {
+                    size: 30,
+                    weight: 200
+                }
+            }
+        }
+    }
+    
+}
+
+
 function Graph() {
   return (
-    <div class='container'>
-      <div className="header">
-        <h1 className="title">MultiType Chart</h1>
-      </div>
-      <Bar data={data} height={200} width={200} />
+    <div class="root">
+      <h1 className="title">MultiType Chart</h1>
+      <Bar data={data} height={2} width={4} options={options}/>
+      <h1>Graph Timeline Buttons Down Here</h1>
     </div>
   );
 }

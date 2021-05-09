@@ -1,6 +1,6 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import SignUpLogIn from "./Pages/SignUpLogIn/SignUpLogIn";
-import './App.css';
+import "./App.css";
 
 function App() {
   return (

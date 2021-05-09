@@ -7,7 +7,7 @@ import DashboardNavBar from "../../Components/DashboardNavBar/DashboardNavBar";
 function Dashboard() {
   return (
     <Container fluid>
-      <Row><DashboardNavBar /></Row>
+      <Row>NavBar goes here</Row>
       <Row>
         <Col lg={8}>
           <Row>

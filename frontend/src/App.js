@@ -8,9 +8,9 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path="/dashboard">
-          <Dashboard />
+            <Dashboard />
         </Route>
-        <Route path="/">
+        <Route path="">
           <SignUpLogIn />
         </Route>
       </Switch>

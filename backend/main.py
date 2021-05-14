@@ -1,6 +1,4 @@
-import string
 from model import User
-import pymongo
 from flask import Flask
 from flask import request
 from flask import jsonify
@@ -8,9 +6,6 @@ from flask import g as context
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 import requests as r
-
-from flask_httpauth import HTTPBasicAuth
-auth = HTTPBasicAuth()
 
 
 app = Flask(__name__)  # Initializing flask app
@@ -120,33 +115,38 @@ def validSignIn(user: dict) -> bool:
     return True
 
 
-# Gets the token for the user passed through the HTTP header
+# Only for testing purposes. Will be removed afterwards
+# Gets the token for the user passed through the header.
 @app.route('/token', methods=['GET'])
-@auth.login_required
 def get_auth_token():
+
+    # A header is still to be decided
+    token = request.headers.get("bearer")
+
     token = User().generate_auth_token(context.user)
     return jsonify({'token': token.decode('ascii')})
 
 
 # If given an email, verifies that the password matches the one in the database
 # If given a token, verifies that the token is valid
-@auth.verify_password
-def verify_password(email_or_token, password):
+def verify_token(token):
+    """
+    Input:  A token
+    Output: Returns True if the given token is valid.
+            Returns False otherwise.
+
+            On successful validation of the token, the user is passed back
+            through context.user and remains through the request
+    """
 
     # First checks if a token was passed in
-    user = User().verify_auth_token(email_or_token)
+    user = User().verify_auth_token(token)
 
-    if not user:  # If no user was linked to a token or an email was passed in
+    if not user:  # If no user was linked to the token that was passed in
+        return False
 
-        # Search email in database and then compare passwords
-        user = User().find_by_email(email_or_token)
-        if not user or not bcrypt.check_password_hash(
-                user['password'],
-                password):
-            return False
-
-    # context remains constant through a request. Used to securely hold info
-    # through different calls
+    # context remains constant through a request. Used to securely pass info
+    # back from a call
     context.user = user
     return True
 

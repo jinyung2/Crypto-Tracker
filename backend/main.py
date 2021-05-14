@@ -25,7 +25,7 @@ def signup():
     if existingEmail(userToAdd):
         return jsonify(success=False, reason="Email Already Exists"), 400
 
-    # Password encrytion
+    # Password encryption
     crypt = bcrypt.generate_password_hash(
         userToAdd['password']).decode('utf-8')
     userToAdd['password'] = crypt
@@ -86,18 +86,18 @@ def signin():
 
     # Check if any of the fienlds is empty
     if not validSignIn(given_user):
-        return jsonify(success=False, reason="Invalid Fields"), 400
+        return jsonify(success=False, reason="Invalid Credentials"), 400
 
     # Search for the email in database
     found = User().find_by_email(given_user['email'])
     if not found:
-        return jsonify(success=False, reason="Email Not Found"), 400
+        return jsonify(success=False, reason="Invalid Credentials"), 400
 
     # Compare given password to database
     if not bcrypt.check_password_hash(
             found['password'],
             given_user['password']):
-        return jsonify(success=False, reason="Password Does Not Match"), 400
+        return jsonify(success=False, reason="Invalid Credentials"), 400
 
     # Generate token for the user
     token = User().generate_auth_token(given_user)
@@ -154,7 +154,7 @@ def verify_token(token):
     return True
 
 
-@app.route('/search/<id>', methods=['GET'])
+@app.route('/coin/<id>', methods=['GET'])
 def get_coin(id):
     url = "http://api.coincap.io/v2/assets"
 

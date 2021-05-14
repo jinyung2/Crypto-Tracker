@@ -62,34 +62,34 @@ Please note that this does NOT remove all styling errors. You should re-run `pyc
 
 ## Usage
 
-### "/signup"
+### `/signup`
 #### Compatible Methods: Post
 Used for user account creation
 
 Expects `data` to have a json file containing:
-    `email`: the user's email
-    `password`: the user's password
-    `reEnterPass`: the re-entered password
+* `email`: the user's email
+* `password`: the user's password
+* `reEnterPass`: the re-entered password
 
 #### Response
 Upon successful signup, a json file containing a `token` is returned. This `token` can be used to access pages that require authentication and will expire after 10 minutes.
 
 If signup fails, a json file containing a `reason` will be returned.
 
-### "/signin"
+### `/signin`
 #### Compatible Methods: Post
 Used for users to sign in into their existing accounts
 
 Expects `data` to have a json file containing:
-    `email`: the user's email
-    `password`: the user's password
+* `email`: the user's email
+* `password`: the user's password
 
 #### Response
 Upon successful login, a json file containing a `token` is returned. This `token` can be used to access pages that require authentication and will expire after 10 minutes.
 
 If login fails, a json file containing a `reason` will be returned (Does not specify what the error is).
 
-### "/coin/<id>"
+### `/coin/<id>`
 #### Compatible Methods: Get
 Used to search for specific coins. NOTE that this route is still in development, so the information might change in the future
 
@@ -97,7 +97,7 @@ Used to search for specific coins. NOTE that this route is still in development,
 
 #### Response
 if a coin with the given `id` is found, then a json file is returned containing:
-    `name`: The name of the coin
-    `id`: the id of the coin
-    `symbol`: the symbol of the coin
-    `priceUsd`: The current price, in USD, of the coin
+* `name`: The name of the coin
+* `id`: the id of the coin
+* `symbol`: the symbol of the coin
+* `priceUsd`: The current price, in USD, of the coin

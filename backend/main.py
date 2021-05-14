@@ -30,6 +30,9 @@ def signup():
         userToAdd['password']).decode('utf-8')
     userToAdd['password'] = crypt
 
+    # Remove casing from email
+    userToAdd['email'] = userToAdd['email'].lower()
+
     # Remove re-entered password from the dict
     del userToAdd['reEnterPass']
 

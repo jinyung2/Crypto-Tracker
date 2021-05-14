@@ -174,18 +174,3 @@ def get_coin(id):
             }
             return info_coin
     return jsonify({"error": "Coin not found"}), 404
-
-
-# WILL BE LEAVING THIS FOR NOW FOR DEBUGGING PURPOSES
-@app.route('/users', methods=['GET', 'POST', 'DELETE'])
-def get_users():
-    if request.method == 'GET':
-        search_email = request.args.get('email')
-
-        if search_email:
-            users = User().find_by_email(search_email)
-
-        else:
-            users = User().find_all()
-
-        return {"users_list": users}

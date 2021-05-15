@@ -3,3 +3,5 @@ backend/__pycache__/dotenv.cpython-39.pyc
 backend/__pycache__/main.cpython-39.pyc
 backend/__pycache__/model.cpython-39.pyc
 backend/.env
+backend/env
+.vscode/

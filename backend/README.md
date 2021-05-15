@@ -1,3 +1,5 @@
+# Backend
+
 [![Build Status](https://travis-ci.com/Hadiasemi/Crypto-Tracker.svg?branch=master)](https://travis-ci.com/Hadiasemi/Crypto-Tracker)
 
 The backend for this project was implemented using Flask.

@@ -13,5 +13,5 @@ install:
 # command to run tests
 script:
 #  - pytest -v *_tests.py
-  - coverage run -m pytest -v
+  - coverage run -m cd backend && pytest -v
   - coverage report -m --include="main.py"

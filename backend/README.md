@@ -60,11 +60,11 @@ on your terminal.
 
 Please note that this does NOT remove all styling errors. You should re-run `pycodestyle` afterwards to make sure that all issues were addressed.
 
-## Usage
+## Routes
 
 ### `/signup`
-#### Compatible Methods: Post
-Used for user account creation
+#### Compatible Methods: POST
+Used for user account creation.
 
 Expects `data` to have a json file containing:
 * `email`: the user's email
@@ -77,8 +77,8 @@ Upon successful signup, a json file containing a `token` is returned. This `toke
 If signup fails, a json file containing a `reason` will be returned.
 
 ### `/signin`
-#### Compatible Methods: Post
-Used for users to sign in into their existing accounts
+#### Compatible Methods: POST
+Used for users to sign in into their existing accounts.
 
 Expects `data` to have a json file containing:
 * `email`: the user's email
@@ -90,14 +90,29 @@ Upon successful login, a json file containing a `token` is returned. This `token
 If login fails, a json file containing a `reason` will be returned (Does not specify what the error is).
 
 ### `/coin/<id>`
-#### Compatible Methods: Get
-Used to search for specific coins. NOTE that this route is still in development, so the information might change in the future
+#### Compatible Methods: GET
+Used to search for specific coins. NOTE that this route is still in development, so the information might change in the future.
 
 `id` can either be the id of a coin, or the symbol of a coin.
 
 #### Response
-if a coin with the given `id` is found, then a json file is returned containing:
+If a coin with the given `id` is found, then a json file is returned containing:
 * `name`: The name of the coin
 * `id`: the id of the coin
 * `symbol`: the symbol of the coin
 * `priceUsd`: The current price, in USD, of the coin
+
+### `/watchlist`
+#### Compatible Methods: GET
+Used to get the watchlist of a specific user. NOTE that this route is still in development, so the information might change in the future.
+
+Route expects a `token` to be passed in through the `bearer` header.
+
+#### Response
+Returns json file with a `wachlist`: an array containing the names of the coins that the user has in their watchlist.
+
+### `/watchlist/<id>`
+#### Compatible Methods: POST, DELETE
+Used to add or delete elements from a user's watchlist. NOTE that this route is still in development, so the information might change in the future.
+
+`id` is the name of coin. Can be updated to also work with symbols

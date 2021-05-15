@@ -110,3 +110,10 @@ class User(Model):
         # Find and return user linked to that token
         user = User().find_by_email(data['email'])
         return user
+
+    def update_watchlist(self):
+
+        self.collection.update(
+            {"_id": ObjectId(self._id)},
+            {'$set': {'watchlist': self.watchlist}}
+        )

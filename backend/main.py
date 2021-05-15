@@ -135,6 +135,7 @@ def get_auth_token():
 
 # If given an email, verifies that the password matches the one in the database
 # If given a token, verifies that the token is valid
+
 def verify_token(token):
     """
     Input:  A token

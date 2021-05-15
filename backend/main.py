@@ -36,6 +36,9 @@ def signup():
     # Remove re-entered password from the dict
     del userToAdd['reEnterPass']
 
+    # Create an empty watchlist
+    userToAdd['watchlist'] = []
+
     # Save user to database
     new_user = User(userToAdd)
     new_user.save()
@@ -153,6 +156,41 @@ def verify_token(token):
     context.user = user
     return True
 
+
+@app.route('/watchlist', methods=['GET'])
+def get_watchlist():
+
+    token = request.headers.get("bearer")
+
+    if not verify_token(token):
+        return jsonify(success=False), 400
+
+    return jsonify(watchlist=context.user['watchlist']), 201
+
+
+@app.route('/watchlist/<id>', methods=['POST', 'DELETE'])
+def edit_watchlist(id):
+
+    token = request.headers.get("bearer")
+
+    if not verify_token(token):
+        return jsonify(success=False), 400
+
+    if request.method == 'POST':
+
+        # TODO: implement a check to see that the id does indeed exist
+
+        context.user['watchlist'].append(id)
+
+    elif request.method == 'DELETE':
+        if id in context.user['watchlist']:
+            context.user['watchlist'].remove(id)
+
+    updated = User(context.user)
+    updated.update_watchlist()
+
+    return jsonify(success=True), 201
+        
 
 @app.route('/coin/<id>', methods=['GET'])
 def get_coin(id):

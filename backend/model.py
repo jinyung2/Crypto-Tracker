@@ -5,8 +5,8 @@ from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer,
                           BadSignature, SignatureExpired)
 
 
-from dotenv import dotenv_values
-config = dotenv_values(".env")
+from dotenv import load_dotenv
+import os 
 
 
 class Model(dict):
@@ -43,8 +43,12 @@ class Model(dict):
 
 class User(Model):
 
+    load_dotenv()
+    URI = os.environ['URI']
+    SECRET_KEY = os.environ['SECRET_KEY']
+
     db_client = pymongo.MongoClient(
-        config["URI"],
+        URI,
         tls=True,
         tlsAllowInvalidCertificates=True)
     db = db_client.get_database('cryptotracker')
@@ -84,7 +88,7 @@ class User(Model):
         Output: A token linked to the user's email
         """
         # Set up serializer
-        s = Serializer(config['SECRET_KEY'], expiration)
+        s = Serializer(User.SECRET_KEY, expiration)
 
         # Return encrypted dictionary containing the user's email
         return s.dumps({'email': user['email']})
@@ -97,7 +101,7 @@ class User(Model):
                 Returns None otherwise
         """
         # Set up serializer
-        s = Serializer(config['SECRET_KEY'])
+        s = Serializer(User.SECRET_KEY)
 
         # Try loading token
         try:

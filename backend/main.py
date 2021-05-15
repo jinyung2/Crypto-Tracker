@@ -1,15 +1,12 @@
+from model import User
 from flask import Flask
 from flask import request
 from flask import jsonify
+from flask import g as context
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 import requests as r
 
-import pymongo
-
-from model import User
-
-import string
 
 app = Flask(__name__)  # Initializing flask app
 bcrypt = Bcrypt(app)  # Initializing encryption utility
@@ -28,21 +25,27 @@ def signup():
     if existingEmail(userToAdd):
         return jsonify(success=False, reason="Email Already Exists"), 400
 
-    # Password encrytion
+    # Password encryption
     crypt = bcrypt.generate_password_hash(
         userToAdd['password']).decode('utf-8')
     userToAdd['password'] = crypt
 
+    # Remove casing from email
+    userToAdd['email'] = userToAdd['email'].lower()
+
     # Remove re-entered password from the dict
     del userToAdd['reEnterPass']
+
+    # Create an empty watchlist
+    userToAdd['watchlist'] = []
 
     # Save user to database
     new_user = User(userToAdd)
     new_user.save()
 
     # Return token and success code
-    resp = jsonify(token=new_user.get("_id"))
-    return resp, 201
+    token = User().generate_auth_token(new_user)
+    return jsonify(token=token.decode('utf-8')), 201
 
 
 def validSignUp(user: dict) -> bool:
@@ -86,20 +89,22 @@ def signin():
 
     # Check if any of the fienlds is empty
     if not validSignIn(given_user):
-        return jsonify(success=False, reason="Invalid Fields"), 400
+        return jsonify(success=False, reason="Invalid Credentials"), 400
 
     # Search for the email in database
     found = User().find_by_email(given_user['email'])
     if not found:
-        return jsonify(success=False, reason="Email Not Found"), 400
+        return jsonify(success=False, reason="Invalid Credentials"), 400
 
     # Compare given password to database
     if not bcrypt.check_password_hash(
             found['password'],
             given_user['password']):
-        return jsonify(success=False, reason="Password Does Not Match"), 400
+        return jsonify(success=False, reason="Invalid Credentials"), 400
 
-    return jsonify(token=found['_id']), 200
+    # Generate token for the user
+    token = User().generate_auth_token(given_user)
+    return jsonify(token=token.decode('utf-8')), 201
 
 
 def validSignIn(user: dict) -> bool:
@@ -116,7 +121,93 @@ def validSignIn(user: dict) -> bool:
     return True
 
 
-@app.route('/search/<id>', methods=['GET'])
+# Only for testing purposes. Will be removed afterwards
+# Gets the token for the user passed through the header.
+@app.route('/token', methods=['GET'])
+def get_auth_token():
+
+    # A header is still to be decided
+    token = request.headers.get("bearer")
+
+    token = User().generate_auth_token(context.user)
+    return jsonify({'token': token.decode('ascii')})
+
+
+# If given an email, verifies that the password matches the one in the database
+# If given a token, verifies that the token is valid
+def verify_token(token):
+    """
+    Input:  A token
+    Output: Returns True if the given token is valid.
+            Returns False otherwise.
+
+            On successful validation of the token, the user is passed back
+            through context.user and remains through the request
+    """
+
+    # First checks if a token was passed in
+    user = User().verify_auth_token(token)
+
+    if not user:  # If no user was linked to the token that was passed in
+        return False
+
+    # context remains constant through a request. Used to securely pass info
+    # back from a call
+    context.user = user
+    return True
+
+
+# Route to get the user's watchlist
+@app.route('/watchlist', methods=['GET'])
+def get_watchlist():
+
+    # Get the passed in token
+    token = request.headers.get("bearer")
+
+    # Verify that a valid token was passed in
+    if not verify_token(token):
+        return jsonify(success=False), 400
+
+    # Return user's watchlist
+    return jsonify(watchlist=context.user['watchlist']), 201
+
+
+# Route to add/remove an item from watchlist
+@app.route('/watchlist/<id>', methods=['POST', 'DELETE'])
+def edit_watchlist(id):
+
+    # Get the passed in token
+    token = request.headers.get("bearer")
+
+    # Verify that a valid token was passed in
+    if not verify_token(token):
+        return jsonify(success=False), 400
+
+    # 'id' is to be added to the list
+    if request.method == 'POST':
+
+        # TODO: implement a check to see that the id does indeed exist
+
+        # Add 'id' to watchlist and remove casing
+        context.user['watchlist'].append(id.lower())
+
+    # 'id' is to be removed from the list
+    elif request.method == 'DELETE':
+
+        # Check that the 'id' is in the list
+        if id in context.user['watchlist']:
+
+            # Remove 'id'
+            context.user['watchlist'].remove(id.lower())
+
+    # Update user's watchlist
+    updated = User(context.user)
+    updated.update_watchlist()
+
+    return jsonify(success=True), 201
+        
+
+@app.route('/coin/<id>', methods=['GET'])
 def get_coin(id):
     url = "http://api.coincap.io/v2/assets"
 
@@ -136,18 +227,3 @@ def get_coin(id):
             }
             return info_coin
     return jsonify({"error": "Coin not found"}), 404
-
-
-# WILL BE LEAVING THIS FOR NOW FOR DEBUGGING PURPOSES
-@app.route('/users', methods=['GET', 'POST', 'DELETE'])
-def get_users():
-    if request.method == 'GET':
-        search_email = request.args.get('email')
-
-        if search_email:
-            users = User().find_by_email(search_email)
-
-        else:
-            users = User().find_all()
-
-        return {"users_list": users}

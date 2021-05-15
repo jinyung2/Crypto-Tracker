@@ -4,4 +4,8 @@ backend/__pycache__/main.cpython-39.pyc
 backend/__pycache__/model.cpython-39.pyc
 backend/.env
 backend/env
+<<<<<<< HEAD
 .vscode/
+=======
+backend/venv
+>>>>>>> deb4df4f5415af4b4f53216a8f6a36bbac7d19c3

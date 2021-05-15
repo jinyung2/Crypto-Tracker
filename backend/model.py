@@ -111,7 +111,11 @@ class User(Model):
         user = User().find_by_email(data['email'])
         return user
 
+    # Watchlist update
     def update_watchlist(self):
+        """
+            Updates the entry with the same '_id'
+        """
 
         self.collection.update(
             {"_id": ObjectId(self._id)},

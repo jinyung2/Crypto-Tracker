@@ -157,35 +157,50 @@ def verify_token(token):
     return True
 
 
+# Route to get the user's watchlist
 @app.route('/watchlist', methods=['GET'])
 def get_watchlist():
 
+    # Get the passed in token
     token = request.headers.get("bearer")
 
+    # Verify that a valid token was passed in
     if not verify_token(token):
         return jsonify(success=False), 400
 
+    # Return user's watchlist
     return jsonify(watchlist=context.user['watchlist']), 201
 
 
+# Route to add/remove an item from watchlist
 @app.route('/watchlist/<id>', methods=['POST', 'DELETE'])
 def edit_watchlist(id):
 
+    # Get the passed in token
     token = request.headers.get("bearer")
 
+    # Verify that a valid token was passed in
     if not verify_token(token):
         return jsonify(success=False), 400
 
+    # 'id' is to be added to the list
     if request.method == 'POST':
 
         # TODO: implement a check to see that the id does indeed exist
 
-        context.user['watchlist'].append(id)
+        # Add 'id' to watchlist and remove casing
+        context.user['watchlist'].append(id.lower())
 
+    # 'id' is to be removed from the list
     elif request.method == 'DELETE':
-        if id in context.user['watchlist']:
-            context.user['watchlist'].remove(id)
 
+        # Check that the 'id' is in the list
+        if id in context.user['watchlist']:
+
+            # Remove 'id'
+            context.user['watchlist'].remove(id.lower())
+
+    # Update user's watchlist
     updated = User(context.user)
     updated.update_watchlist()
 

@@ -1,5 +1,8 @@
+[![Build Status](https://travis-ci.com/Hadiasemi/Crypto-Tracker.svg?branch=master)](https://travis-ci.com/Hadiasemi/Crypto-Tracker)
+
 The backend for this project was implemented using Flask.
 There are a couple things that you need to do to get started.
+
 
 # Set Up
 
@@ -58,6 +61,7 @@ autopep --in-place -a -a <filename>
 on your terminal.
 
 Please note that this does NOT remove all styling errors. You should re-run `pycodestyle` afterwards to make sure that all issues were addressed.
+
 
 # Routes
 

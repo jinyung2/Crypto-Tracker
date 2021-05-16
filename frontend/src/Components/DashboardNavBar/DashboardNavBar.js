@@ -32,7 +32,7 @@ function DashboardNavBar() {
     }
 
     return (
-        <Navbar collapseOnSelect fixed="top" bg="light" variant="light" expand="lg">
+        <Navbar collapseOnSelect bg="light" variant="light" expand="lg">
             <Link to="/dashboard"><Navbar.Brand><img src={logo} alt="logo" height="30" width="auto" /></Navbar.Brand></Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">

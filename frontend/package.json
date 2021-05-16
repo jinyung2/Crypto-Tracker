@@ -6,11 +6,8 @@
         "@testing-library/jest-dom": "^5.12.0",
         "@testing-library/react": "^11.2.6",
         "@testing-library/user-event": "^12.8.3",
-<<<<<<< HEAD
         "axios": "^0.21.1",
-=======
         "chart.js": "^3.2.1",
->>>>>>> tried experimenting with example multi type graphs
         "husky": "^6.0.0",
         "lint-staged": "^10.5.4",
         "prettier": "^2.2.1",

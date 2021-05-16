@@ -2,9 +2,9 @@ import "./SignUpLogIn.css";
 import { Container, Row, Col, Alert } from "react-bootstrap";
 import { Route } from "react-router-dom";
 import { useState } from "react";
-import logo from "../../assets/crypto-logo-white.png";
 import Signup from "../../Components/SignUpForm/SignUp";
 import LogIn from "../../Components/LoginForm/LogInForm";
+import logo from "./../../assets/crypto-logo-white.png"
 
 function LoginSignUp() {
   const [up, setUP] = useState({

@@ -4,7 +4,7 @@ import { Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AutoSuggest from "react-autosuggest";
 import axios from "axios";
-import logo from "./../../Assets/crypto-logo.png";
+import logo from "./../../assets/crypto-logo.png";
 
 function DashboardNavBar() {
     const [cryptos, setCryptos] = useState("");

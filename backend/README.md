@@ -114,7 +114,7 @@ Used to get the watchlist of a specific user. NOTE that this route is still in d
 Route expects a `token` to be passed in through the `bearer` header.
 
 ### Response
-Returns json file with a `wachlist`: an array containing the names of the coins that the user has in their watchlist.
+Returns json file with a `watchlist`: an array containing the names of the coins that the user has in their watchlist.
 
 ## `/watchlist/<id>`
 ### Compatible Methods: POST, DELETE

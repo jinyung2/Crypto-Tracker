@@ -61,7 +61,7 @@ function DashboardNavBar() {
                 <NavDropdown.Item href="#">Option 1</NavDropdown.Item>
                 <NavDropdown.Item href="#">Option 2</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Options" id="collasible-nav-dropdown">
+            <NavDropdown title="Profile" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#">Option 1</NavDropdown.Item>
                 <NavDropdown.Item href="#">Option 2</NavDropdown.Item>
             </NavDropdown>

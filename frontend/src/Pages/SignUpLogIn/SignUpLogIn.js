@@ -75,7 +75,7 @@ function LoginSignUp() {
           hist.push('/dashboard');
         })
         .catch((err) => {
-          console.log(err);
+            setError('Sign up credentials are invalid. Please try again.');
         });
     }
     //else then no errors and add to database and redirect user to dashbaord
@@ -112,7 +112,7 @@ function LoginSignUp() {
           hist.push('/dashboard');
         })
         .catch((err) => {
-          console.log(err);
+            setError('Log In Credentials are invalid. Please try again.');
         });
     }
   }

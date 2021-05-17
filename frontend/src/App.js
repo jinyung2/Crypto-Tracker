@@ -14,8 +14,12 @@ function App() {
         <Route exact path="/">
             {ctx.isLoggedIn ? <Redirect to="/dashboard"/> : <Redirect to="/auth"/> }
         </Route>
-        <Route path="/auth" component={SignUpLogIn} />
-        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/auth">
+            {!ctx.isLoggedIn ? <SignUpLogIn/> : <Redirect to="/dashboard" />}
+        </Route>
+        <Route path="/dashboard">
+            {ctx.isLoggedIn ? <Dashboard /> : <Redirect to="/" />}
+        </Route>
         <Route path="*">
             <h1 style={{color: 'white', fontSize: '100pt'}}>404 PAGE LATER?</h1>
         </Route>

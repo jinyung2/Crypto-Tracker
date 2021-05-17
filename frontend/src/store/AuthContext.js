@@ -14,7 +14,7 @@ const AuthContext = createContext({
  * @returns number representing remaining time in milliseconds.
  */
 function calcRemainingTime(expTime) {
-    return new Date(expTime).getTime() - new Date().getTime();
+    return new Date(+expTime).getTime() - new Date().getTime();
 }
 
 /**
@@ -25,6 +25,9 @@ function getTokenUser() {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     const expTime = localStorage.getItem('expTime'); // this is the javascript Date where token expires
+
+    console.log("Exp Time:", expTime);
+    console.log(calcRemainingTime(expTime));
 
     if (calcRemainingTime(expTime) <= 0 ) {
         localStorage.removeItem('token');

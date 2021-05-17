@@ -1,7 +1,7 @@
 import "./SignUpLogIn.css";
 import { Container, Row, Col, Alert } from "react-bootstrap";
-import { Route } from "react-router-dom";
-import { useState } from "react";
+import { Redirect, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Signup from "../../Components/SignUpForm/SignUp";
 import LogIn from "../../Components/LoginForm/LogInForm";
 import logo from "./../../assets/crypto-logo-white.png"
@@ -107,6 +107,9 @@ function LoginSignUp() {
             <img id="logo" src={logo} alt="logo" />
           </Col>
           <Col id="vr" className="justify-content-center">
+            <Route path="/">
+                <Redirect to="/signup" />
+            </Route>
             <Route path="/signup">
               <Signup
                 handleChange={handleSignUpChange}

@@ -6,7 +6,7 @@ function LogIn(props) {
   return (
     <div>
       <div className="nav-buttons">
-        <Link id="loginLink" to="/login">
+        <Link id="loginLink" to="/auth/login">
           <button
             style={{ backgroundColor: "#979797" }}
             className="lsButton"
@@ -15,7 +15,7 @@ function LogIn(props) {
             Login
           </button>
         </Link>
-        <Link id="signUpBtn" to="/signup">
+        <Link id="signUpBtn" to="/auth/signup">
           <button className="lsButton" onClick={props.clearError}>
             Sign Up
           </button>

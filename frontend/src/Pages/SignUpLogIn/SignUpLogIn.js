@@ -1,12 +1,13 @@
 import "./SignUpLogIn.css";
 import { Container, Row, Col, Alert } from "react-bootstrap";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, useRouteMatch } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Signup from "../../Components/SignUpForm/SignUp";
 import LogIn from "../../Components/LoginForm/LogInForm";
 import logo from "./../../assets/crypto-logo-white.png"
 
 function LoginSignUp() {
+  const match = useRouteMatch();
   const [up, setUP] = useState({
     email: "",
     password: "",
@@ -107,22 +108,22 @@ function LoginSignUp() {
             <img id="logo" src={logo} alt="logo" />
           </Col>
           <Col id="vr" className="justify-content-center">
-            <Route path="/">
-                <Redirect to="/signup" />
-            </Route>
-            <Route path="/signup">
+            <Route path={`${match.url}/signup`}>
               <Signup
                 handleChange={handleSignUpChange}
                 submitForm={submitSignUpForm}
                 clearError={clearError}
               ></Signup>
             </Route>
-            <Route path="/login">
+            <Route path={`${match.url}/login`}>
               <LogIn
                 handleChange={handleLogInChange}
                 submitForm={handleLogInForm}
                 clearError={clearError}
               ></LogIn>
+            </Route>
+            <Route path="/auth">
+                <Redirect to={`${match.url}/signup`} />
             </Route>
             {error ? (
               <Alert style={{ margin: "5px 20%" }} variant="danger">

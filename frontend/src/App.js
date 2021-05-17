@@ -11,14 +11,13 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/dashboard">
-          <Dashboard />
+        <Route exact path="/">
+            {ctx.isLoggedIn ? <Redirect to="/dashboard"/> : <Redirect to="/auth"/> }
         </Route>
-        <Route exact path="">
-          <SignUpLogIn />
-        </Route>
+        <Route path="/auth" component={SignUpLogIn} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route path="*">
-            <Redirect to="/" />
+            <h1 style={{color: 'white', fontSize: '100pt'}}>404 PAGE LATER?</h1>
         </Route>
       </Switch>
     </BrowserRouter>

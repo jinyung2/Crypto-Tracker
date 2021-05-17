@@ -6,11 +6,14 @@ from flask import g as context
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 import requests as r
+from crypto_model import Crypto
 
 
 app = Flask(__name__)  # Initializing flask app
 bcrypt = Bcrypt(app)  # Initializing encryption utility
 CORS(app)  # Can't remember why anymore, but we need it
+cr = Crypto()
+
 
 
 @app.route('/signup', methods=['POST'])
@@ -210,13 +213,11 @@ def edit_watchlist(id):
 
 @app.route('/coin/<id>', methods=['GET'])
 def get_coin(id):
-    url = "http://api.coincap.io/v2/assets"
-
-    payload = {}
-    headers = {}
+    
     info_coin = {}
-    response = r.request("GET", url, headers=headers, data=payload)
-    data = response.json()
+    # cr = Crypto()
+    data = cr.get_all_coin(id)
+    # print(data)
     for info in data['data']:
         if id == info['id'] or str.upper(id) == info['symbol']:
             info_coin = {
@@ -228,3 +229,12 @@ def get_coin(id):
             }
             return info_coin
     return jsonify({"error": "Coin not found"}), 404
+@app.route('/coin/<id>/<interval>')
+def get_history(id,interval):
+    """
+      id: the coine id
+      interval: m1,m5,m15,m30,h1,h2,h6,h12,d1
+      
+      """
+    data = cr.get_history(id,interval)
+    return data

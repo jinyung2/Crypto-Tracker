@@ -70,6 +70,7 @@ function LoginSignUp() {
           reEnterPass: up.reEnterPass,
         })
         .then((res) => {
+          console.log(res);
           ctx.login(res.data.token, 'Test User', Date.now() + 600000);
           hist.push('/dashboard');
         })

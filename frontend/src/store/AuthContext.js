@@ -26,9 +26,6 @@ function getTokenUser() {
     const user = localStorage.getItem('user');
     const expTime = localStorage.getItem('expTime'); // this is the javascript Date where token expires
 
-    console.log("Exp Time:", expTime);
-    console.log(calcRemainingTime(expTime));
-
     if (calcRemainingTime(expTime) <= 0 ) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');

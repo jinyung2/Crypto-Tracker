@@ -71,7 +71,7 @@ function LoginSignUp() {
         })
         .then((res) => {
           console.log(res);
-          ctx.login(res.data.token, 'Test User', Date.now() + 600000);
+          ctx.login(res.data.token, up.email, Date.now() + 600000);
           hist.push('/dashboard');
         })
         .catch((err) => {
@@ -108,7 +108,7 @@ function LoginSignUp() {
           password: loginCred.password,
         })
         .then((res) => {
-          ctx.login(res.data.token, 'Test User', Date.now() + 600000);
+          ctx.login(res.data.token, loginCred.email, Date.now() + 600000);
           hist.push('/dashboard');
         })
         .catch((err) => {

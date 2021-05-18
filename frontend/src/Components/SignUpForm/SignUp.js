@@ -6,12 +6,12 @@ function Signup(props) {
   return (
     <div>
       <div className="nav-buttons">
-        <Link id="loginLink" to="/login">
+        <Link id="loginLink" to="/auth/login">
           <button className="lsButton" onClick={props.clearError}>
             Login
           </button>
         </Link>
-        <Link id="signUpBtn" to="/signup">
+        <Link id="signUpBtn" to="/auth/signup">
           <button
             style={{ backgroundColor: "#979797" }}
             className="lsButton"

@@ -53,5 +53,8 @@
         "src/**/*.{js,jsx,json,css,md}": [
             "prettier --write"
         ]
+    },
+    "devDependencies": {
+        "react-test-renderer": "^17.0.2"
     }
 }

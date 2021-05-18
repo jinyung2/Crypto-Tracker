@@ -1,17 +1,27 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import SignUpLogIn from "./Pages/SignUpLogIn/SignUpLogIn";
-import Dashboard from "./Pages/Dashboard/Dashboard";
-import "./App.css";
+import { useContext } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import SignUpLogIn from './Pages/SignUpLogIn/SignUpLogIn';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import AuthContext from './store/AuthContext';
+import './App.css';
 
 function App() {
+  const ctx = useContext(AuthContext);
+
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/dashboard">
-            <Dashboard />
+        <Route exact path="/">
+            {ctx.isLoggedIn ? <Redirect to="/dashboard"/> : <Redirect to="/auth"/> }
         </Route>
-        <Route path="">
-          <SignUpLogIn />
+        <Route path="/auth">
+            {!ctx.isLoggedIn ? <SignUpLogIn/> : <Redirect to="/dashboard" />}
+        </Route>
+        <Route path="/dashboard">
+            {ctx.isLoggedIn ? <Dashboard /> : <Redirect to="/" />}
+        </Route>
+        <Route path="*">
+            <h1 style={{color: 'white', fontSize: '100pt'}}>404 PAGE LATER?</h1>
         </Route>
       </Switch>
     </BrowserRouter>

@@ -1,10 +1,17 @@
-import { React, Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Graph from '../../Components/Graph/Graph';
 import './Dashboard.css';
 import DashboardNavBar from '../../Components/DashboardNavBar/DashboardNavBar';
+import axios from 'axios';
+
+
 
 function Dashboard() {
+    const [coinData, setCoinData] = useState();
+    const [graphData, setGraphData] = useState();
+    const [watchlist, setWatchList] = useState();
+
   return (
     <Fragment>
       <DashboardNavBar />

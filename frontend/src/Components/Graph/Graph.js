@@ -1,137 +1,107 @@
-import React, { useState } from 'react';
-import { Bar, Doughnut, Radar } from 'react-chartjs-2';
+import React, { useState, useEffect } from 'react';
+import { Bar, Doughnut, Radar, Line } from 'react-chartjs-2';
+import axios from 'axios';
 import './Graph.css';
 
 const rand = () => Math.round(Math.random() * 255);
 
-const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  datasets: [
-    {
-      type: 'line',
-      label: 'Dataset 1',
-      borderColor: 'rgb(54, 162, 235)',
-      backgroundColor: 'white',
-      borderWidth: 2,
-      fill: false,
-      data: [rand(), rand(), rand(), rand(), rand(), rand(), rand()],
-    },
-    {
-      type: 'bar',
-      label: 'Dataset 2',
-      backgroundColor: `rgb(${rand()}, ${rand()}, ${rand()})`,
-      data: [rand(), rand(), rand(), rand(), rand(), rand(), rand()],
-        borderColor: 'white',
-      borderWidth: 2,
-    },
-    {
-      type: 'bar',
-      label: 'Dataset 3',
-      backgroundColor: 'rgb(75, 192, 192)',
-      data: [rand(), rand(), rand(), rand(), rand(), rand(), rand()],
-    },
-  ],
-};
-
-const data2 = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-  datasets: [
-    {
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
-
-const options = {
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-  scales: {
-    yAxes: {
-      grid: {
+let options = {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
         display: false,
       },
-      ticks: {
-        font: {
-          size: 30,
-          weight: 'bold',
+    },
+    scales: {
+      yAxes: {
+        grid: {
+          display: true,
         },
+        ticks: {
+          font: {
+            size: 10,
+            weight: 'bold',
+          },
+        },
+        display: true,
       },
-      display: true,
-    },
-    xAxes: {
-      grid: {
-        display: false,
-      },
-      ticks: {
-        color: 'pink',
-        font: {
-          size: 30,
-          weight: 200,
+      xAxes: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          color: 'pink',
+          font: {
+            size: 30,
+            weight: 200,
+          },
         },
       },
     },
-  },
-};
+    responsive: true
+  };
 
 const types = ['bar', 'doughnut', 'radar'];
+function Graph(props) {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState({});
+  const diff = 10;
+useEffect(() => {
+    axios.get('http://localhost:5000/coin/bitcoin/h12').then(async (res) => {
+        console.log(res.data);
+        const labels = await res.data.data
+        .map(() => '')
+        .filter((val, i, arr) => i > 0 && i % diff === 0 || (i == arr.length - 1));
 
-function Graph() {
-  const [type, setType] = useState('bar');
-  function toggleType() {
-    const index = (types.indexOf(type) + 1) % types.length;
-    setType(types[index]);
-  }
+        const data = await res.data.data
+        .map((data, i, arr) =>
+        i >= diff
+        ? [+arr[i - diff].priceUsd, +arr[i].priceUsd]
+        : [0, +data.priceUsd]
+        )
+        .filter((val, i, arr) => i > 0 && i % diff === 0 || (i == arr.length - 1));
+
+        let borderColor = ['rgba(0, 177, 106, 1)'];
+        for (let i = 1; i < data.length; i++) {
+            borderColor.push(data[i][0] > data[i][1] ? 'red' : 'rgba(0, 177, 106, 1)');
+        }
+        console.log(data);
+        const min = Math.floor(data.flatMap(e => e).reduce((a,b) => Math.min(a,b)));
+        const max = Math.ceil(data.flatMap(e => e).reduce((a,b) => Math.max(a,b)));
+        options = {...options, scales: {...options.scales, yAxes: {...options.scales.yAxes, min: min, max: max}}};
+      setData({
+        labels: labels,
+        datasets: [
+            // {
+            //   type: 'line',
+            //   label: '',
+            //   data: data,
+            //   borderWidth: 1.5,
+            //   pointBorderWidth: 0,
+            //   borderColor: data[0][0] <= data[data.length-1][1] ? 'rgba(0, 177, 106, 1)' : 'rgba(219, 10, 91, 1)',
+            // },
+          {
+            type: 'bar',
+            categoryPercentage: 1.0,
+            barPercentage: 0.7,
+            label: '',
+            data: data,
+            backgroundColor: borderColor,
+            borderWidth: 1,
+          },
+        ],
+      });
+      setLoading(false);
+    });
+  }, []);
+
   return (
-    <div class="root">
+    <div className="root">
       <h1 className="title">MultiType Chart</h1>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {type === 'doughnut' ? (
-          <Doughnut
-            data={data2}
-            height={500}
-            options={{ maintainAspectRatio: false, plugins: {legend: {display: false}}}}
-          />
-        ) : null}
-        {type === 'radar' ? (
-          <Radar
-            data={data2}
-            height={500}
-            options={{ maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {
-                r: {
-                    grid: {
-                        color: ['white', 'purple']
-                    }
-                }
-            }}}
-          ></Radar>
-        ) : null}
-        {type === 'bar' ? (
-          <Bar data={data} height={500} width={1000} options={options} />
-        ) : null}
-      </div>
-      <div onClick={toggleType}>
+      {loading ? <div style={{width: '100%', height: '500px'}}>LOADING</div> : <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Bar data={data} height={500} options={options} />
+      </div>}
+      <div>
         <h1 style={{ border: '1px solid white' }}>
           Click here to Toggle Chart
         </h1>

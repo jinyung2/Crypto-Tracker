@@ -1,3 +1,11 @@
 .container-fluid {
     color: var(--color-font);
+    box-sizing: border-box;
+    padding: 2% 4%;
+}
+
+@media only screen and (max-width: 992px) {
+    .container-fluid {
+        padding: 20px 30px;
+    }    
 }

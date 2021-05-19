@@ -70,3 +70,10 @@ body {
     color: black;
   }
 
+  #navbar-link {
+    color: black;
+  }
+
+  #navbar-link:hover,  #collasible-nav-dropdown:hover{
+    color: rgb(117, 117, 117);
+  }

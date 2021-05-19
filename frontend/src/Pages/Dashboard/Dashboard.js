@@ -13,14 +13,14 @@ function getCoinInfo(name, setFn) {
 }
 
 function Dashboard() {
-    const [coin, setCoin] = useState('dogecoin');
+  const [coin, setCoin] = useState('dogecoin');
   // coinData for the current price, name display
   const [coinData, setCoinData] = useState(null);
   const [watchlist, setWatchList] = useState(null);
 
   useEffect(() => {
     getCoinInfo(coin, setCoinData);
-  }, []);
+  }, [setCoin]);
 
   return (
     <Fragment>
@@ -29,14 +29,18 @@ function Dashboard() {
         <Row>
           <Col lg={8}>
             <Row>
-              {coinData ? 
+              {coinData ? (
                 <div className="coin-container">
                   <div className="coin-title">
                     {coinData.name}: {coinData.symbol}
                   </div>
                   <div className="coin-price">${+coinData.priceUsd}</div>
-                </div> : <div className="coin-container"><BarLoader width={300} color='#fff'/></div>
-              }
+                </div>
+              ) : (
+                <div className="coin-container">
+                  <BarLoader width={300} color="#fff" />
+                </div>
+              )}
               <Graph coin={coin} />
             </Row>
             <Row>

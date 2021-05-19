@@ -5,82 +5,77 @@ import { ScaleLoader } from 'react-spinners';
 import './Graph.css';
 
 let options = {
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: false,
+    },
+  },
+  scales: {
+    yAxes: {
+      grid: {
+        display: true,
+        color: 'rgba(108, 122, 137, 1)',
+      },
+      ticks: {
+        font: {
+          size: 15,
+          weight: 'bold',
+        },
+      },
+      display: true,
+    },
+    xAxes: {
+      grid: {
         display: false,
       },
-    },
-    scales: {
-      yAxes: {
-        grid: {
-          display: true,
-        },
-        ticks: {
-          font: {
-            size: 15,
-            weight: 'bold',
-          },
-        },
-        display: true,
-      },
-      xAxes: {
-        grid: {
-          display: false,
-        },
-        ticks: {
-          color: 'pink',
-          font: {
-            size: 10,
-          },
+      ticks: {
+        color: 'pink',
+        font: {
+          size: 10,
         },
       },
     },
-  };
+  },
+};
 
-function Graph(props) {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState({});
-  const diff = 50;
-useEffect(() => {
+function getHistoryData(coin, inter, setData, setLoading) {
     setLoading(true);
-    axios.get(`http://localhost:5000/coin/${props.coin}/m1`).then((res) => {
-        const labels = res.data.data
-        .map((data, i) => '')
-        .filter((val, i, arr) => (i > 0 && ((i % diff) === 0)) || (i === arr.length - 1));
-
-        const graphData = res.data.data
+    const diff = inter == 'm1' || inter == 'm5' ? 20 : 10;
+    axios.get(`http://localhost:5000/coin/${coin}/${inter}`).then((res) => {
+        console.log('Size:', res.data.data.length);
+      const graphData = res.data.data
+        .filter((val, i, arr) => i % diff === 0 || i === arr.length - 1)
         .map((data, i, arr) =>
-        i >= diff
-        ? [+arr[i - diff].priceUsd, +arr[i].priceUsd]
-        : [0, +data.priceUsd]
-        )
-        .filter((val, i, arr) => (i > 0 && i % diff === 0) || (i === arr.length - 1));
+          i > 0
+            ? [+arr[i - 1].priceUsd, +arr[i].priceUsd]
+            : [0, +arr[i].priceUsd]
+        ).slice(1);
 
-        console.log(graphData);
+      const labels = new Array(graphData.length).fill('');
 
-        let borderColor = ['rgba(0, 177, 106, 1)'];
-        for (let i = 1; i < graphData.length; i++) {
-            borderColor.push(graphData[i][0] > graphData[i][1] ? 'red' : 'rgba(0, 177, 106, 1)');
-        }
-        const min = graphData.flatMap(e => e).reduce((a,b) => Math.min(a,b));
-        const max = graphData.flatMap(e => e).reduce((a,b) => Math.max(a,b));
-        options = {...options, scales: {...options.scales, yAxes: {...options.scales.yAxes, min: min * 0.95, max: max * 1.05}}};
+      let borderColor = ['rgba(0, 177, 106, 1)'];
+      for (let i = 1; i < graphData.length; i++) {
+        borderColor.push(
+          graphData[i][0] > graphData[i][1] ? 'red' : 'rgba(0, 177, 106, 1)'
+        );
+      }
+      const min = graphData.flatMap((e) => e).reduce((a, b) => Math.min(a, b));
+      const max = graphData.flatMap((e) => e).reduce((a, b) => Math.max(a, b));
+      options = {
+        ...options,
+        scales: {
+          ...options.scales,
+          yAxes: { ...options.scales.yAxes, min: min * 0.95, max: max * 1.05 },
+        },
+      };
       setData({
         labels: labels,
         datasets: [
-            // {
-            //   type: 'line',
-            //   label: '',
-            //   data: data,
-            //   borderWidth: 1.5,
-            //   pointBorderWidth: 0,
-            //   borderColor: data[0][0] <= data[data.length-1][1] ? 'rgba(0, 177, 106, 1)' : 'rgba(219, 10, 91, 1)',
-            // },
           {
             type: 'bar',
             categoryPercentage: 1.0,
-            barPercentage: 0.7,
+            barPercentage: 0.75,
             label: '',
             data: graphData,
             backgroundColor: borderColor,
@@ -88,19 +83,47 @@ useEffect(() => {
           },
         ],
       });
-      setLoading(false);
+    }).then(() => {
+        setLoading(false);
     });
-  }, [setData]);
+}
+
+function Graph(props) {
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState({});
+    const [interval, setInterval] = useState('h6');
+
+    useEffect(() => {
+        getHistoryData(props.coin, interval, setData, setLoading);
+    }, [interval]);
+
+    function changeInterval(i) {
+        setLoading(true);
+        setInterval(i);
+    }
 
   return (
     <div className="root">
-      {loading ? <div className='loading'><h1>Loading...</h1><ScaleLoader width={7} color='#fff'/></div> : <div style={{ display: 'flex', justifyContent: 'center' }}>
+      {loading ? (
+        <div className="loading">
+          <h1>Loading...</h1>
+          <ScaleLoader width={7} color="#fff" />
+        </div>
+      ) : (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Bar data={data} height={500} options={options} />
-      </div>}
-      <div>
-        <h1 style={{ border: '1px solid white' }}>
-          Click here to Toggle Chart
-        </h1>
+        </div>
+      )}
+      <div className="history-container">
+        <div onClick={() => changeInterval('m1')} className={interval == 'm1' ? "history-button active" : "history-button"}>1 DAY</div>
+        <div onClick={() => changeInterval('m5')} className={interval == 'm5' ? "history-button active" : "history-button"}>5 DAYS</div>
+        <div onClick={() => changeInterval('m15')} className={interval == 'm15' ? "history-button active" : "history-button"}>7 DAYS</div>
+        <div onClick={() => changeInterval('m30')} className={interval == 'm30' ? "history-button active" : "history-button"}>14 DAYS</div>
+        <div onClick={() => changeInterval('h1')} className={interval == 'h1' ? "history-button active" : "history-button"}>1 MONTH</div>
+        <div onClick={() => changeInterval('h2')} className={interval == 'h2' ? "history-button active" : "history-button"}>2 MONTH</div>
+        <div onClick={() => changeInterval('h6')} className={interval == 'h6' ? "history-button active" : "history-button"}>6 MONTH</div>
+        <div onClick={() => changeInterval('h12')} className={interval == 'h12' ? "history-button active" : "history-button"}>1 YEAR</div>
+        <div onClick={() => changeInterval('d1')} className={interval == 'd1' ? "history-button active" : "history-button"}>2 YEAR</div>
       </div>
     </div>
   );

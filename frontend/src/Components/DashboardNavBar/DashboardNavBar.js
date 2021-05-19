@@ -1,6 +1,6 @@
 import "./DashboardNavBar.css";
 import { useState, useEffect } from "react";
-import { Navbar, NavDropdown } from "react-bootstrap";
+import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AutoSuggest from "react-autosuggest";
 import axios from "axios";
@@ -61,10 +61,7 @@ function DashboardNavBar() {
                 <NavDropdown.Item href="#">Option 1</NavDropdown.Item>
                 <NavDropdown.Item href="#">Option 2</NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Profile" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#">Option 1</NavDropdown.Item>
-                <NavDropdown.Item href="#">Option 2</NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Link id="navbar-link" href="#">Log Out</Nav.Link>
             </Navbar.Collapse>
         </Navbar>
     )

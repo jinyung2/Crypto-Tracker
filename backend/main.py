@@ -214,25 +214,18 @@ def edit_watchlist(id):
 @app.route('/coin/<id>', methods=['GET'])
 def get_coin(id):
     
-    info_coin = {}
-    # cr = Crypto()
     data = cr.get_all_coin(id)
-    # print(data)
     for info in data['data']:
         if id == info['id'] or str.upper(id) == info['symbol']:
-            info_coin = {
-                "name": info['name'],
-                'id': info['id'],
-                'symbol': info['symbol'],
-                'priceUsd': info['priceUsd']
+            return info
 
-            }
-            return info_coin
     return jsonify({"error": "Coin not found"}), 404
+
+
 @app.route('/coin/<id>/<interval>')
-def get_history(id,interval):
+def get_history(id, interval):
     """
-      id: the coine id
+      id: the coin id
       interval: m1,m5,m15,m30,h1,h2,h6,h12,d1
       
       """

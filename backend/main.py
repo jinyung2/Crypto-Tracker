@@ -213,7 +213,7 @@ def edit_watchlist(id):
 @app.route('/coin/<id>', methods=['GET'])
 def get_coin(id):
 
-    data = cr.get_all_coin(id)
+    data = cr.get_all_coin()
     for info in data['data']:
         if id == info['id'] or str.upper(id) == info['symbol']:
             return info

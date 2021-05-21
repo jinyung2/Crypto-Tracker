@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Graph from '../../Components/Graph/Graph';
 import './Dashboard.css';
 import DashboardNavBar from '../../Components/DashboardNavBar/DashboardNavBar';
+import Info from '../../Components/Info/Info'
 
 function Dashboard() {
   return (
@@ -15,7 +16,7 @@ function Dashboard() {
               <Graph />
             </Row>
             <Row>
-              <h1>Info here</h1>
+              <Info />
             </Row>
           </Col>
           <Col lg>

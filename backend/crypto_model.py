@@ -6,7 +6,7 @@ class Crypto:
     def __init__(self, base_url='http://api.coincap.io/v2/assets'):
         self.base_url = base_url
 
-    def get_all_coin(self, id):
+    def get_all_coin(self):
 
         response = r.get(self.base_url)
         data = response.json()

@@ -15,7 +15,6 @@ CORS(app)  # Can't remember why anymore, but we need it
 cr = Crypto()
 
 
-
 @app.route('/signup', methods=['POST'])
 def signup():
 
@@ -209,11 +208,11 @@ def edit_watchlist(id):
     updated.update_watchlist()
 
     return jsonify(success=True), 201
-        
+
 
 @app.route('/coin/<id>', methods=['GET'])
 def get_coin(id):
-    
+
     data = cr.get_all_coin(id)
     for info in data['data']:
         if id == info['id'] or str.upper(id) == info['symbol']:
@@ -225,9 +224,8 @@ def get_coin(id):
 @app.route('/coin/<id>/<interval>')
 def get_history(id, interval):
     """
-      id: the coin id
-      interval: m1,m5,m15,m30,h1,h2,h6,h12,d1
-      
-      """
-    data = cr.get_history(id,interval)
+    id: the coin id
+    interval: m1,m5,m15,m30,h1,h2,h6,h12,d1
+    """
+    data = cr.get_history(id, interval)
     return data

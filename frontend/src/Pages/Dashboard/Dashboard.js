@@ -12,6 +12,14 @@ function getCoinInfo(name, setFn) {
   });
 }
 
+function getWatchlist() {
+    axios.get('http://localhost:5000/watchlist', {
+        'bearer': localStorage.getItem('token')
+    }).then((res) => {
+        console.log(res);
+    })
+}
+
 function Dashboard() {
   const [coin, setCoin] = useState('dogecoin');
   // coinData for the current price, name display
@@ -21,6 +29,18 @@ function Dashboard() {
   useEffect(() => {
     getCoinInfo(coin, setCoinData);
   }, [setCoin]);
+
+  function addToWatchList(coin) {
+    axios.post(`http://localhost:5000/watchlist/${coin}`, {}, 
+    {
+        'bearer': localStorage.getItem('token')
+    }).then((res) => {
+        // possibly validate res here
+        setWatchList([...watchlist, coin]);
+    }).catch((err) => {
+        alert('Failed to add to watchlist!')
+    });
+  }
 
   return (
     <Fragment>
@@ -37,7 +57,7 @@ function Dashboard() {
                     </div>
                     <div className="coin-price">${+coinData.priceUsd}</div>
                   </div>
-                  <button className="coin-add">Add to Watchlist</button>
+                  <button className="coin-add" onClick={addToWatchList}>Add to Watchlist</button>
                 </div>
               ) : (
                 <div className="coin-container">

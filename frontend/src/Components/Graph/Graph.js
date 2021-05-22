@@ -43,7 +43,6 @@ function getHistoryData(coin, inter, setData, setLoading) {
     setLoading(true);
     const diff = inter == 'm1' || inter == 'm5' ? 20 : 10;
     axios.get(`http://localhost:5000/coin/${coin}/${inter}`).then((res) => {
-        console.log('Size:', res.data.data.length);
       const graphData = res.data.data
         .filter((val, i, arr) => i % diff === 0 || i === arr.length - 1)
         .map((data, i, arr) =>

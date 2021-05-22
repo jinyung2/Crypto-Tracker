@@ -64,7 +64,7 @@ function DashboardNavBar() {
                 }}
                 className="search"
             />
-            <NavDropdown title="Options" id="collasible-nav-dropdown">
+            <NavDropdown title="Options" id="collapsible-nav-dropdown">
                 <NavDropdown.Item href="#">Option 1</NavDropdown.Item>
                 <NavDropdown.Item href="#">Option 2</NavDropdown.Item>
             </NavDropdown>

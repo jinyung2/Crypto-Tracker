@@ -1,4 +1,4 @@
-import { React, Fragment } from 'react';
+import { React, Fragment, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Graph from '../../Components/Graph/Graph';
 import './Dashboard.css';
@@ -6,6 +6,9 @@ import DashboardNavBar from '../../Components/DashboardNavBar/DashboardNavBar';
 import Info from '../../Components/Info/Info'
 
 function Dashboard() {
+
+  const [coin, setCoin] = useState('dogecoin');
+
   return (
     <Fragment>
       <DashboardNavBar />
@@ -16,7 +19,7 @@ function Dashboard() {
               <Graph />
             </Row>
             <Row>
-              <Info />
+              <Info coin={coin}/>
             </Row>
           </Col>
           <Col lg>

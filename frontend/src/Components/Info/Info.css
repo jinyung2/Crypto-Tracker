@@ -1,31 +1,42 @@
 .root {
-    /* background-color: red; */
     width: 100%;
-    margin: 10px;
+    margin-top: 10px;
+    border-top: solid 1px white;
+    padding-top: 20px;
 }
 
 ul {
     display: table;
-    width: 100%;
 }
 
 li {
-    /* margin: 5px; */
     list-style-type: none;
-    /* background-color: blue; */
-    display: flex;
+    display: table;
     float: left;
     width: 50%;
-    font-size: 20px;
+    font-size: 18px;
     padding-right: 35px;
+    margin-bottom: 10px;
+}
+
+li * {
+    float: left;
 }
 
 .category {
-    width: 50%;
+    width: 40%;
 }
 
 .value {
-    width: 50%;
+    width: 60%;
     text-align: right;
-    /* background-color: red; */
+}
+
+@media screen and (max-width: 1680px) {
+    
+    li * {
+        width: 100%;
+        float: none;
+    }
+
 }

@@ -5,6 +5,7 @@ import './Dashboard.css';
 import DashboardNavBar from '../../Components/DashboardNavBar/DashboardNavBar';
 import { BarLoader } from 'react-spinners';
 import axios from 'axios';
+import Info from '../../Components/Info/Info'
 
 function getCoinInfo(name, setFn) {
   axios.get(`http://localhost:5000/coin/${name}`).then((res) => {

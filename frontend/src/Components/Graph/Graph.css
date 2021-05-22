@@ -25,6 +25,10 @@
     margin: 5px 0;
 }
 
+.history-button:hover {
+    cursor: pointer;
+}
+
 .active {
     background-color: var(--color-sub-2);
     color: var(--color-font-inv);

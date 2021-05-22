@@ -24,14 +24,26 @@ export default function Info(props) {
     }, [props.coin])
 
     return (
-        <div className="info-section">
+        <div className="root">
             
             <h1>{data['coin']} Stats</h1>
             <ul>
-                <li>Price: ${data['price']}</li>
-                <li>24Hr Percent Change: {data['percentChange']}%</li>
-                <li>Market Cap: ${data['marketCap']}</li>
-                <li>Supply: ${data['supply']}</li>
+                <li>
+                    <div className="category"><b>Price:</b></div>
+                    <div className="value">${data['price']}</div>
+                </li>
+                <li>
+                    <div className="category"><b>24Hr Percent Change:</b></div>
+                    <div className="value">{data['percentChange']}%</div>
+                </li>
+                <li>
+                    <div className="category"><b>Market Cap:</b></div>
+                    <div className="value">${data['marketCap']}</div>
+                </li>
+                <li>
+                    <div className="category"><b>Supply:</b></div>
+                    <div className="value">${data['supply']}</div>
+                </li>
             </ul>
 
         </div>

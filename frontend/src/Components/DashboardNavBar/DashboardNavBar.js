@@ -55,7 +55,7 @@ function DashboardNavBar() {
                         setSearch(newValue);
                     }
                 }}
-                className="search"
+             w   className="search"
             />
             <NavDropdown title="Options" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#">Option 1</NavDropdown.Item>

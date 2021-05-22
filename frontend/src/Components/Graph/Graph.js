@@ -106,7 +106,7 @@ function Graph(props) {
     <div className="root">
       {loading ? (
         <div className="loading">
-          <h1>Loading...</h1>
+          <h2>Loading...</h2>
           <ScaleLoader width={7} color="#fff" />
         </div>
       ) : (

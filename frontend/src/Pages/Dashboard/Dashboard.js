@@ -27,14 +27,17 @@ function Dashboard() {
       <DashboardNavBar />
       <Container fluid>
         <Row>
-          <Col lg={8}>
+          <Col xl={8}>
             <Row>
               {coinData ? (
                 <div className="coin-container">
-                  <div className="coin-title">
-                    {coinData.name}: {coinData.symbol}
+                  <div className="coin-title-price">
+                    <div className="coin-title">
+                      {coinData.name}: {coinData.symbol}
+                    </div>
+                    <div className="coin-price">${+coinData.priceUsd}</div>
                   </div>
-                  <div className="coin-price">${+coinData.priceUsd}</div>
+                  <button className="coin-add">Add to Watchlist</button>
                 </div>
               ) : (
                 <div className="coin-container">

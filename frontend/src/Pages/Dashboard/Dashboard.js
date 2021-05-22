@@ -12,12 +12,19 @@ function getCoinInfo(name, setFn) {
   });
 }
 
-function getWatchlist() {
-    axios.get('http://localhost:5000/watchlist', {
-        'bearer': localStorage.getItem('token')
-    }).then((res) => {
-        console.log(res);
+function getWatchlist(setFn) {
+  axios
+    .get('http://localhost:5000/watchlist', {
+      headers: {
+        bearer: localStorage.getItem('token'),
+      },
     })
+    .then((res) => {
+      setFn(res.data.watchlist);
+    })
+    .catch((err) => {
+      alert('Failed to retrieve watchlist!');
+    });
 }
 
 function Dashboard() {
@@ -27,19 +34,33 @@ function Dashboard() {
   const [watchlist, setWatchList] = useState(null);
 
   useEffect(() => {
+    getWatchlist(setWatchList);
+  }, []);
+
+  useEffect(() => {
     getCoinInfo(coin, setCoinData);
   }, [setCoin]);
 
-  function addToWatchList(coin) {
-    axios.post(`http://localhost:5000/watchlist/${coin}`, {}, 
-    {
-        'bearer': localStorage.getItem('token')
-    }).then((res) => {
+  function addToWatchList() {
+    axios
+      .post(
+        `http://localhost:5000/watchlist/${coin}`,
+        {},
+        {
+          headers: {
+            bearer: localStorage.getItem('token'),
+          },
+        }
+      )
+      .then((res) => {
         // possibly validate res here
         setWatchList([...watchlist, coin]);
-    }).catch((err) => {
-        alert('Failed to add to watchlist!')
-    });
+    }).then(() => {
+          console.log(watchlist);
+      })
+      .catch((err) => {
+        alert('Failed to add to watchlist!');
+      });
   }
 
   return (
@@ -57,7 +78,9 @@ function Dashboard() {
                     </div>
                     <div className="coin-price">${+coinData.priceUsd}</div>
                   </div>
-                  <button className="coin-add" onClick={addToWatchList}>Add to Watchlist</button>
+                  <button className="coin-add" onClick={addToWatchList}>
+                    Add to Watchlist
+                  </button>
                 </div>
               ) : (
                 <div className="coin-container">

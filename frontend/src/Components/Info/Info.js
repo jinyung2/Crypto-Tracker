@@ -27,10 +27,6 @@ export default function Info(props) {
             
             <ul>
                 <li>
-                    <div className="category"><b>Max Supply:</b></div>
-                    <div className="value">${data['maxSupply']}</div>
-                </li>
-                <li>
                     <div className="category"><b>24Hr Percent Change:</b></div>
                     <div className="value">{data['percentChange']}%</div>
                 </li>
@@ -41,6 +37,10 @@ export default function Info(props) {
                 <li>
                     <div className="category"><b>Supply:</b></div>
                     <div className="value">${data['supply']}</div>
+                </li>
+                <li>
+                    <div className="category"><b>Max Supply:</b></div>
+                    <div className="value">{data['maxSupply']}</div>
                 </li>
             </ul>
 

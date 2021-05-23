@@ -1,0 +1,32 @@
+.watchlist-root {
+    width: 100%;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--color-main);
+}
+
+.watchlist-root:hover,
+.watchlist-root:focus {
+    background-color: black;
+    transform: translateX(3px);
+    border: none;
+}
+
+.watchlist-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+}
+
+.green {
+    color: var(--color-green);
+}
+
+.red {
+    color: var(--color-red);
+}

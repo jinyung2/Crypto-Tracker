@@ -3,9 +3,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Graph from '../../Components/Graph/Graph';
 import './Dashboard.css';
 import DashboardNavBar from '../../Components/DashboardNavBar/DashboardNavBar';
-import { BarLoader } from 'react-spinners';
+import { BarLoader, BeatLoader } from 'react-spinners';
 import axios from 'axios';
 import AuthContext from '../../store/AuthContext';
+import Watchlist from '../../Components/Watchlist/Watchlist';
 
 function getCoinInfo(name, setFn) {
   axios.get(`http://localhost:5000/coin/${name}`).then((res) => {
@@ -14,21 +15,24 @@ function getCoinInfo(name, setFn) {
 }
 
 function Dashboard() {
-    const [coin, setCoin] = useState('dogecoin');
-    // coinData for the current price, name display
     const [coinData, setCoinData] = useState(null);
     const [watchlist, setWatchList] = useState(null);
 
     const ctx = useContext(AuthContext);
     
     useEffect(() => {
-        getWatchlist(setWatchList);
+        getWatchlist();
     }, []);
     
     useEffect(() => {
+        const coin = watchlist && watchlist.length > 0 ? watchlist[0] : 'dogecoin';
         getCoinInfo(coin, setCoinData);
-    }, [setCoin]);
+    }, [setCoinData]);
     
+    function changeCoin(coin) {
+        getCoinInfo(coin, setCoinData);
+    }
+
     function getWatchlist() {
       axios
         .get('http://localhost:5000/watchlist', {
@@ -47,7 +51,7 @@ function Dashboard() {
     function addToWatchList() {
         axios
       .post(
-        `http://localhost:5000/watchlist/${coin}`,
+        `http://localhost:5000/watchlist/${coinData.id}`,
         {},
         {
           headers: {
@@ -57,8 +61,7 @@ function Dashboard() {
       )
       .then((res) => {
         // possibly validate res here
-        setWatchList([...watchlist, coin]);
-        console.log(watchlist);
+        setWatchList([...watchlist, coinData.id]);
       })
       .catch((err) => {
         console.log(err);
@@ -68,7 +71,7 @@ function Dashboard() {
   function removeFromWatchList() {
     axios
       .delete(
-        `http://localhost:5000/watchlist/${coin}`,
+        `http://localhost:5000/watchlist/${coinData.id}`,
         {},
         {
           headers: {
@@ -77,7 +80,7 @@ function Dashboard() {
         }
       )
       .then(() => {
-        setWatchList([...watchlist].filter((c) => c !== coin));
+        setWatchList([...watchlist].filter((c) => c !== coinData.name));
         console.log(watchlist);
       })
       .catch((err) => {
@@ -109,7 +112,7 @@ function Dashboard() {
                   <BarLoader width={300} color="#fff" />
                 </div>
               )}
-              <Graph coin={coin} />
+              <Graph coin={coinData ? coinData.id : 'dogecoin'} />
             </Row>
             <Row>
               <h1>Info here</h1>
@@ -117,7 +120,7 @@ function Dashboard() {
           </Col>
           <Col lg>
             <h2>WatchList</h2>
-            {watchlist ? [...watchlist].map((v, i) => <div key={i}>HELLO</div>) : <BarLoader />}
+            {watchlist && watchlist.length > 0 ? [...watchlist].map((v, i) => <Watchlist key={i} coin={v} changeCoin={changeCoin}/>) : <div>HELLO</div>}
           </Col>
         </Row>
       </Container>

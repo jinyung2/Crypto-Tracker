@@ -56,7 +56,7 @@ function getHistoryData(coin, inter, setData, setLoading) {
       let borderColor = ['rgba(0, 177, 106, 1)'];
       for (let i = 1; i < graphData.length; i++) {
         borderColor.push(
-          graphData[i][0] > graphData[i][1] ? 'red' : 'rgba(0, 177, 106, 1)'
+          graphData[i][0] > graphData[i][1] ? 'rgba(210, 77, 87, 1)' : 'rgba(0, 177, 106, 1)'
         );
       }
       const min = graphData.flatMap((e) => e).reduce((a, b) => Math.min(a, b));
@@ -128,4 +128,4 @@ function Graph(props) {
   );
 }
 
-export default Graph;
+export default React.memo(Graph);

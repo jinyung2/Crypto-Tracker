@@ -193,7 +193,8 @@ def edit_watchlist(id):
         # TODO: implement a check to see that the id does indeed exist
 
         # Add 'id' to watchlist and remove casing
-        context.user['watchlist'].append(id.lower())
+        if id.lower() not in context.user['watchlist']:
+            context.user['watchlist'].append(id.lower())
 
     # 'id' is to be removed from the list
     elif request.method == 'DELETE':

@@ -6,7 +6,7 @@ import './Watchlist.css';
 function Watchlist(props) {
   const [data, setData] = useState({
     name: props.coin,
-    symbol: props.coin,
+    symbol: "",
     price: 0,
     change: 0,
   });
@@ -30,7 +30,7 @@ function Watchlist(props) {
   }
 
   function changeCoin() {
-    props.changeCoin(data.name.toLowerCase());
+    props.changeCoin(data.symbol.toLowerCase());
   }
 
   useEffect(() => {
@@ -55,7 +55,7 @@ function Watchlist(props) {
           </div>
         )}
       </div>
-      <button onClick={props.remove} className="watchlist-button">X</button>
+      <button onClick={() => props.remove(props.coin)} className="watchlist-button">X</button>
     </div>
   );
 }

@@ -36,11 +36,15 @@ function Dashboard() {
     getCoinInfo(coin, setCoinData, setLoading);
   }, [setCoinData]);
 
-  function changeCoin(coin) {
-    setLoading(true);
-    getCoinInfo(coin, setCoinData, setLoading);
-  }
+  useEffect(() => {
+      console.log('hello');
+  },[changeCoin, addToWatchList, removeFromWatchList]);
 
+  function changeCoin(coin) {
+      setLoading(true);
+      getCoinInfo(coin, setCoinData, setLoading);
+    }
+      
   function getWatchlist() {
     axios
       .get('http://localhost:5000/watchlist', {
@@ -70,17 +74,17 @@ function Dashboard() {
       .then((res) => {
         // possibly validate res here
         setWatchList([...watchlist, coinData.id]);
+        console.log(watchlist);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  function removeFromWatchList() {
+  function removeFromWatchList(coin) {
     axios
       .delete(
-        `http://localhost:5000/watchlist/${coinData.id}`,
-        {},
+        `http://localhost:5000/watchlist/${coin}`,
         {
           headers: {
             bearer: ctx.token,
@@ -88,8 +92,7 @@ function Dashboard() {
         }
       )
       .then(() => {
-        setWatchList([...watchlist].filter((c) => c !== coinData.name));
-        console.log(watchlist);
+        setWatchList([...watchlist].filter((c) => c !== coin));
       })
       .catch((err) => {
         console.log(err);
@@ -120,7 +123,7 @@ function Dashboard() {
                   <BarLoader width={300} color="#fff" />
                 </div>
               )}
-              <Graph coin={coinData ? coinData.id : 'dogecoin'} />
+              {coinData && <Graph coin={coinData.id} />}
             </Row>
             <Row>
               <h1>Info here</h1>
@@ -131,7 +134,7 @@ function Dashboard() {
             {watchlist && watchlist.length > 0 ? (
               [...watchlist].map((v, i) => (
                 <Watchlist
-                  key={i}
+                  key={v}
                   coin={v}
                   changeCoin={changeCoin}
                   remove={removeFromWatchList}

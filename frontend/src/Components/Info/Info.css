@@ -5,26 +5,13 @@
     padding-top: 20px;
 }
 
-ul {
-    /* display: table; */
-}
 
 li {
     list-style-type: none;
-    /* display: flex; */
-    /* float: left; */
-    /* width: 50%; */
     min-height: 10vh;
     font-size: 18px;
     padding-right: 35px;
     margin-bottom: 20px;
-}
-
-li * {
-    /* float: left; */
-}
-
-.category {
 }
 
 .value {

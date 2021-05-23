@@ -9,52 +9,55 @@ import AuthContext from '../../store/AuthContext';
 import Watchlist from '../../Components/Watchlist/Watchlist';
 
 function getCoinInfo(name, setFn, setLoading) {
-  axios.get(`http://localhost:5000/coin/${name}`).then((res) => {
-    setFn(res.data);
-    setLoading(false);
-  }).catch((err) => {
+  axios
+    .get(`http://localhost:5000/coin/${name}`)
+    .then((res) => {
+      setFn(res.data);
+      setLoading(false);
+    })
+    .catch((err) => {
       console.log(err);
-  });
+    });
 }
 
 function Dashboard() {
-    const [loading, setLoading] = useState(false);
-    const [coinData, setCoinData] = useState(null);
-    const [watchlist, setWatchList] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [coinData, setCoinData] = useState(null);
+  const [watchlist, setWatchList] = useState(null);
 
-    const ctx = useContext(AuthContext);
-    
-    useEffect(() => {
-        getWatchlist();
-    }, []);
-    
-    useEffect(() => {
-        const coin = watchlist && watchlist.length > 0 ? watchlist[0] : 'dogecoin';
-        getCoinInfo(coin, setCoinData, setLoading);
-    }, [setCoinData]);
-    
-    function changeCoin(coin) {
-        setLoading(true);
-        getCoinInfo(coin, setCoinData, setLoading);
-    }
+  const ctx = useContext(AuthContext);
 
-    function getWatchlist() {
-      axios
-        .get('http://localhost:5000/watchlist', {
-          headers: {
-            bearer: ctx.token,
-          },
-        })
-        .then((res) => {
-          setWatchList(res.data.watchlist);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+  useEffect(() => {
+    getWatchlist();
+  }, []);
 
-    function addToWatchList() {
-        axios
+  useEffect(() => {
+    const coin = watchlist && watchlist.length > 0 ? watchlist[0] : 'dogecoin';
+    getCoinInfo(coin, setCoinData, setLoading);
+  }, [setCoinData]);
+
+  function changeCoin(coin) {
+    setLoading(true);
+    getCoinInfo(coin, setCoinData, setLoading);
+  }
+
+  function getWatchlist() {
+    axios
+      .get('http://localhost:5000/watchlist', {
+        headers: {
+          bearer: ctx.token,
+        },
+      })
+      .then((res) => {
+        setWatchList(res.data.watchlist);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function addToWatchList() {
+    axios
       .post(
         `http://localhost:5000/watchlist/${coinData.id}`,
         {},
@@ -125,7 +128,18 @@ function Dashboard() {
           </Col>
           <Col lg>
             <h2>WatchList</h2>
-            {watchlist && watchlist.length > 0 ? [...watchlist].map((v, i) => <Watchlist key={i} coin={v} changeCoin={changeCoin}/>) : <div>HELLO PUT EMPTY LIST PLACEHOLDER HERE!</div>}
+            {watchlist && watchlist.length > 0 ? (
+              [...watchlist].map((v, i) => (
+                <Watchlist
+                  key={i}
+                  coin={v}
+                  changeCoin={changeCoin}
+                  remove={removeFromWatchList}
+                />
+              ))
+            ) : (
+              <div>HELLO PUT EMPTY LIST PLACEHOLDER HERE!</div>
+            )}
           </Col>
         </Row>
       </Container>

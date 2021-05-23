@@ -38,6 +38,7 @@ function Dashboard() {
 
   useEffect(() => {}, [changeCoin]);
 
+  // using this function re-renders all other necessary data on page.
   function changeCoin(coin) {
     setLoading(true);
     getCoinInfo(coin, setCoinData, setLoading);
@@ -95,7 +96,7 @@ function Dashboard() {
 
   return (
     <Fragment>
-      <DashboardNavBar />
+      <DashboardNavBar change={changeCoin} />
       <Container fluid>
         <Row>
           <Col xl={8}>

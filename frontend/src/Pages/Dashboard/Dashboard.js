@@ -104,7 +104,7 @@ function Dashboard() {
               {!loading && coinData ? (
                 <div className="coin-container">
                   <div className="coin-title-price">
-                    <div className="coin-title">
+                    <div className="title coin-title">
                       {coinData.name}: {coinData.symbol}
                     </div>
                     <div className="coin-price">${+coinData.priceUsd}</div>
@@ -124,8 +124,8 @@ function Dashboard() {
               <h1>Info here</h1>
             </Row>
           </Col>
-          <Col lg>
-            <h2>WatchList</h2>
+          <Col xl={4}>
+            <div className="title">WatchList</div>
             <div className="watchlist">
               {watchlist && watchlist.length > 0 ? (
                 [...watchlist].map((v, i) => (

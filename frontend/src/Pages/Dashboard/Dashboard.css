@@ -20,10 +20,13 @@
     width: 100%;
 }
 
-.coin-title {
+.title {
     font-weight: 400;
     font-size: 2rem;
-    width: 450px;
+}
+
+.coin-title {
+    flex: 1 1 auto;
 }
 
 .coin-price {
@@ -32,7 +35,6 @@
 }
 
 .coin-add {
-    margin-right: 5%;
     border-radius: 100px;
     color: #fff;
     display: flex;
@@ -68,7 +70,7 @@
     border-radius: 2px;
 }
 
-@media only screen and (max-width: 1240px) {
+@media only screen and (max-width: 1200px) {
     .container-fluid {
         padding: 20px 30px;
     }
@@ -80,9 +82,13 @@
         height: 100px;
     }
     
-    .coin-title {
+    .title {
         font-size: 1.25rem;
         width: 100%;
+    }
+
+    .watchlist {
+        font-size: 0.9rem;
     }
     
     .coin-add {
@@ -92,6 +98,6 @@
 
 @media only screen and (max-width: 500px) {
     .watchlist {
-        font-size: 0.5rem;
+        font-size: 0.8rem;
     }
 }

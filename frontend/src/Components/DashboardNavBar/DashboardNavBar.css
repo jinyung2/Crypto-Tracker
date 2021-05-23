@@ -66,7 +66,7 @@ body {
     color: black;
   }
 
-  #collasible-nav-dropdown {
+  #collapsible-nav-dropdown {
     color: black;
   }
 
@@ -74,6 +74,6 @@ body {
     color: black;
   }
 
-  #navbar-link:hover,  #collasible-nav-dropdown:hover{
+  #navbar-link:hover,  #collapsible-nav-dropdown:hover{
     color: rgb(117, 117, 117);
   }

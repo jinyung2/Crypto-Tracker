@@ -39,54 +39,6 @@ let options = {
   },
 };
 
-// function getHistoryData(coin, inter, setData, setLoading) {
-//     setLoading(true);
-//     const diff = inter == 'm1' || inter == 'm5' ? 20 : 10;
-//     axios.get(`http://localhost:5000/coin/${coin}/${inter}`).then((res) => {
-//       const graphData = res.data.data
-//         .filter((val, i, arr) => i % diff === 0 || i === arr.length - 1)
-//         .map((data, i, arr) =>
-//           i > 0
-//             ? [+arr[i - 1].priceUsd, +arr[i].priceUsd]
-//             : [0, +arr[i].priceUsd]
-//         ).slice(1);
-
-//       const labels = new Array(graphData.length).fill('');
-
-//       let borderColor = ['rgba(0, 177, 106, 1)'];
-//       for (let i = 1; i < graphData.length; i++) {
-//         borderColor.push(
-//           graphData[i][0] > graphData[i][1] ? 'rgba(210, 77, 87, 1)' : 'rgba(0, 177, 106, 1)'
-//         );
-//       }
-//       const min = graphData.flatMap((e) => e).reduce((a, b) => Math.min(a, b));
-//       const max = graphData.flatMap((e) => e).reduce((a, b) => Math.max(a, b));
-//       options = {
-//         ...options,
-//         scales: {
-//           ...options.scales,
-//           yAxes: { ...options.scales.yAxes, min: min * 0.95, max: max * 1.05 },
-//         },
-//       };
-//       setData({
-//         labels: labels,
-//         datasets: [
-//           {
-//             type: 'bar',
-//             categoryPercentage: 1.0,
-//             barPercentage: 0.75,
-//             label: '',
-//             data: graphData,
-//             backgroundColor: borderColor,
-//             borderWidth: 1,
-//           },
-//         ],
-//       });
-//     }).then(() => {
-//         setLoading(false);
-//     });
-// }
-
 function Graph(props) {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState({});
@@ -94,7 +46,7 @@ function Graph(props) {
 
     useEffect(() => {
         getHistoryData(props.coin, interval);
-    }, [interval, setData]);
+    }, [interval]);
 
     function changeInterval(i) {
         setLoading(true);
@@ -105,6 +57,7 @@ function Graph(props) {
         setLoading(true);
         const diff = inter == 'm1' || inter == 'm5' ? 20 : 10;
         axios.get(`http://localhost:5000/coin/${coin}/${inter}`).then((res) => {
+            console.log(res);
           const graphData = res.data.data
             .filter((val, i, arr) => i % diff === 0 || i === arr.length - 1)
             .map((data, i, arr) =>
@@ -127,7 +80,7 @@ function Graph(props) {
             ...options,
             scales: {
               ...options.scales,
-              yAxes: { ...options.scales.yAxes, min: min * 0.95, max: max * 1.05 },
+              yAxes: { ...options.scales.yAxes, min: min, max: max },
             },
           };
           setData({

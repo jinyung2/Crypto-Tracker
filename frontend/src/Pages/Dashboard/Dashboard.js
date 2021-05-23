@@ -38,7 +38,7 @@ function Dashboard() {
 
   useEffect(() => {
       console.log('hello');
-  },[changeCoin, addToWatchList, removeFromWatchList]);
+  },[changeCoin]);
 
   function changeCoin(coin) {
       setLoading(true);
@@ -123,7 +123,7 @@ function Dashboard() {
                   <BarLoader width={300} color="#fff" />
                 </div>
               )}
-              {coinData && <Graph coin={coinData.id} />}
+              <Graph key={coinData.id} coin={coinData.id} />
             </Row>
             <Row>
               <h1>Info here</h1>

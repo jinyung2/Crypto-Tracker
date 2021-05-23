@@ -36,15 +36,13 @@ function Dashboard() {
     getCoinInfo(coin, setCoinData, setLoading);
   }, [setCoinData]);
 
-  useEffect(() => {
-      console.log('hello');
-  },[changeCoin]);
+  useEffect(() => {}, [changeCoin]);
 
   function changeCoin(coin) {
-      setLoading(true);
-      getCoinInfo(coin, setCoinData, setLoading);
-    }
-      
+    setLoading(true);
+    getCoinInfo(coin, setCoinData, setLoading);
+  }
+
   function getWatchlist() {
     axios
       .get('http://localhost:5000/watchlist', {
@@ -74,7 +72,6 @@ function Dashboard() {
       .then((res) => {
         // possibly validate res here
         setWatchList([...watchlist, coinData.id]);
-        console.log(watchlist);
       })
       .catch((err) => {
         console.log(err);
@@ -83,14 +80,11 @@ function Dashboard() {
 
   function removeFromWatchList(coin) {
     axios
-      .delete(
-        `http://localhost:5000/watchlist/${coin}`,
-        {
-          headers: {
-            bearer: ctx.token,
-          },
-        }
-      )
+      .delete(`http://localhost:5000/watchlist/${coin}`, {
+        headers: {
+          bearer: ctx.token,
+        },
+      })
       .then(() => {
         setWatchList([...watchlist].filter((c) => c !== coin));
       })
@@ -123,7 +117,7 @@ function Dashboard() {
                   <BarLoader width={300} color="#fff" />
                 </div>
               )}
-              <Graph key={coinData.id} coin={coinData.id} />
+              {coinData && <Graph key={coinData.id} coin={coinData.id} />}
             </Row>
             <Row>
               <h1>Info here</h1>
@@ -131,18 +125,20 @@ function Dashboard() {
           </Col>
           <Col lg>
             <h2>WatchList</h2>
-            {watchlist && watchlist.length > 0 ? (
-              [...watchlist].map((v, i) => (
-                <Watchlist
-                  key={v}
-                  coin={v}
-                  changeCoin={changeCoin}
-                  remove={removeFromWatchList}
-                />
-              ))
-            ) : (
-              <div>HELLO PUT EMPTY LIST PLACEHOLDER HERE!</div>
-            )}
+            <div className="watchlist">
+              {watchlist && watchlist.length > 0 ? (
+                [...watchlist].map((v, i) => (
+                  <Watchlist
+                    key={v}
+                    coin={v}
+                    changeCoin={changeCoin}
+                    remove={removeFromWatchList}
+                  />
+                ))
+              ) : (
+                <div>HELLO PUT EMPTY LIST PLACEHOLDER HERE!</div>
+              )}
+            </div>
           </Col>
         </Row>
       </Container>

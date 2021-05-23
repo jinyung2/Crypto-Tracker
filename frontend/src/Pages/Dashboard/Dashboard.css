@@ -48,7 +48,30 @@
     background-color: black;
     transform: scale(1.05);
     outline: none;
+}
 
+.watchlist {
+    height: 80vh;
+    overflow-x: hidden;
+}
+
+.watchlist::-webkit-scrollbar {
+    width: 0.3em;
+}
+
+.watchlist::-webkit-scrollbar-track {
+    background: var(--color-sub);
+}
+
+.watchlist::-webkit-scrollbar-thumb {
+    background-color: var(--color-sub-2);
+    border-radius: 2px;
+}
+
+@media only screen and (max-width: 1240px) {
+    .container-fluid {
+        padding: 20px 30px;
+    }
 }
 
 @media only screen and (max-width: 700px) {
@@ -67,8 +90,8 @@
     }
 }
 
-@media only screen and (max-width: 1240px) {
-    .container-fluid {
-        padding: 20px 30px;
+@media only screen and (max-width: 500px) {
+    .watchlist {
+        font-size: 0.5rem;
     }
 }

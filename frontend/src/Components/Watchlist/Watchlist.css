@@ -43,6 +43,10 @@
     margin-left: auto;
 }
 
+.watchlist-name-symbol {
+    padding-right: 5px;
+}
+
 .green {
     color: var(--color-green);
 }

@@ -2,11 +2,13 @@
     font-family: 'Press Start 2P', sans-serif;
     color: var(--color-font);
     box-sizing: border-box;
-    padding: 2% 4%;
 }
 
-.coin-container {
-    padding: 0 0 0 25px;
+.row {
+    padding: 10px 20px;
+}
+
+.header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,14 +72,12 @@
     border-radius: 2px;
 }
 
-@media only screen and (max-width: 1200px) {
-    .container-fluid {
-        padding: 20px 30px;
-    }
-}
-
 @media only screen and (max-width: 700px) {
-    .coin-container {
+    .row {
+        padding: 10px;
+    }
+
+    .header-container {
         flex-direction: column;
         height: 100px;
     }

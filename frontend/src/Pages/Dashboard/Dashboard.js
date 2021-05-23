@@ -8,13 +8,17 @@ import axios from 'axios';
 import AuthContext from '../../store/AuthContext';
 import Watchlist from '../../Components/Watchlist/Watchlist';
 
-function getCoinInfo(name, setFn) {
+function getCoinInfo(name, setFn, setLoading) {
   axios.get(`http://localhost:5000/coin/${name}`).then((res) => {
     setFn(res.data);
+    setLoading(false);
+  }).catch((err) => {
+      console.log(err);
   });
 }
 
 function Dashboard() {
+    const [loading, setLoading] = useState(false);
     const [coinData, setCoinData] = useState(null);
     const [watchlist, setWatchList] = useState(null);
 
@@ -26,11 +30,12 @@ function Dashboard() {
     
     useEffect(() => {
         const coin = watchlist && watchlist.length > 0 ? watchlist[0] : 'dogecoin';
-        getCoinInfo(coin, setCoinData);
+        getCoinInfo(coin, setCoinData, setLoading);
     }, [setCoinData]);
     
     function changeCoin(coin) {
-        getCoinInfo(coin, setCoinData);
+        setLoading(true);
+        getCoinInfo(coin, setCoinData, setLoading);
     }
 
     function getWatchlist() {
@@ -95,7 +100,7 @@ function Dashboard() {
         <Row>
           <Col xl={8}>
             <Row>
-              {coinData ? (
+              {!loading && coinData ? (
                 <div className="coin-container">
                   <div className="coin-title-price">
                     <div className="coin-title">
@@ -120,7 +125,7 @@ function Dashboard() {
           </Col>
           <Col lg>
             <h2>WatchList</h2>
-            {watchlist && watchlist.length > 0 ? [...watchlist].map((v, i) => <Watchlist key={i} coin={v} changeCoin={changeCoin}/>) : <div>HELLO</div>}
+            {watchlist && watchlist.length > 0 ? [...watchlist].map((v, i) => <Watchlist key={i} coin={v} changeCoin={changeCoin}/>) : <div>HELLO PUT EMPTY LIST PLACEHOLDER HERE!</div>}
           </Col>
         </Row>
       </Container>

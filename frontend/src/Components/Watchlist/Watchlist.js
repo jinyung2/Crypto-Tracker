@@ -16,7 +16,6 @@ function Watchlist(props) {
     axios
       .get(`http://localhost:5000/coin/${props.coin}`)
       .then((res) => {
-        console.log(res);
         setData({
           name: res.data.name,
           symbol: res.data.symbol,

@@ -1,15 +1,18 @@
 import "./DashboardNavBar.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AutoSuggest from "react-autosuggest";
 import axios from "axios";
 import logo from "./../../assets/crypto-logo.png";
+import AuthContext from '../../store/AuthContext';
 
 function DashboardNavBar() {
     const [cryptos, setCryptos] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [search, setSearch] = useState("");
+
+    const ctx = useContext(AuthContext);
 
     async function fetchAll() {
         try {
@@ -29,6 +32,10 @@ function DashboardNavBar() {
 
     function getSuggestions(value) {
         return cryptos.filter(crypto => crypto.name.toLowerCase().includes(value.toLowerCase()));
+    }
+
+    function logoutHandler() {
+        ctx.logout();
     }
 
     return (
@@ -57,11 +64,11 @@ function DashboardNavBar() {
                 }}
                 className="search"
             />
-            <NavDropdown title="Options" id="collasible-nav-dropdown">
+            <NavDropdown title="Options" id="collapsible-nav-dropdown">
                 <NavDropdown.Item href="#">Option 1</NavDropdown.Item>
                 <NavDropdown.Item href="#">Option 2</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link id="navbar-link" href="#">Log Out</Nav.Link>
+            <Nav.Link id="navbar-link" onClick={logoutHandler}>Log Out</Nav.Link>
             </Navbar.Collapse>
         </Navbar>
     )

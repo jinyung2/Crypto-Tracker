@@ -1,0 +1,56 @@
+.watchlist-root {
+    width: 100%;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--color-main);
+    display: flex;
+}
+
+.watchlist-root:hover,
+.watchlist-root:focus {
+    background-color: black;
+    transform: scale(1.01);
+    border: none;
+}
+
+.watchlist-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+}
+
+.watchlist-button {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    flex: 0 0 auto;
+    padding-left: 10px;
+}
+
+.watchlist-button:hover,
+.watchlist-button:focus {
+    color: red;
+    outline: none;
+}
+
+.watchlist-price {
+    margin-left: auto;
+}
+
+.watchlist-name-symbol {
+    padding-right: 5px;
+}
+
+.green {
+    color: var(--color-green);
+}
+
+.red {
+    color: var(--color-red);
+}

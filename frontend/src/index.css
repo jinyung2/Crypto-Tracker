@@ -2,14 +2,19 @@
 
 html {
   --color-background: #2c2c2c;
+  --color-main: #222222;
   --color-sub: #979797;
   --color-sub-2: #e5e5e5;
   --color-button: #e9e9e9;
   --color-font: #ffffff;
   --color-font-inv: #000000;
+  --color-red: rgba(210, 77, 87, 1);
+  --color-green: rgba(0, 177, 106, 1);
 }
 
 body {
+    font-family: 'Press Start 2P', sans-serif;
+
   background-color: var(--color-background);
   margin: 0;
 }

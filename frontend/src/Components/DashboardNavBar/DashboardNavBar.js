@@ -7,7 +7,7 @@ import axios from "axios";
 import logo from "./../../assets/crypto-logo.png";
 import AuthContext from '../../store/AuthContext';
 
-function DashboardNavBar() {
+function DashboardNavBar(props) {
     const [cryptos, setCryptos] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [search, setSearch] = useState("");
@@ -50,11 +50,13 @@ function DashboardNavBar() {
                     setSearch(value);
                     setSuggestions(getSuggestions(value));
                 }}
-                onSuggestionSelected={(_, { suggestionValue }) =>
-                    console.log("Selected: " + suggestionValue)
+                onSuggestionSelected={(_, { suggestion }) => {
+                    props.change(suggestion.id);
+                    setSearch("");
                 }
-                getSuggestionValue={suggestion => suggestion}
-                renderSuggestion={suggestion => <Link id="cryptoLink" to={"/crypto/#" + suggestion.id}><span>{suggestion.name + ": " + suggestion.symbol}</span></Link>}
+                }
+                getSuggestionValue={suggestion => suggestion.id}
+                renderSuggestion={suggestion => <span>{suggestion.name + ": " + suggestion.symbol}</span>}
                 inputProps={{
                     placeholder: "Search",
                     value: search,

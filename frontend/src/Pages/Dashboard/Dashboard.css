@@ -1,22 +1,33 @@
 .container-fluid {
-    font-family: 'Press Start 2P', sans-serif;
     color: var(--color-font);
     box-sizing: border-box;
-    padding: 2% 4%;
 }
 
-.coin-container {
-    padding: 0 0 0 25px;
+.row {
+    padding: 10px 20px;
+}
+
+.header-container {
     display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     height: 80px;
+    width: 100%;
+}
+
+.coin-title-price {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.title {
+    font-weight: 400;
+    font-size: 2rem;
 }
 
 .coin-title {
-    font-weight: 400;
-    font-size: 2rem;
+    flex: 1 1 auto;
 }
 
 .coin-price {
@@ -24,8 +35,78 @@
     font-size: 1rem;
 }
 
-@media only screen and (max-width: 992px) {
-    .container-fluid {
-        padding: 20px 30px;
+.coin-add {
+    border-radius: 100px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    transition: 0.2s ease;
+    outline: none;
+}
+
+.coin-add:hover,
+.coin-add:focus {
+    background-color: black;
+    transform: scale(1.05);
+    outline: none;
+}
+
+.watchlist {
+    height: 80vh;
+    overflow-x: hidden;
+}
+
+.watchlist::-webkit-scrollbar {
+    width: 0.3em;
+}
+
+.watchlist::-webkit-scrollbar-track {
+    background: var(--color-sub);
+}
+
+.watchlist::-webkit-scrollbar-thumb {
+    background-color: var(--color-sub-2);
+    border-radius: 2px;
+}
+
+@media only screen and (max-width: 1199px) {
+    .title {
+        font-size: 1.75rem;
+    }
+}
+
+@media only screen and (max-width: 755px) {
+    .row {
+        padding: 10px;
+    }
+
+    .header-container {
+        flex-direction: column;
+        height: 100px;
+    }
+    
+    .title {
+        font-size: 1.25rem;
+        width: 100%;
+    }
+
+    .watchlist-title {
+        height: auto;
+    }
+
+    .watchlist {
+        font-size: 0.9rem;
+    }
+    
+    .coin-add {
+        margin: 10px 0;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .watchlist {
+        font-size: 0.8rem;
     }
 }

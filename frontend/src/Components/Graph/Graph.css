@@ -5,7 +5,7 @@
 
 .loading {
     width: 100%;
-    height: 500px;
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,6 +23,14 @@
 .history-button {
     padding: 2px;
     margin: 5px 0;
+    transition: all 0.2s ease;
+}
+
+.history-button:hover,
+.history-button:focus {
+    cursor: pointer;
+    background-color: var(--color-sub-2);
+    color: var(--color-font-inv);    
 }
 
 .active {

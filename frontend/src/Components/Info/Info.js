@@ -23,7 +23,7 @@ export default function Info(props) {
     }, [props.coin])
 
     return (
-        <div className="root">
+        <div className="info-container">
             
             <ul>
                 <li>

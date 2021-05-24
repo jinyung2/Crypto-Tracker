@@ -46,7 +46,7 @@ function Graph(props) {
 
     useEffect(() => {
         getHistoryData(props.coin, interval);
-    }, [interval]);
+    }, [interval, props.coin]);
 
     function changeInterval(i) {
         setLoading(true);
@@ -55,7 +55,7 @@ function Graph(props) {
 
     function getHistoryData(coin, inter) {
         setLoading(true);
-        const diff = inter == 'm1' || inter == 'm5' ? 20 : 10;
+        const diff = inter === 'm1' || inter === 'm5' ? 20 : 10;
         axios.get(`http://localhost:5000/coin/${coin}/${inter}`).then((res) => {
           const graphData = res.data.data
             .filter((val, i, arr) => i % diff === 0 || i === arr.length - 1)
@@ -110,19 +110,19 @@ function Graph(props) {
         </div>
       ) : (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Bar data={data} height={500} options={options} />
+          <Bar data={data} height={400} options={options} />
         </div>
       )}
       <div className="history-container">
-        <div onClick={() => changeInterval('m1')} className={interval == 'm1' ? "history-button active" : "history-button"}>1 DAY</div>
-        <div onClick={() => changeInterval('m5')} className={interval == 'm5' ? "history-button active" : "history-button"}>5 DAYS</div>
-        <div onClick={() => changeInterval('m15')} className={interval == 'm15' ? "history-button active" : "history-button"}>7 DAYS</div>
-        <div onClick={() => changeInterval('m30')} className={interval == 'm30' ? "history-button active" : "history-button"}>14 DAYS</div>
-        <div onClick={() => changeInterval('h1')} className={interval == 'h1' ? "history-button active" : "history-button"}>1 MONTH</div>
-        <div onClick={() => changeInterval('h2')} className={interval == 'h2' ? "history-button active" : "history-button"}>2 MONTH</div>
-        <div onClick={() => changeInterval('h6')} className={interval == 'h6' ? "history-button active" : "history-button"}>6 MONTH</div>
-        <div onClick={() => changeInterval('h12')} className={interval == 'h12' ? "history-button active" : "history-button"}>1 YEAR</div>
-        <div onClick={() => changeInterval('d1')} className={interval == 'd1' ? "history-button active" : "history-button"}>2 YEAR</div>
+        <div onClick={() => changeInterval('m1')} className={interval === 'm1' ? "history-button active" : "history-button"}>1 DAY</div>
+        <div onClick={() => changeInterval('m5')} className={interval === 'm5' ? "history-button active" : "history-button"}>5 DAYS</div>
+        <div onClick={() => changeInterval('m15')} className={interval === 'm15' ? "history-button active" : "history-button"}>7 DAYS</div>
+        <div onClick={() => changeInterval('m30')} className={interval === 'm30' ? "history-button active" : "history-button"}>14 DAYS</div>
+        <div onClick={() => changeInterval('h1')} className={interval === 'h1' ? "history-button active" : "history-button"}>1 MONTH</div>
+        <div onClick={() => changeInterval('h2')} className={interval === 'h2' ? "history-button active" : "history-button"}>2 MONTH</div>
+        <div onClick={() => changeInterval('h6')} className={interval === 'h6' ? "history-button active" : "history-button"}>6 MONTH</div>
+        <div onClick={() => changeInterval('h12')} className={interval === 'h12' ? "history-button active" : "history-button"}>1 YEAR</div>
+        <div onClick={() => changeInterval('d1')} className={interval === 'd1' ? "history-button active" : "history-button"}>2 YEAR</div>
       </div>
     </div>
   );

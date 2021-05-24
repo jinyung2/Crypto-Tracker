@@ -3,10 +3,11 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Graph from '../../Components/Graph/Graph';
 import './Dashboard.css';
 import DashboardNavBar from '../../Components/DashboardNavBar/DashboardNavBar';
-import { BarLoader, BeatLoader } from 'react-spinners';
+import { BarLoader } from 'react-spinners';
 import axios from 'axios';
 import AuthContext from '../../store/AuthContext';
 import Watchlist from '../../Components/Watchlist/Watchlist';
+import Info from '../../Components/Info/Info'
 
 function getCoinInfo(name, setFn, setLoading) {
   axios
@@ -35,8 +36,6 @@ function Dashboard() {
     const coin = watchlist && watchlist.length > 0 ? watchlist[0] : 'dogecoin';
     getCoinInfo(coin, setCoinData, setLoading);
   }, [setCoinData]);
-
-  useEffect(() => {}, [changeCoin]);
 
   // using this function re-renders all other necessary data on page.
   function changeCoin(coin) {
@@ -121,11 +120,11 @@ function Dashboard() {
               {coinData && <Graph key={coinData.id} coin={coinData.id} />}
             </Row>
             <Row>
-              <h1>Info here</h1>
+              {coinData && <Info key ={coinData.id} coin={coinData.id}/>}
             </Row>
           </Col>
           <Col xl={4}>
-            <div className="header-container title">WatchList</div>
+            <div className="header-container title watchlist-title">WatchList</div>
             <div className="watchlist">
               {watchlist && watchlist.length > 0 ? (
                 [...watchlist].map((v, i) => (

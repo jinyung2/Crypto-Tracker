@@ -58,7 +58,7 @@ Any reported issues should be addressed before pushing.
 ## autopep8
 `autopep8` automatically addresses minor formatting issues. To use it, run
 ```
-autopep --in-place -a -a <filename>
+autopep8 --in-place -a -a <filename>
 ```
 on your terminal.
 

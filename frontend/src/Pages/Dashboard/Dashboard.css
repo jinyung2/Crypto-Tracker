@@ -1,5 +1,4 @@
 .container-fluid {
-    font-family: 'Press Start 2P', sans-serif;
     color: var(--color-font);
     box-sizing: border-box;
 }
@@ -72,7 +71,13 @@
     border-radius: 2px;
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 1199px) {
+    .title {
+        font-size: 1.75rem;
+    }
+}
+
+@media only screen and (max-width: 755px) {
     .row {
         padding: 10px;
     }
@@ -85,6 +90,10 @@
     .title {
         font-size: 1.25rem;
         width: 100%;
+    }
+
+    .watchlist-title {
+        height: auto;
     }
 
     .watchlist {

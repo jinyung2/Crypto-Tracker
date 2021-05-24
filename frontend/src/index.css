@@ -13,6 +13,8 @@ html {
 }
 
 body {
+    font-family: 'Press Start 2P', sans-serif;
+
   background-color: var(--color-background);
   margin: 0;
 }

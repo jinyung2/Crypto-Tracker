@@ -71,7 +71,9 @@ function Dashboard() {
       )
       .then((res) => {
         // possibly validate res here
-        setWatchList([...watchlist, coinData.id]);
+        if (watchlist.indexOf(coinData.id) < 0) {
+            setWatchList([...watchlist, coinData.id]);
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -7,7 +7,8 @@ import { BarLoader } from 'react-spinners';
 import axios from 'axios';
 import AuthContext from '../../store/AuthContext';
 import Watchlist from '../../Components/Watchlist/Watchlist';
-import Info from '../../Components/Info/Info'
+import Info from '../../Components/Info/Info';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 function getCoinInfo(name, setFn, setLoading) {
   axios
@@ -72,7 +73,7 @@ function Dashboard() {
       .then((res) => {
         // possibly validate res here
         if (watchlist.indexOf(coinData.id) < 0) {
-            setWatchList([...watchlist, coinData.id]);
+          setWatchList([...watchlist, coinData.id]);
         }
       })
       .catch((err) => {
@@ -122,25 +123,38 @@ function Dashboard() {
               {coinData && <Graph key={coinData.id} coin={coinData.id} />}
             </Row>
             <Row>
-              {coinData && <Info key ={coinData.id} coin={coinData.id}/>}
+              {coinData && <Info key={coinData.id} coin={coinData.id} />}
             </Row>
           </Col>
           <Col xl={4}>
-            <div className="header-container title watchlist-title">WatchList</div>
-            <div className="watchlist">
-              {watchlist && watchlist.length > 0 ? (
-                [...watchlist].map((v, i) => (
-                  <Watchlist
-                    key={v}
-                    coin={v}
-                    changeCoin={changeCoin}
-                    remove={removeFromWatchList}
-                  />
-                ))
-              ) : (
-                <div>HELLO PUT EMPTY LIST PLACEHOLDER HERE!</div>
-              )}
+            <div className="header-container title watchlist-title">
+              WatchList
             </div>
+            <DragDropContext>
+              <Droppable droppableId="watchlist">
+                {(provided) => (
+                  <div className="watchlist" {...provided.droppableProps} ref={provided.innerRef}>
+                    {watchlist && watchlist.length > 0 ? (
+                      [...watchlist].map((v, i) => (
+                          <Draggable key={v} draggableId={v} index={i}>
+                              {(provided) => 
+                              <Watchlist
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                coin={v}
+                                changeCoin={changeCoin}
+                                remove={removeFromWatchList}
+                              />}
+                          </Draggable>
+                      ))
+                    ) : (
+                      <div>HELLO PUT EMPTY LIST PLACEHOLDER HERE!</div>
+                    )}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           </Col>
         </Row>
       </Container>

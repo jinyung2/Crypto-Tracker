@@ -97,7 +97,11 @@ function Dashboard() {
   }
 
   function handleDragEnd(res) {
-    console.log(res);
+    const wlist = [...watchlist];
+    const [reordered] = wlist.splice(res.source.index, 1);
+    wlist.splice(res.destination.index, 0, reordered);
+
+    setWatchList(wlist);
   }
 
   return (

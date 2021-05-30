@@ -43,7 +43,7 @@ function Watchlist(props) {
     className="watchlist-root" 
     ref={props.innerRef}>
       <div 
-    //   onClick={changeCoin} 
+      onClick={changeCoin} 
       className="watchlist-container"
       >
         <div 

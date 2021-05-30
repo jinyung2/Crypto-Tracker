@@ -134,7 +134,7 @@ function LoginSignUp() {
   }
 
   return (
-    <Container fluid>
+    <Container fluid className="main-container">
       <Row md
         style={{ textAlign: 'center', width: '100%' }}
         className="align-items-center justify-content-center"

@@ -99,7 +99,7 @@ function Dashboard() {
 
   const graphTypeToggler = useCallback(() => {
     setGraphType(!graphType);
-  }, []);
+  }, [graphType]);
 
   return (
     <Fragment>

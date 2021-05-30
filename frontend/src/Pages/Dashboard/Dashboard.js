@@ -165,7 +165,10 @@ function Dashboard() {
                         </Draggable>
                       ))
                     ) : (
-                      <div>HELLO PUT EMPTY LIST PLACEHOLDER HERE!</div>
+                      <div className="watchlist-placeholder">
+                        <p>You have nothing in your Watchlist!</p>
+                        <p>Search for crypto and click 'Add to Watchlist'!</p>
+                      </div>
                     )}
                     {provided.placeholder}
                   </div>

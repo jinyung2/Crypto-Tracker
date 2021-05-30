@@ -7,7 +7,7 @@ import { BarLoader } from 'react-spinners';
 import axios from 'axios';
 import AuthContext from '../../store/AuthContext';
 import Watchlist from '../../Components/Watchlist/Watchlist';
-import Info from '../../Components/Info/Info'
+import Info from '../../Components/Info/Info';
 
 function getCoinInfo(name, setFn, setLoading) {
   axios
@@ -25,17 +25,13 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [coinData, setCoinData] = useState(null);
   const [watchlist, setWatchList] = useState(null);
+  const [graphType, setGraphType] = useState(true);
 
   const ctx = useContext(AuthContext);
 
   useEffect(() => {
     getWatchlist();
   }, []);
-
-  useEffect(() => {
-    const coin = watchlist && watchlist.length > 0 ? watchlist[0] : 'dogecoin';
-    getCoinInfo(coin, setCoinData, setLoading);
-  }, [setCoinData]);
 
   // using this function re-renders all other necessary data on page.
   function changeCoin(coin) {
@@ -52,6 +48,12 @@ function Dashboard() {
       })
       .then((res) => {
         setWatchList(res.data.watchlist);
+      })
+      .then(() => {
+        return watchlist && watchlist.length > 0 ? watchlist[0] : 'dogecoin';
+      })
+      .then((coin) => {
+        getCoinInfo(coin, setCoinData, setLoading);
       })
       .catch((err) => {
         console.log(err);
@@ -72,7 +74,7 @@ function Dashboard() {
       .then((res) => {
         // possibly validate res here
         if (watchlist.indexOf(coinData.id) < 0) {
-            setWatchList([...watchlist, coinData.id]);
+          setWatchList([...watchlist, coinData.id]);
         }
       })
       .catch((err) => {
@@ -93,6 +95,10 @@ function Dashboard() {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function graphTypeToggler() {
+    setGraphType(!graphType);
   }
 
   return (
@@ -119,14 +125,23 @@ function Dashboard() {
                   <BarLoader width={300} color="#fff" />
                 </div>
               )}
-              {coinData && <Graph key={coinData.id} coin={coinData.id} />}
+              {coinData && (
+                <Graph
+                  graphType={graphType}
+                  changeType={graphTypeToggler}
+                  key={coinData.id}
+                  coin={coinData.id}
+                />
+              )}
             </Row>
             <Row>
-              {coinData && <Info key ={coinData.id} coin={coinData.id}/>}
+              {coinData && <Info key={coinData.id} coin={coinData.id} />}
             </Row>
           </Col>
           <Col xl={4}>
-            <div className="header-container title watchlist-title">WatchList</div>
+            <div className="header-container title watchlist-title">
+              WatchList
+            </div>
             <div className="watchlist">
               {watchlist && watchlist.length > 0 ? (
                 [...watchlist].map((v, i) => (

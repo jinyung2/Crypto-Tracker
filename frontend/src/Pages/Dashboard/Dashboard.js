@@ -96,6 +96,10 @@ function Dashboard() {
       });
   }
 
+  function handleDragEnd(res) {
+    console.log(res);
+  }
+
   return (
     <Fragment>
       <DashboardNavBar change={changeCoin} />
@@ -130,27 +134,36 @@ function Dashboard() {
             <div className="header-container title watchlist-title">
               WatchList
             </div>
-            <DragDropContext>
+            <DragDropContext onDragEnd={handleDragEnd}>
               <Droppable droppableId="watchlist">
                 {(provided) => (
-                  <div className="watchlist" {...provided.droppableProps} ref={provided.innerRef}>
+                  <div
+                    ref={provided.innerRef}
+                    className="watchlist"
+                    {...provided.droppableProps}
+                  >
                     {watchlist && watchlist.length > 0 ? (
                       [...watchlist].map((v, i) => (
-                          <Draggable key={v} draggableId={v} index={i}>
-                              {(provided) => 
+                        <Draggable key={v} draggableId={v} index={i}>
+                          {(provided) => (
+                            <div
+                              {...provided.dragHandleProps}
+                              {...provided.draggableProps}
+                            >
                               <Watchlist
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
+                                innerRef={provided.innerRef}
                                 coin={v}
                                 changeCoin={changeCoin}
                                 remove={removeFromWatchList}
-                              />}
-                          </Draggable>
+                              />
+                            </div>
+                          )}
+                        </Draggable>
                       ))
                     ) : (
                       <div>HELLO PUT EMPTY LIST PLACEHOLDER HERE!</div>
                     )}
+                    {provided.placeholder}
                   </div>
                 )}
               </Droppable>

@@ -39,11 +39,16 @@ function Watchlist(props) {
   }, [setData]);
 
   return (
-    <div className="watchlist-root">
+    <div 
+    className="watchlist-root" 
+    ref={props.innerRef}>
       <div 
-      onClick={changeCoin} 
-      className="watchlist-container">
-        <div className="watchlist-name-symbol">
+    //   onClick={changeCoin} 
+      className="watchlist-container"
+      >
+        <div 
+        className="watchlist-name-symbol"
+        >
           {props.coin.charAt(0).toUpperCase() + props.coin.slice(1)}:{' '}
           {!loading && data.symbol}
         </div>

@@ -7,7 +7,7 @@ import './Graph.css';
 
 let options = {
   animation: {
-      duration: 0
+      duration: 500
   },
   maintainAspectRatio: false,
   plugins: {

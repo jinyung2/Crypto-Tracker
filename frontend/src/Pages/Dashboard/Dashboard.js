@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
+import React, { Fragment, useState, useEffect, useContext, useCallback } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Graph from '../../Components/Graph/Graph';
 import './Dashboard.css';
@@ -97,9 +97,9 @@ function Dashboard() {
       });
   }
 
-  function graphTypeToggler() {
+  const graphTypeToggler = useCallback(() => {
     setGraphType(!graphType);
-  }
+  }, []);
 
   return (
     <Fragment>

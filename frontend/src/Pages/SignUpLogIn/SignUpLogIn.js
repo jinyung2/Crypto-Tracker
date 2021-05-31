@@ -1,6 +1,12 @@
 import './SignUpLogIn.css';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
-import { Redirect, Route, useRouteMatch, useHistory } from 'react-router-dom';
+import {
+  Redirect,
+  Route,
+  useRouteMatch,
+  useHistory,
+  NavLink,
+} from 'react-router-dom';
 import { useState, useContext } from 'react';
 import Signup from '../../Components/SignUpForm/SignUp';
 import LogIn from '../../Components/LoginForm/LogInForm';
@@ -75,7 +81,7 @@ function LoginSignUp() {
           hist.push('/dashboard');
         })
         .catch((err) => {
-            setError('Sign up credentials are invalid. Please try again.');
+          setError('Sign up credentials are invalid. Please try again.');
         });
     }
     //else then no errors and add to database and redirect user to dashbaord
@@ -112,7 +118,7 @@ function LoginSignUp() {
           hist.push('/dashboard');
         })
         .catch((err) => {
-            setError('Log In Credentials are invalid. Please try again.');
+          setError('Log In Credentials are invalid. Please try again.');
         });
     }
   }
@@ -124,19 +130,29 @@ function LoginSignUp() {
 
   function clearError() {
     setError('');
+    console.log(hist);
   }
 
   return (
-    <div id="signUpLogin">
-      <Container fluid>
-        <Row
-          style={{ textAlign: 'center' }}
-          className="align-items-center justify-content-center"
-        >
-          <Col>
-            <img id="logo" src={logo} alt="logo" />
-          </Col>
-          <Col id="vr" className="justify-content-center">
+    <Container fluid className="main-container">
+      <Row md
+        style={{ textAlign: 'center', width: '100%' }}
+        className="align-items-center justify-content-center"
+      >
+        <Col lg>
+          <img id="logo" src={logo} alt="logo" />
+        </Col>
+        <div className="divider-line"></div>
+        <Col lg>
+          <div className="login-signup">
+            <div className="nav-buttons">
+              <NavLink id="loginLink" to="/auth/login" className="lsButton" activeClassName="active-link" onClick={clearError}>
+                  Login
+              </NavLink>
+              <NavLink id="signUpBtn" to="/auth/signup" className="lsButton" activeClassName="active-link" onClick={clearError}>
+                  Sign Up
+              </NavLink>
+            </div>
             <Route path={`${match.url}/signup`}>
               <Signup
                 handleChange={handleSignUpChange}
@@ -159,10 +175,10 @@ function LoginSignUp() {
                 {error}
               </Alert>
             ) : null}
-          </Col>
-        </Row>
-      </Container>
-    </div>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

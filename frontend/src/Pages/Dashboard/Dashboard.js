@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
+import React, { Fragment, useState, useEffect, useContext, useCallback } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Graph from '../../Components/Graph/Graph';
 import './Dashboard.css';
@@ -26,17 +26,13 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [coinData, setCoinData] = useState(null);
   const [watchlist, setWatchList] = useState(null);
+  const [graphType, setGraphType] = useState(true);
 
   const ctx = useContext(AuthContext);
 
   useEffect(() => {
     getWatchlist();
   }, []);
-
-  useEffect(() => {
-    const coin = watchlist && watchlist.length > 0 ? watchlist[0] : 'dogecoin';
-    getCoinInfo(coin, setCoinData, setLoading);
-  }, [setCoinData]);
 
   // using this function re-renders all other necessary data on page.
   function changeCoin(coin) {
@@ -53,6 +49,12 @@ function Dashboard() {
       })
       .then((res) => {
         setWatchList(res.data.watchlist);
+      })
+      .then(() => {
+        return watchlist && watchlist.length > 0 ? watchlist[0] : 'dogecoin';
+      })
+      .then((coin) => {
+        getCoinInfo(coin, setCoinData, setLoading);
       })
       .catch((err) => {
         console.log(err);
@@ -102,7 +104,22 @@ function Dashboard() {
     wlist.splice(res.destination.index, 0, reordered);
 
     setWatchList(wlist);
+    axios.put('http://localhost:5000/watchlist', {
+        watchlist: wlist
+    },
+    {
+        headers: {
+            bearer: ctx.token
+        }
+    }).then(() => {
+    }).catch((err) => {
+        console.log(err);
+    })
+
   }
+  const graphTypeToggler = useCallback(() => {
+    setGraphType(!graphType);
+  }, [graphType]);
 
   return (
     <Fragment>
@@ -128,7 +145,14 @@ function Dashboard() {
                   <BarLoader width={300} color="#fff" />
                 </div>
               )}
-              {coinData && <Graph key={coinData.id} coin={coinData.id} />}
+              {coinData && (
+                <Graph
+                  graphType={graphType}
+                  changeType={graphTypeToggler}
+                  key={coinData.id}
+                  coin={coinData.id}
+                />
+              )}
             </Row>
             <Row>
               {coinData && <Info key={coinData.id} coin={coinData.id} />}

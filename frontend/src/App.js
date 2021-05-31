@@ -4,6 +4,7 @@ import SignUpLogIn from './Pages/SignUpLogIn/SignUpLogIn';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import AuthContext from './store/AuthContext';
 import './App.css';
+import PageNotFound from './Components/PageNotFound/PageNotFound';
 
 function App() {
   const ctx = useContext(AuthContext);
@@ -21,7 +22,7 @@ function App() {
             {ctx.isLoggedIn ? <Dashboard /> : <Redirect to="/" />}
         </Route>
         <Route path="*">
-            <h1 style={{color: 'white', fontSize: '100pt'}}>404 PAGE LATER?</h1>
+            <PageNotFound />
         </Route>
       </Switch>
     </BrowserRouter>

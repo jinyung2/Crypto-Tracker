@@ -31,6 +31,7 @@ function Watchlist(props) {
 
   function changeCoin() {
     props.changeCoin(data.symbol.toLowerCase());
+    window.scroll({top: 0, left: 0, behavior: 'smooth'});
   }
 
   useEffect(() => {

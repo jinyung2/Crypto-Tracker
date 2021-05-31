@@ -27,7 +27,9 @@
 }
 
 .history-button:hover,
-.history-button:focus {
+.history-button:focus,
+.type-switch:hover,
+.type-switch:focus {
     cursor: pointer;
     background-color: var(--color-sub-2);
     color: var(--color-font-inv);    
@@ -36,4 +38,13 @@
 .active {
     background-color: var(--color-sub-2);
     color: var(--color-font-inv);
+}
+
+.type-switch {
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid white;
+    grid-column: -1 / -2;
+    
 }

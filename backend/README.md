@@ -99,10 +99,21 @@ Used to search for specific coins.
 
 ### Response
 If a coin with the given `id` is found, then a json file is returned containing:
-* `name`: The name of the coin
+* `name`: the name of the coin
 * `id`: the id of the coin
 * `symbol`: the symbol of the coin
-* `priceUsd`: The current price, in USD, of the coin
+* `priceUsd`: the current price, in USD, of the coin
+
+## `/coin/<id>/<interval>`
+### Compatible Methods: GET
+Returns a coin's history with the given time intervals. `id` is the name of the coin and `interval` can be either `m1`, `m5`, `m15`, `m30`, `h1`, `h2`, `h6`, `h12`, or `d1`
+
+### Response
+Returns a json response with `data`, which is an array of dictionaries containing:
+* `date`: the date at which the data was collected
+* `time`: the time at which the data was collected
+* `priceUsd`: the price of the coin at that given date and time
+* `circulatingSupply`: the supply of the coin at the given date and time
 
 ## `/watchlist`
 ### Compatible Methods: GET, PUT

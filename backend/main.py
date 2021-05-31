@@ -232,7 +232,7 @@ def get_coin(id):
     return jsonify({"error": "Coin not found"}), 404
 
 
-@app.route('/coin/<id>/<interval>')
+@app.route('/coin/<id>/<interval>', methods=['GET'])
 def get_history(id, interval):
     """
     id: the coin id

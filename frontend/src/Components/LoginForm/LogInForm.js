@@ -1,29 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./../../Pages/SignUpLogIn/SignUpLogIn.css";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './../../Pages/SignUpLogIn/SignUpLogIn.css';
 
 function LogIn(props) {
   return (
-    <div>
-      <div className="nav-buttons">
-        <Link id="loginLink" to="/auth/login">
-          <button
-            style={{ backgroundColor: "#979797" }}
-            className="lsButton"
-            onClick={props.clearError}
-          >
-            Login
-          </button>
-        </Link>
-        <Link id="signUpBtn" to="/auth/signup">
-          <button className="lsButton" onClick={props.clearError}>
-            Sign Up
-          </button>
-        </Link>
-      </div>
       <form id="signUpForm">
         <input
-          className="form-control form-control-lg signUpInput"
+          className="form-control signUpInput"
           type="text"
           name="email"
           placeholder="Email"
@@ -31,7 +14,7 @@ function LogIn(props) {
         />
         <br />
         <input
-          className="form-control form-control-lg signUpInput"
+          className="form-control signUpInput"
           type="password"
           name="password"
           onChange={props.handleChange}
@@ -45,7 +28,6 @@ function LogIn(props) {
           onClick={props.submitForm}
         />
       </form>
-    </div>
   );
 }
 

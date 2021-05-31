@@ -1,41 +1,63 @@
-#signUpLogin {
-  padding: 10% 10%;
+.main-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10%;
+}
+
+.divider-line {
+    height: 40vw;
+    width: 1px;
+    background-color: var(--color-sub);
+    margin: 0 3%;
 }
 
 #logo {
-  display: inline-block;
-  border: none;
-  background: none;
-  max-height: 500px;
-  width: auto;
+  width: 100%;
+}
+
+#loginLink,
+#signUpBtn {
+    flex: 1 1 auto;
+    width: 100%;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+    color: black;
 }
 
 .lsButton {
-  display: inline;
-  margin: 0;
-  background-color: var(--color-sub-2);
-  outline: none;
-  border: none;
-  width: 30%;
-  font-size: 160%;
-  padding: 1%;
+    background-color: var(--color-sub-2);
+    white-space: nowrap;
+    outline: none;
+    border: none;
+    padding: 3% 1%;
+    width: 100%;
+}
+
+.login-signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
 }
 
 #signUpForm {
-  /* height: 100%; */
   background-color: var(--color-sub);
-  width: 60%;
-  padding: 8% 5%;
-  margin-left: 20%;
+  padding: 8%;
+  width: 100%;
 }
 
 .signUpInput {
   margin: 2% 2% 2% 0;
   border-radius: 100px;
-  border: 1px solid #000000;
   width: 100%;
   padding: 3% 7%;
-  font-size: 120%;
+  font-size: 1.5rem;
 }
 
 .signUpSubmit {
@@ -44,72 +66,47 @@
   background: var(--color-button);
   border: none;
   margin-top: 5%;
-  font-size: 120%;
+  font-size: 1.5rem;
 }
 
-#vr {
-    border-left: 1px solid #8D8D8D;
-    height: 100%;
+.nav-buttons {
+    width: 100%;
+    display: flex;
 }
 
-@media only screen and (max-width: 1024px) {
+.active-link {
+    background-color: var(--color-sub);
+}
+
+@media only screen and (max-width: 1253px) {
+    .container-fluid {
+        padding: 5%;
+    }
+
+    .login-signup,
+    .signUpSubmit,
+    .signUpInput {
+        font-size: 1.25rem;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .divider-line {
+        display: none;
+    }
+    
     #logo {
-        max-height: 100px;
+        padding: 5% 0;
+        width: 75%;
     }
 
-    .lsButton {
-        width: 40%;
+    .login-signup {
+        padding: 5% 10%;
     }
 
-    #signUpForm {
-        width: 80%;
-        margin-left: 10%;
-    }
-}
-
-@media only screen and (max-width: 425px) {
-    #logo {
-        max-height: 90px;
-    }
-
-    .lsButton {
-        width: 50%;
-        margin-top: 10%;
-    }
-
-    #signUpForm {
-        width: 100%;
-        margin-left: 0;
-    }
-
-    #vr {
-        border-left: none;
-    }
-}
-
-@media only screen and (width: 414px) {
-    #logo {
-        width: 100%;
-        height: auto;
-    }
-}
-
-@media only screen and (width: 540px) {
-    #signUpLogin {
-        padding: 15% 15%;
-    }
-
-    .lsButton {
-        width: 50%;
-        margin-top: 8%;
-    }
-
-    #signUpForm {
-        width: 100%;
-        margin-left: 0;
-    }
-
-    #vr {
-        border-left: none;
+    .login-signup,
+    .signUpSubmit,
+    .signUpInput {
+        font-size: 0.9rem;
     }
 }

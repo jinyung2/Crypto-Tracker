@@ -64,6 +64,7 @@ on your terminal.
 
 Please note that this does NOT remove all styling errors. You should re-run `pycodestyle` afterwards to make sure that all issues were addressed.
 
+
 # Routes
 
 ## `/signup`
@@ -107,12 +108,10 @@ If a coin with the given `id` is found, then a json file is returned containing:
 * `priceUsd`: The current price, in USD, of the coin
 
 ## `/watchlist`
-### Compatible Methods: GET, PUT
-Used to get or update the watchlist of a specific user.
+### Compatible Methods: GET
+Used to get the watchlist of a specific user. NOTE that this route is still in development, so the information might change in the future.
 
 Route expects a `token` to be passed in through the `bearer` header.
-
-In the case of a `PUT`, the route also expects a json file containing a `watchlist`, which is an array containing the new coins that the user is tracking.
 
 ### Response
 Returns json file with a `watchlist`: an array containing the names of the coins that the user has in their watchlist.

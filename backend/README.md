@@ -7,7 +7,6 @@ There are a couple things that you need to do to get started.
 
 
 # Set Up
-
 ## Virtual Environment
 It is recommended that you set up a virtual environment to ensure that the project is isolated.
 
@@ -64,9 +63,7 @@ on your terminal.
 
 Please note that this does NOT remove all styling errors. You should re-run `pycodestyle` afterwards to make sure that all issues were addressed.
 
-
 # Routes
-
 ## `/signup`
 ### Compatible Methods: POST
 Used for user account creation.
@@ -96,7 +93,7 @@ If login fails, a json file containing a `reason` will be returned (Does not spe
 
 ## `/coin/<id>`
 ### Compatible Methods: GET
-Used to search for specific coins. NOTE that this route is still in development, so the information might change in the future.
+Used to search for specific coins.
 
 `id` can either be the id of a coin, or the symbol of a coin.
 
@@ -120,6 +117,6 @@ Returns json file with a `watchlist`: an array containing the names of the coins
 
 ## `/watchlist/<id>`
 ### Compatible Methods: POST, DELETE
-Used to add or delete elements from a user's watchlist. NOTE that this route is still in development, so the information might change in the future.
+Used to add or delete elements from a user's watchlist.
 
 `id` is the name of coin. Can be updated to also work with symbols

@@ -160,8 +160,8 @@ def verify_token(token):
     return True
 
 
-# Route to get the user's watchlist
-@app.route('/watchlist', methods=['GET'])
+# Route to get/update a user's watchlist
+@app.route('/watchlist', methods=['GET', 'PUT'])
 def get_watchlist():
 
     # Get the passed in token
@@ -171,8 +171,18 @@ def get_watchlist():
     if not verify_token(token):
         return jsonify(success=False), 400
 
-    # Return user's watchlist
-    return jsonify(watchlist=context.user['watchlist']), 201
+    if request.method == 'GET':
+        # Return user's watchlist
+        return jsonify(watchlist=context.user['watchlist']), 201
+
+    if request.method == 'PUT':
+        # Get the newly ordered watchlist
+        new_watchlist = request.get_json()['watchlist']
+
+        #Save user with new watchlist
+        context.user['watchlist'] = new_watchlist
+        User(context.user).update_watchlist()
+        return jsonify(success=True), 201
 
 
 # Route to add/remove an item from watchlist

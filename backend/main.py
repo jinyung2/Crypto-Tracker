@@ -179,7 +179,7 @@ def get_watchlist():
         # Get the newly ordered watchlist
         new_watchlist = request.get_json()['watchlist']
 
-        #Save user with new watchlist
+        # Save user with new watchlist
         context.user['watchlist'] = new_watchlist
         User(context.user).update_watchlist()
         return jsonify(success=True), 201

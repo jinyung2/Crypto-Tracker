@@ -13,6 +13,17 @@ def test_find_by_email_not_found():
    assert User().find_by_email("nonexistentemail@no.com") == None
 
 
+def test_update_watchlist_empty():
+
+   empty_watchlist = []
+
+   found_user = User().find_by_email(existing_user)
+   found_user['watchlist'] = empty_watchlist
+   User(found_user).update_watchlist()
+
+   assert User().find_by_email(existing_user)['watchlist'] == empty_watchlist
+
+
 def test_update_watchlist_one_item():
 
    one_item_watchlist = ['dogecoin']

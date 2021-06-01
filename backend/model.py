@@ -6,7 +6,7 @@ from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer,
 
 
 from dotenv import load_dotenv
-import os 
+import os
 
 
 class Model(dict):
@@ -54,7 +54,7 @@ class User(Model):
     db = db_client.get_database('cryptotracker')
     collection = db.Users
 
-    def find_all(self):
+    def find_all(self) -> list:
         users = list(self.collection.find())
         for user in users:
             user["_id"] = str(user["_id"])
@@ -71,7 +71,7 @@ class User(Model):
             user["_id"] = str(user["_id"])
         return user
 
-    def find_by_id(self, id: str):
+    def find_by_id(self, id: str) -> list:
 
         user = self.collection.find_one({"_id": id})
 
@@ -81,7 +81,7 @@ class User(Model):
         return user
 
     # Auth-Token Generation
-    def generate_auth_token(self, user: dict, expiration=600):
+    def generate_auth_token(self, user: dict, expiration: int = 600):
         """
         Input:  A dictionary representing a user and an expiration timer,
                 600 seconds (10 minutes) by default
@@ -94,7 +94,7 @@ class User(Model):
         return s.dumps({'email': user['email']})
 
     # Token verification
-    def verify_auth_token(self, token):
+    def verify_auth_token(self, token: str):
         """
         Input:  A token
         Output: Returns the user linked to that token if the token is valid

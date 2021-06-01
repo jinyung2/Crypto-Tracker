@@ -15,7 +15,7 @@ class Crypto:
 
     def get_history(self, id, interval):
         """
-        id: the coine id
+        id: the coin id
         interval: m1,m5,m15,m30,h1,h2,h6,h12,d1
 
         """

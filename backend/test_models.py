@@ -1,4 +1,5 @@
 import pytest
+from crypto_model import Crypto
 from model import User
 
 existing_user = 'testuser@users.com'   # Email of an existing user
@@ -79,3 +80,20 @@ def test_verify_auth_token_invalid():
 
    # Check that there was no user linked to that token
    assert linked_user == None
+
+# ------------- CRYPTO MODEL TESTS ---------------
+
+def test_get_all_coin():
+   # Get all of the cois
+   coins = Crypto().get_all_coin()
+
+   # Check that something was returned
+   assert coins != None
+
+   # Check that the response has a data section
+   assert 'data' in coins
+
+   # Check that data contains a list of coins
+   assert type(coins['data']) == list
+
+

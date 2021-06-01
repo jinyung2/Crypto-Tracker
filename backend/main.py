@@ -221,22 +221,23 @@ def edit_watchlist(id):
     return jsonify(success=True), 201
 
 
+# Route to get the current information about a coin
 @app.route('/coin/<id>', methods=['GET'])
 def get_coin(id):
 
+    # Get the current info of all the coins
     data = cr.get_all_coin()
+
+    # Search for the specified coin and return its info
     for info in data['data']:
         if id == info['id'] or str.upper(id) == info['symbol']:
             return info
 
+    # If coin was not found, return an error
     return jsonify({"error": "Coin not found"}), 404
 
 
+# Route to get the hitorical data of a coin
 @app.route('/coin/<id>/<interval>', methods=['GET'])
 def get_history(id, interval):
-    """
-    id: the coin id
-    interval: m1,m5,m15,m30,h1,h2,h6,h12,d1
-    """
-    data = cr.get_history(id, interval)
-    return data
+    return cr.get_history(id, interval)

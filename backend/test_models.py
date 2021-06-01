@@ -33,3 +33,19 @@ def test_update_watchlist_one_item():
    User(found_user).update_watchlist()
 
    assert User().find_by_email(existing_user)['watchlist'] == one_item_watchlist
+
+
+def test_find_all():
+
+   all_users = User().find_all()
+
+   found_user = None
+   for user in all_users:
+      if user['email'] == existing_user:
+         found_user = user
+         break
+
+   assert found_user != None
+
+
+

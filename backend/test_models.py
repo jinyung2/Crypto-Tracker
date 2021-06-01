@@ -48,4 +48,12 @@ def test_find_all():
    assert found_user != None
 
 
+def test_generate_auth_token():
+
+   user = User().find_by_email(existing_user)
+   token = User().generate_auth_token(user)
+
+   assert token != None
+
+
 

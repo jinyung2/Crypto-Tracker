@@ -1,7 +1,7 @@
 import pytest
 from model import User
 
-existing_user = 'hadiasemi@gmail.com'   # Email of an existing user
+existing_user = 'testuser@users.com'   # Email of an existing user
 
 
 def test_find_by_email_found():
@@ -10,65 +10,72 @@ def test_find_by_email_found():
 
 
 def test_find_by_email_not_found():
+   # Checks that there is no user with the passed in email
    assert User().find_by_email("nonexistentemail@no.com") == None
 
 
 def test_update_watchlist_empty():
-
-   empty_watchlist = []
-
+   # Get a user and replace its watchlist with an empty list
    found_user = User().find_by_email(existing_user)
-   found_user['watchlist'] = empty_watchlist
+   found_user['watchlist'] = []
    User(found_user).update_watchlist()
 
-   assert User().find_by_email(existing_user)['watchlist'] == empty_watchlist
+   # Get the newly updated user
+   updated_user = User().find_by_email(existing_user)
+
+   # Check that the user's watchlist is indeed empty
+   assert updated_user['watchlist'] == []
 
 
 def test_update_watchlist_one_item():
-
-   one_item_watchlist = ['dogecoin']
+   # List with a single item that will replace the user's watchlist
+   single_item = 'dogecoin'
    
+   # Get a user and replace its watchlist with a one-item watchlist
    found_user = User().find_by_email(existing_user)
-   found_user['watchlist'] = one_item_watchlist
+   found_user['watchlist'] = [single_item]
    User(found_user).update_watchlist()
 
-   assert User().find_by_email(existing_user)['watchlist'] == one_item_watchlist
+   # Get the newly updated user
+   updated_user = User().find_by_email(existing_user)
+
+   # Check that the user's watchlist contains only one item
+   assert updated_user['watchlist'] == [single_item]
 
 
 def test_find_all():
-
-   all_users = User().find_all()
-
-   found_user = None
-   for user in all_users:
-      if user['email'] == existing_user:
-         found_user = user
-         break
-
-   assert found_user != None
+   # Checks that there is at least one user
+   assert User().find_all() != []
 
 
 def test_generate_auth_token():
-
+   # Get a user and generate a token for it
    user = User().find_by_email(existing_user)
    token = User().generate_auth_token(user)
 
+   # Check that a token was indeed generated
    assert token != None
 
 
 def test_verify_auth_token_valid():
-
+   # Get a user and generate a token for it
    user = User().find_by_email(existing_user)
    token = User().generate_auth_token(user)
 
+   # Get the user linked to the token
    linked_user = User().verify_auth_token(token)
+
+   # Check that the user linked to the token matches with the passed in user
    assert linked_user['email'] == existing_user
 
 
 def test_verify_auth_token_invalid():
-
+   # Get a user and generate a token for it
    user = User().find_by_email(existing_user)
    token = User().generate_auth_token(user)
 
+   # Try go verify an invalid token
    linked_user = User().verify_auth_token("invalid token")
+
+   # Check that there was no user linked to that token
    assert linked_user == None

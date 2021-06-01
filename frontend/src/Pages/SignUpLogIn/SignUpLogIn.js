@@ -7,7 +7,7 @@ import {
   useHistory,
   NavLink,
 } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Signup from '../../Components/SignUpForm/SignUp';
 import LogIn from '../../Components/LoginForm/LogInForm';
 import logo from './../../assets/crypto-logo-white.png';
@@ -130,7 +130,6 @@ function LoginSignUp() {
 
   function clearError() {
     setError('');
-    console.log(hist);
   }
 
   return (

@@ -8,6 +8,7 @@ import axios from 'axios';
 import AuthContext from '../../store/AuthContext';
 import Watchlist from '../../Components/Watchlist/Watchlist';
 import Info from '../../Components/Info/Info';
+// 
 
 function getCoinInfo(name, setFn, setLoading) {
   axios

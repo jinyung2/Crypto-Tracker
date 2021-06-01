@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BarLoader } from 'react-spinners';
 import axios from 'axios';
 import './Watchlist.css';
+import { user } from '../../Api/User';
 
 function Watchlist(props) {
   const [data, setData] = useState({
@@ -13,8 +14,9 @@ function Watchlist(props) {
   const [loading, setLoading] = useState(false);
 
   function priceHandler() {
-    axios
-      .get(`http://localhost:5000/coin/${props.coin}`)
+    // axios
+    //   .get(`http://localhost:5000/coin/${props.coin}`)
+    user.getWatchlist(props.coin)
       .then((res) => {
         setData({
           name: res.data.name,

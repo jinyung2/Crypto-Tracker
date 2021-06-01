@@ -97,3 +97,15 @@ def test_get_all_coin():
    assert type(coins['data']) == list
 
 
+def test_get_history():
+   # Get the hitory of a coin
+   coin_hist = Crypto().get_history('dogecoin', 'm1')
+
+   # Check that something was returned
+   assert coin_hist != None
+
+   # Check that the response has a data section
+   assert 'data' in coin_hist
+
+   # Check that data contains a list with historical data 
+   assert type(coin_hist['data']) == list

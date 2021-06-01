@@ -8,6 +8,7 @@ import axios from 'axios';
 import AuthContext from '../../store/AuthContext';
 import Watchlist from '../../Components/Watchlist/Watchlist';
 import Info from '../../Components/Info/Info';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 function getCoinInfo(name, setFn, setLoading) {
   axios
@@ -97,6 +98,25 @@ function Dashboard() {
       });
   }
 
+  function handleDragEnd(res) {
+    const wlist = [...watchlist];
+    const [reordered] = wlist.splice(res.source.index, 1);
+    wlist.splice(res.destination.index, 0, reordered);
+
+    setWatchList(wlist);
+    axios.put('http://localhost:5000/watchlist', {
+        watchlist: wlist
+    },
+    {
+        headers: {
+            bearer: ctx.token
+        }
+    }).then(() => {
+    }).catch((err) => {
+        console.log(err);
+    })
+
+  }
   const graphTypeToggler = useCallback(() => {
     setGraphType(!graphType);
   }, [graphType]);
@@ -142,20 +162,43 @@ function Dashboard() {
             <div className="header-container title watchlist-title">
               WatchList
             </div>
-            <div className="watchlist">
-              {watchlist && watchlist.length > 0 ? (
-                [...watchlist].map((v, i) => (
-                  <Watchlist
-                    key={v}
-                    coin={v}
-                    changeCoin={changeCoin}
-                    remove={removeFromWatchList}
-                  />
-                ))
-              ) : (
-                <div>HELLO PUT EMPTY LIST PLACEHOLDER HERE!</div>
-              )}
-            </div>
+            <DragDropContext onDragEnd={handleDragEnd}>
+              <Droppable droppableId="watchlist">
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    className="watchlist"
+                    {...provided.droppableProps}
+                  >
+                    {watchlist && watchlist.length > 0 ? (
+                      [...watchlist].map((v, i) => (
+                        <Draggable key={v} draggableId={v} index={i}>
+                          {(provided) => (
+                            <div
+                              {...provided.dragHandleProps}
+                              {...provided.draggableProps}
+                            >
+                              <Watchlist
+                                innerRef={provided.innerRef}
+                                coin={v}
+                                changeCoin={changeCoin}
+                                remove={removeFromWatchList}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))
+                    ) : (
+                      <div className="watchlist-placeholder">
+                        <p>You have nothing in your Watchlist!</p>
+                        <p>Search for crypto and click 'Add to Watchlist'!</p>
+                      </div>
+                    )}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           </Col>
         </Row>
       </Container>

@@ -56,4 +56,12 @@ def test_generate_auth_token():
    assert token != None
 
 
+def test_verify_auth_token_valid():
+
+   user = User().find_by_email(existing_user)
+   token = User().generate_auth_token(user)
+
+   linked_user = User().verify_auth_token(token)
+   assert linked_user['email'] == existing_user
+
 

@@ -10,8 +10,6 @@ function LogIn(props) {
     setPassword(!isPasswordShown);
   }
 
-  console.log(isPasswordShown);
-
   return (
       <form id="signUpForm">
         <input

@@ -11,7 +11,7 @@ Once in their accounts, users are able to search for a specific cryptocurrency a
 <img src="screenshots/dashboard.png" width=600>
 
 The website is responsive and can adapt to devices of different resolutions.
-<img src="screenshots/responsive.png" width=400>
+<img src="screenshots/responsive.png" height=400>
 
 ## Installation
 Detailed instructions on how to set up the frontend and backend can be found in their respective folders. The general requirements are to have pip (or any package manager) and npm installed.

@@ -8,7 +8,7 @@ import axios from 'axios';
 import AuthContext from '../../store/AuthContext';
 import Watchlist from '../../Components/Watchlist/Watchlist';
 import Info from '../../Components/Info/Info';
-// 
+import { user } from '../../Api/User';
 
 function getCoinInfo(name, setFn, setLoading) {
   axios
@@ -41,12 +41,13 @@ function Dashboard() {
   }
 
   function getWatchlist() {
-    axios
-      .get('http://localhost:5000/watchlist', {
-        headers: {
-          bearer: ctx.token,
-        },
-      })
+    // axios
+    //   .get('http://localhost:5000/watchlist', {
+    //     headers: {
+    //       bearer: ctx.token,
+    //     },
+    //   })
+    user.getWatchlist()
       .then((res) => {
         setWatchList(res.data.watchlist);
       })
@@ -62,16 +63,17 @@ function Dashboard() {
   }
 
   function addToWatchList() {
-    axios
-      .post(
-        `http://localhost:5000/watchlist/${coinData.id}`,
-        {},
-        {
-          headers: {
-            bearer: ctx.token,
-          },
-        }
-      )
+    // axios
+    //   .post(
+    //     `http://localhost:5000/watchlist/${coinData.id}`,
+    //     {},
+    //     {
+    //       headers: {
+    //         bearer: ctx.token,
+    //       },
+    //     }
+    //   )
+    user.addToWatchlist(coinData.id)
       .then((res) => {
         // possibly validate res here
         if (watchlist.indexOf(coinData.id) < 0) {

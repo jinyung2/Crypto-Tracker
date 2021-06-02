@@ -16,7 +16,7 @@ function Watchlist(props) {
   function priceHandler() {
     // axios
     //   .get(`http://localhost:5000/coin/${props.coin}`)
-    user.getWatchlist(props.coin)
+    user.getCoin(props.coin)
       .then((res) => {
         setData({
           name: res.data.name,

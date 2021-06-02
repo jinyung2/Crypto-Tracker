@@ -11,7 +11,8 @@ export const userApi = axios.create({
 userApi.interceptors.request.use((config) => ({
   ...config,
   headers: {
-      bearer: ctx.token
+    //   bearer: ctx.token
+      bearer: localStorage.getItem('token')
   },
 }));
 

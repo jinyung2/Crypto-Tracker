@@ -21,8 +21,17 @@ userApi.interceptors.response.use((response) =>
     async (error) => Promise.reject(error.response)
 );
 
-// export const authApi = axios.create({
-//   baseURL: baseURL,
-// });
+export const authApi = axios.create({
+  baseURL: baseURL,
+});
+
+authApi.interceptors.request.use((config) => ({
+    ...config
+}));
+
+userApi.interceptors.response.use((response) => 
+    response,
+    async (error) => Promise.reject(error.response)
+);
 
 // export { userApi, authApi };

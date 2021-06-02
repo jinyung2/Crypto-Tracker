@@ -88,7 +88,4 @@ describe('removeFromWatchlist', () => {
 
         await expect(user.removeFromWatchlist(coin)).rejects.toThrow();
     });
-
-    
-
 })

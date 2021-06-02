@@ -123,21 +123,6 @@ def validSignIn(user: dict) -> bool:
     return True
 
 
-# Only for testing purposes. Will be removed afterwards
-# Gets the token for the user passed through the header.
-@app.route('/token', methods=['GET'])
-def get_auth_token():
-
-    # A header is still to be decided
-    token = request.headers.get("bearer")
-
-    token = User().generate_auth_token(context.user)
-    return jsonify({'token': token.decode('ascii')})
-
-
-# If given an email, verifies that the password matches the one in the database
-# If given a token, verifies that the token is valid
-
 def verify_token(token):
     """
     Input:  A token

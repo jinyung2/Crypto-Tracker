@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { user } from '../../Api/User';
 import axios from 'axios';
 
 import './Info.css';
 
 function getData(coin, setData) {
-    axios.get("http://localhost:5000/coin/" + coin).then((res) => {
+    user.getCoin(coin)
+    .then((res) => {
         setData({
             'maxSupply': (res.data.maxSupply === null ? 0 : parseInt(res.data.maxSupply)),
             'marketCap': parseFloat(res.data.marketCapUsd).toFixed(2),

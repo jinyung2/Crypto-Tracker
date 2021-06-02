@@ -28,7 +28,7 @@ function Signup(props) {
           placeholder="Password"
         />
         <i
-          className="fa fa-eye password-icon"
+          className={isPasswordShown ? "fa fa-eye-slash password-icon" : "fa fa-eye password-icon"}
           onClick={togglePasswordVisibility}
         />
       </div>

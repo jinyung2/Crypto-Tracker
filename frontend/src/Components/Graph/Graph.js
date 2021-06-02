@@ -43,7 +43,7 @@ let options = {
   },
 };
 
-let borderColor = ['rgba(0, 177, 106, 1)'];
+let borderColor = [];
 
 function Graph(props) {
   const [loading, setLoading] = useState(true);
@@ -79,9 +79,10 @@ function Graph(props) {
           .slice(1);
 
         setGraphData(graphData);
+        borderColor = ['rgba(0, 177, 106, 1)'];
         for (let i = 1; i < graphData.length; i++) {
           borderColor.push(
-            graphData[i][0] > graphData[i][1]
+            +graphData[i][0] > +graphData[i][1]
               ? 'rgba(210, 77, 87, 1)'
               : 'rgba(0, 177, 106, 1)'
           );

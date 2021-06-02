@@ -1,4 +1,10 @@
-import React, { Fragment, useState, useEffect, useContext, useCallback } from 'react';
+import React, {
+  Fragment,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Graph from '../../Components/Graph/Graph';
 import './Dashboard.css';
@@ -12,8 +18,10 @@ import { user } from '../../Api/User';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 function getCoinInfo(name, setFn, setLoading) {
-  axios
-    .get(`http://localhost:5000/coin/${name}`)
+  //   axios
+  //     .get(`http://localhost:5000/coin/${name}`)
+  user
+    .getCoin(name)
     .then((res) => {
       setFn(res.data);
       setLoading(false);
@@ -48,7 +56,8 @@ function Dashboard() {
     //       bearer: ctx.token,
     //     },
     //   })
-    user.getWatchlist()
+    user
+      .getWatchlist()
       .then((res) => {
         setWatchList(res.data.watchlist);
       })
@@ -74,7 +83,8 @@ function Dashboard() {
     //       },
     //     }
     //   )
-    user.addToWatchlist(coinData.id)
+    user
+      .addToWatchlist(coinData.id)
       .then((res) => {
         // possibly validate res here
         if (watchlist.indexOf(coinData.id) < 0) {
@@ -87,12 +97,14 @@ function Dashboard() {
   }
 
   function removeFromWatchList(coin) {
-    axios
-      .delete(`http://localhost:5000/watchlist/${coin}`, {
-        headers: {
-          bearer: ctx.token,
-        },
-      })
+    // axios
+    //   .delete(`http://localhost:5000/watchlist/${coin}`, {
+    //     headers: {
+    //       bearer: ctx.token,
+    //     },
+    //   })
+    user
+      .removeFromWatchlist(coin)
       .then(() => {
         setWatchList([...watchlist].filter((c) => c !== coin));
       })
@@ -107,19 +119,22 @@ function Dashboard() {
     wlist.splice(res.destination.index, 0, reordered);
 
     setWatchList(wlist);
-    axios.put('http://localhost:5000/watchlist', {
-        watchlist: wlist
-    },
-    {
-        headers: {
-            bearer: ctx.token
-        }
-    }).then(() => {
-    }).catch((err) => {
+    // axios.put('http://localhost:5000/watchlist', {
+    //     watchlist: wlist
+    // },
+    // {
+    //     headers: {
+    //         bearer: ctx.token
+    //     }
+    // })
+    user
+      .updateWatchlist(wlist)
+      .then(() => {})
+      .catch((err) => {
         console.log(err);
-    })
-
+      });
   }
+
   const graphTypeToggler = useCallback(() => {
     setGraphType(!graphType);
   }, [graphType]);

@@ -78,6 +78,22 @@ a:hover {
     background-color: var(--color-sub);
 }
 
+.login-password-icon {
+    position: absolute;
+    top: 53%;
+    right: 15%;
+    color: black;
+    cursor: pointer;
+}
+
+.signup-password-icon {
+    position: absolute;
+    top: 43%;
+    right: 15%;
+    color: black;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 1253px) {
     .container-fluid {
         padding: 5%;
@@ -109,4 +125,10 @@ a:hover {
     .signUpInput {
         font-size: 0.9rem;
     }
+
+    .login-password-icon,
+    .signup-password-icon {
+        right: 22%;
+    }
 }
+

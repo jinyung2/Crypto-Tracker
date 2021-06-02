@@ -10,7 +10,6 @@ import Graph from '../../Components/Graph/Graph';
 import './Dashboard.css';
 import DashboardNavBar from '../../Components/DashboardNavBar/DashboardNavBar';
 import { BarLoader } from 'react-spinners';
-import axios from 'axios';
 import AuthContext from '../../store/AuthContext';
 import Watchlist from '../../Components/Watchlist/Watchlist';
 import Info from '../../Components/Info/Info';
@@ -18,8 +17,6 @@ import { user } from '../../Api/User';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 function getCoinInfo(name, setFn, setLoading) {
-  //   axios
-  //     .get(`http://localhost:5000/coin/${name}`)
   user
     .getCoin(name)
     .then((res) => {
@@ -50,12 +47,6 @@ function Dashboard() {
   }
 
   function getWatchlist() {
-    // axios
-    //   .get('http://localhost:5000/watchlist', {
-    //     headers: {
-    //       bearer: ctx.token,
-    //     },
-    //   })
     user
       .getWatchlist()
       .then((res) => {
@@ -73,16 +64,6 @@ function Dashboard() {
   }
 
   function addToWatchList() {
-    // axios
-    //   .post(
-    //     `http://localhost:5000/watchlist/${coinData.id}`,
-    //     {},
-    //     {
-    //       headers: {
-    //         bearer: ctx.token,
-    //       },
-    //     }
-    //   )
     user
       .addToWatchlist(coinData.id)
       .then((res) => {
@@ -97,12 +78,6 @@ function Dashboard() {
   }
 
   function removeFromWatchList(coin) {
-    // axios
-    //   .delete(`http://localhost:5000/watchlist/${coin}`, {
-    //     headers: {
-    //       bearer: ctx.token,
-    //     },
-    //   })
     user
       .removeFromWatchlist(coin)
       .then(() => {
@@ -119,14 +94,6 @@ function Dashboard() {
     wlist.splice(res.destination.index, 0, reordered);
 
     setWatchList(wlist);
-    // axios.put('http://localhost:5000/watchlist', {
-    //     watchlist: wlist
-    // },
-    // {
-    //     headers: {
-    //         bearer: ctx.token
-    //     }
-    // })
     user
       .updateWatchlist(wlist)
       .then(() => {})

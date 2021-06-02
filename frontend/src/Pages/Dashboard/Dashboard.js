@@ -99,6 +99,9 @@ function Dashboard() {
   }
 
   function handleDragEnd(res) {
+      if (!res.destination) {
+          return;
+      }
     const wlist = [...watchlist];
     const [reordered] = wlist.splice(res.source.index, 1);
     wlist.splice(res.destination.index, 0, reordered);

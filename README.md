@@ -1,5 +1,7 @@
 # Crypto Trackr – Team Doge
 
+[![Build Status](https://travis-ci.com/Hadiasemi/Crypto-Tracker.svg?branch=master)](https://travis-ci.com/Hadiasemi/Crypto-Tracker)
+
 This project was developed for Cal Poly's CS307 by Jin Choi, Tessa Tapmongkol, Hadi Asemi, and Wesly Ortega. 
 
 It was developed using a React frontend and a Flask backend. The web app's main purpose is to allow for the searching and tracking of cryptocurrency prices. 

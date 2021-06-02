@@ -10,7 +10,7 @@ function App() {
   const ctx = useContext(AuthContext);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route exact path="/">
             {ctx.isLoggedIn ? <Redirect to="/dashboard"/> : <Redirect to="/auth"/> }

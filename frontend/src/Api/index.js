@@ -1,5 +1,4 @@
 import axios from 'axios';
-import ctx from '../store/AuthContext';
 
 const baseURL =
   process.env.ENV === 'prod' ? 'https://jinychoi.dev/flask/' : 'http://localhost:5000/';
@@ -11,7 +10,6 @@ export const userApi = axios.create({
 userApi.interceptors.request.use((config) => ({
   ...config,
   headers: {
-    //   bearer: ctx.token
       bearer: localStorage.getItem('token')
   },
 }));

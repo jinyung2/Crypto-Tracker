@@ -1,16 +1,9 @@
-import React, {
-  Fragment,
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-} from 'react';
+import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Graph from '../../Components/Graph/Graph';
 import './Dashboard.css';
 import DashboardNavBar from '../../Components/DashboardNavBar/DashboardNavBar';
 import { BarLoader } from 'react-spinners';
-import AuthContext from '../../store/AuthContext';
 import Watchlist from '../../Components/Watchlist/Watchlist';
 import Info from '../../Components/Info/Info';
 import { user } from '../../Api/User';
@@ -33,8 +26,6 @@ function Dashboard() {
   const [coinData, setCoinData] = useState(null);
   const [watchlist, setWatchList] = useState(null);
   const [graphType, setGraphType] = useState(true);
-
-  const ctx = useContext(AuthContext);
 
   useEffect(() => {
     getWatchlist();

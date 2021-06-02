@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BarLoader } from 'react-spinners';
-import axios from 'axios';
 import './Watchlist.css';
 import { user } from '../../Api/User';
 

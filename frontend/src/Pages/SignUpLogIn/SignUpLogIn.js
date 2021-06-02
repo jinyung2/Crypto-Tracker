@@ -7,12 +7,11 @@ import {
   useHistory,
   NavLink,
 } from 'react-router-dom';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import Signup from '../../Components/SignUpForm/SignUp';
 import LogIn from '../../Components/LoginForm/LogInForm';
 import logo from './../../assets/crypto-logo-white.png';
 import AuthContext from '../../store/AuthContext';
-import axios from 'axios';
 import { auth } from '../../Api/Auth';
 
 function LoginSignUp() {
@@ -72,7 +71,6 @@ function LoginSignUp() {
       clearError();
     auth.signup(up.email, up.password, up.reEnterPass)
         .then((res) => {
-          console.log(res);
           ctx.login(res.data.token, up.email, Date.now() + 600000);
           hist.push('/dashboard');
         })

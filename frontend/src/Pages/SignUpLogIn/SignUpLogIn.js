@@ -160,7 +160,7 @@ function LoginSignUp() {
               <Redirect to={`${match.url}/signup`} />
             </Route>
             {error ? (
-              <Alert style={{ margin: '5px 20%' }} variant="danger">
+              <Alert style={{ margin: '5px 0' }} variant="danger">
                 {error}
               </Alert>
             ) : null}

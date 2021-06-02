@@ -12,7 +12,7 @@ import Signup from '../../Components/SignUpForm/SignUp';
 import LogIn from '../../Components/LoginForm/LogInForm';
 import logo from './../../assets/crypto-logo-white.png';
 import AuthContext from '../../store/AuthContext';
-import axios from 'axios';
+import { auth } from '../../Api/Auth';
 
 function LoginSignUp() {
   const ctx = useContext(AuthContext);
@@ -69,14 +69,8 @@ function LoginSignUp() {
       setError('Passwords do not match. Please re-enter passwords.');
     } else {
       clearError();
-      axios
-        .post('http://localhost:5000/signup', {
-          email: up.email,
-          password: up.password,
-          reEnterPass: up.reEnterPass,
-        })
+    auth.signup(up.email, up.password, up.reEnterPass)
         .then((res) => {
-          console.log(res);
           ctx.login(res.data.token, up.email, Date.now() + 600000);
           hist.push('/dashboard');
         })
@@ -108,11 +102,7 @@ function LoginSignUp() {
       setError('Log In Credentials are invalid. Please try again.');
     } else {
       clearError();
-      axios
-        .post('http://localhost:5000/signin', {
-          email: loginCred.email,
-          password: loginCred.password,
-        })
+      auth.signin(loginCred.email, loginCred.password)
         .then((res) => {
           ctx.login(res.data.token, loginCred.email, Date.now() + 600000);
           hist.push('/dashboard');
@@ -130,7 +120,6 @@ function LoginSignUp() {
 
   function clearError() {
     setError('');
-    console.log(hist);
   }
 
   return (

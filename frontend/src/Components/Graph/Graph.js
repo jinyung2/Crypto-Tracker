@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
-import axios from 'axios';
 import { ScaleLoader } from 'react-spinners';
 import { BarChartLine, GraphUp } from 'react-bootstrap-icons';
+import { user } from '../../Api/User';
 import './Graph.css';
 
 let options = {
@@ -67,8 +67,7 @@ function Graph(props) {
   function getHistoryData(coin, inter) {
     setLoading(true);
     const diff = inter === 'm1' || inter === 'm5' ? 20 : 10;
-    axios
-      .get(`http://localhost:5000/coin/${coin}/${inter}`)
+      user.getCoinInter(coin, inter)
       .then((res) => {
         const graphData = res.data.data
           .filter((val, i, arr) => i % diff === 0 || i === arr.length - 1)

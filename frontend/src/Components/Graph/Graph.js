@@ -108,7 +108,7 @@ function Graph(props) {
                   {
                     type: 'bar',
                     categoryPercentage: 1.0,
-                    barPercentage: 0.75,
+                    barPercentage: 1.0,
                     label: '',
                     data: graphData,
                     backgroundColor: borderColor,

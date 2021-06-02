@@ -56,9 +56,16 @@ a:hover {
   margin: 2% 2% 2% 0;
   border-radius: 100px;
   width: 100%;
-  padding: 3% 7%;
+  padding: 2% 7%;
   font-size: 1.5rem;
+  border: none;
 }
+
+.signUpInput:focus {
+  box-shadow: 2px 2px 2px 2px black;
+  outline: none;
+}
+
 
 .signUpSubmit {
   padding: 3%;
@@ -78,18 +85,26 @@ a:hover {
     background-color: var(--color-sub);
 }
 
-.login-password-icon {
-    position: absolute;
-    top: 53%;
-    right: 15%;
-    color: black;
-    cursor: pointer;
+.input-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.signup-password-icon {
-    position: absolute;
-    top: 43%;
-    right: 15%;
+.input-icon-container:focus-within {
+    box-shadow: 2px 2px 2px 2px black;
+}
+
+.password-input {
+    height: 100%;
+    width: 100%;
+    flex: 1 1 auto;
+    border: none;
+    outline: none;
+}
+
+.password-icon {
+    flex: 0 0 auto;
     color: black;
     cursor: pointer;
 }
@@ -124,11 +139,6 @@ a:hover {
     .signUpSubmit,
     .signUpInput {
         font-size: 0.9rem;
-    }
-
-    .login-password-icon,
-    .signup-password-icon {
-        right: 22%;
     }
 }
 

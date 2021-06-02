@@ -5,7 +5,7 @@ This project was developed for Cal Poly's CS307 by Jin Choi, Tessa Tapmongkol, H
 It was developed using a React frontend and a Flask backend. The web app's main purpose is to allow for the searching and tracking of cryptocurrency prices. 
 
 Users are able to create an account or sign up onto an existing account. 
-<img src="screenshots/signup.png" width=600>
+<img src="screenshots/signup.png" width=400> | <img src="screenshots/login.png" width=400>
 
 that allows them to search for a specific cryptocurrency and add them into an individual watchlist. The watchlist can be arranged in any way that the user sees fit.
 

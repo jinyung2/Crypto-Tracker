@@ -7,7 +7,6 @@ There are a couple things that you need to do to get started.
 
 
 # Set Up
-
 ## Virtual Environment
 It is recommended that you set up a virtual environment to ensure that the project is isolated.
 
@@ -64,9 +63,7 @@ on your terminal.
 
 Please note that this does NOT remove all styling errors. You should re-run `pycodestyle` afterwards to make sure that all issues were addressed.
 
-
 # Routes
-
 ## `/signup`
 ### Compatible Methods: POST
 Used for user account creation.
@@ -96,28 +93,41 @@ If login fails, a json file containing a `reason` will be returned (Does not spe
 
 ## `/coin/<id>`
 ### Compatible Methods: GET
-Used to search for specific coins. NOTE that this route is still in development, so the information might change in the future.
+Used to search for specific coins.
 
 `id` can either be the id of a coin, or the symbol of a coin.
 
 ### Response
 If a coin with the given `id` is found, then a json file is returned containing:
-* `name`: The name of the coin
+* `name`: the name of the coin
 * `id`: the id of the coin
 * `symbol`: the symbol of the coin
-* `priceUsd`: The current price, in USD, of the coin
+* `priceUsd`: the current price, in USD, of the coin
+
+## `/coin/<id>/<interval>`
+### Compatible Methods: GET
+Returns a coin's history with the given time intervals. `id` is the name of the coin and `interval` can be either `m1`, `m5`, `m15`, `m30`, `h1`, `h2`, `h6`, `h12`, or `d1`
+
+### Response
+Returns a json response with `data`, which is an array of dictionaries containing:
+* `date`: the date at which the data was collected
+* `time`: the time at which the data was collected
+* `priceUsd`: the price of the coin at that given date and time
+* `circulatingSupply`: the supply of the coin at the given date and time
 
 ## `/watchlist`
-### Compatible Methods: GET
-Used to get the watchlist of a specific user. NOTE that this route is still in development, so the information might change in the future.
+### Compatible Methods: GET, PUT
+Used to get or update the watchlist of a specific user.
 
 Route expects a `token` to be passed in through the `bearer` header.
+
+In the case of a `PUT`, the route also expects a json file containing a `watchlist`, which is a new array containing the coins that the user is tracking.
 
 ### Response
 Returns json file with a `watchlist`: an array containing the names of the coins that the user has in their watchlist.
 
 ## `/watchlist/<id>`
 ### Compatible Methods: POST, DELETE
-Used to add or delete elements from a user's watchlist. NOTE that this route is still in development, so the information might change in the future.
+Used to add or delete elements from a user's watchlist.
 
 `id` is the name of coin. Can be updated to also work with symbols

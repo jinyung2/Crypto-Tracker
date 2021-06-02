@@ -46,6 +46,8 @@ describe('addToWatchlist', () => {
     const coin = 'test';
     await expect(user.addToWatchlist(coin)).rejects.toThrow();
     });
+})
 
+describe('updateWatchlist', () => {
     
 })

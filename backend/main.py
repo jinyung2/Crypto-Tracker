@@ -123,21 +123,6 @@ def validSignIn(user: dict) -> bool:
     return True
 
 
-# Only for testing purposes. Will be removed afterwards
-# Gets the token for the user passed through the header.
-@app.route('/token', methods=['GET'])
-def get_auth_token():
-
-    # A header is still to be decided
-    token = request.headers.get("bearer")
-
-    token = User().generate_auth_token(context.user)
-    return jsonify({'token': token.decode('ascii')})
-
-
-# If given an email, verifies that the password matches the one in the database
-# If given a token, verifies that the token is valid
-
 def verify_token(token):
     """
     Input:  A token
@@ -179,7 +164,7 @@ def get_watchlist():
         # Get the newly ordered watchlist
         new_watchlist = request.get_json()['watchlist']
 
-        #Save user with new watchlist
+        # Save user with new watchlist
         context.user['watchlist'] = new_watchlist
         User(context.user).update_watchlist()
         return jsonify(success=True), 201
@@ -221,22 +206,23 @@ def edit_watchlist(id):
     return jsonify(success=True), 201
 
 
+# Route to get the current information about a coin
 @app.route('/coin/<id>', methods=['GET'])
 def get_coin(id):
 
+    # Get the current info of all the coins
     data = cr.get_all_coin()
+
+    # Search for the specified coin and return its info
     for info in data['data']:
         if id == info['id'] or str.upper(id) == info['symbol']:
             return info
 
+    # If coin was not found, return an error
     return jsonify({"error": "Coin not found"}), 404
 
 
-@app.route('/coin/<id>/<interval>')
+# Route to get the hitorical data of a coin
+@app.route('/coin/<id>/<interval>', methods=['GET'])
 def get_history(id, interval):
-    """
-    id: the coin id
-    interval: m1,m5,m15,m30,h1,h2,h6,h12,d1
-    """
-    data = cr.get_history(id, interval)
-    return data
+    return cr.get_history(id, interval)

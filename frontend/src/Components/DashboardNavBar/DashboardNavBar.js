@@ -67,8 +67,8 @@ function DashboardNavBar(props) {
                 className="search"
             />
             <NavDropdown title="Options" id="collapsible-nav-dropdown">
-                <NavDropdown.Item href="#">Option 1</NavDropdown.Item>
-                <NavDropdown.Item href="#">Option 2</NavDropdown.Item>
+                <NavDropdown.Item><Link to="/404">Option 1</Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="/404">Option 2</Link></NavDropdown.Item>
             </NavDropdown>
             <Nav.Link id="navbar-link" onClick={logoutHandler}>Log Out</Nav.Link>
             </Navbar.Collapse>

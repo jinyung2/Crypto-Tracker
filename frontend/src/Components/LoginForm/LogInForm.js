@@ -1,5 +1,6 @@
 import React from 'react';
-import { useState } from "react";
+import { useState } from 'react';
+import { InputGroup } from 'react-bootstrap';
 import './../../Pages/SignUpLogIn/SignUpLogIn.css';
 
 function LogIn(props) {
@@ -10,31 +11,36 @@ function LogIn(props) {
   }
 
   return (
-      <form id="signUpForm">
+    <form id="signUpForm" autoComplete="off">
+      <input
+        className="form-control signUpInput"
+        type="text"
+        name="email"
+        placeholder="Email"
+        onChange={props.handleChange}
+      />
+      <br />
+      <div className="form-control signUpInput input-icon-container">
         <input
-          className="form-control signUpInput"
-          type="text"
-          name="email"
-          placeholder="Email"
-          onChange={props.handleChange}
-        />
-        <br />
-        <input
-          className="form-control signUpInput"
-          type={ isPasswordShown ? "text" : "password"}
+          className="password-input"
+          type={isPasswordShown ? 'text' : 'password'}
           name="password"
           onChange={props.handleChange}
           placeholder="Password"
         />
-        <i className="fa fa-eye login-password-icon" onClick={togglePasswordVisibility} />
-        <br />
-        <input
-          className="btn signUpSubmit"
-          type="button"
-          value="Log In"
-          onClick={props.submitForm}
+        <i
+          className="fa fa-eye password-icon"
+          onClick={togglePasswordVisibility}
         />
-      </form>
+      </div>
+      <br />
+      <input
+        className="btn signUpSubmit"
+        type="button"
+        value="Log In"
+        onClick={props.submitForm}
+      />
+    </form>
   );
 }
 

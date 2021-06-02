@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from "react";
+import { useState } from 'react';
 import './../../Pages/SignUpLogIn/SignUpLogIn.css';
 
 function Signup(props) {
@@ -10,7 +10,7 @@ function Signup(props) {
   }
 
   return (
-    <form id="signUpForm">
+    <form id="signUpForm" autoComplete="off">
       <input
         className="form-control signUpInput"
         type="text"
@@ -19,22 +19,27 @@ function Signup(props) {
         onChange={props.handleChange}
       />
       <br />
-      <input
-        className="form-control signUpInput"
-        type={ isPasswordShown ? "text" : "password"}
-        name="password"
-        onChange={props.handleChange}
-        placeholder="Password"
-      />
+      <div className="form-control signUpInput input-icon-container">
+        <input
+          className="password-input"
+          type={isPasswordShown ? 'text' : 'password'}
+          name="password"
+          onChange={props.handleChange}
+          placeholder="Password"
+        />
+        <i
+          className="fa fa-eye password-icon"
+          onClick={togglePasswordVisibility}
+        />
+      </div>
       <br />
       <input
         className="form-control signUpInput"
-        type={ isPasswordShown ? "text" : "password"}
+        type={isPasswordShown ? 'text' : 'password'}
         name="repassword"
         onChange={props.handleChange}
         placeholder="Re-enter Password"
       />
-      <i className="fa fa-eye signup-password-icon" onClick={togglePasswordVisibility} />
       <br />
       <input
         className="btn signUpSubmit"

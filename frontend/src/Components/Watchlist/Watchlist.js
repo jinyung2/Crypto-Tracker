@@ -11,10 +11,9 @@ function Watchlist(props) {
     change: 0,
   });
   const [loading, setLoading] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   function priceHandler() {
-    // axios
-    //   .get(`http://localhost:5000/coin/${props.coin}`)
     user.getCoin(props.coin)
       .then((res) => {
         setData({
@@ -26,6 +25,7 @@ function Watchlist(props) {
         setLoading(false);
       })
       .catch((err) => {
+        setRetryCount(retryCount + 1);
         console.log(err);
       });
   }
@@ -37,7 +37,9 @@ function Watchlist(props) {
 
   useEffect(() => {
     setLoading(true);
-    priceHandler();
+    while (loading && retryCount < 3) {
+      priceHandler();
+    }
   }, [setData]);
 
   return (

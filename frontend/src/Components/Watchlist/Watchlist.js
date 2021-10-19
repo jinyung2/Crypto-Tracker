@@ -37,10 +37,10 @@ function Watchlist(props) {
 
   useEffect(() => {
     setLoading(true);
-    while (loading && retryCount < 3) {
+    if (loading && retryCount < 3) {
       priceHandler();
     }
-  }, [setData]);
+  }, [retryCount]);
 
   return (
     <div 
